@@ -1,7 +1,5 @@
 # CyberCalc.NET9
 
-**Trial Version**
-
 This project is a modernized port of the classic WPF-CALC, rewritten from .NET Framework to .NET 9, introducing new Cyberpunk and Legacy themes while preserving the core calculator functionality.
 
 ## Features
@@ -12,9 +10,17 @@ This project is a modernized port of the classic WPF-CALC, rewritten from .NET F
 - **Keyboard shortcuts support**
 - Modernized WPF interface with Cyberpunk aesthetics
 
-<!-- ### Quick Start
+### Quick Start
 ```bash
-git clone https://github.com/ZeroDayZ7/WPF-Calc.git
-cd WPF-Calc
+git clone https://github.com/ZeroDayZ7/CyberCalc.NET9.git
+cd CyberCalc.NET9
 dotnet build
-dotnet run -->
+dotnet run
+```
+
+### Prerequisites
+- [.NET 9 SDK](https://dotnet.microsoft.com/en-us/download/dotnet/9.0)
+- (Optional) Visual Studio 2022/2023 with WPF workload
+
+### License
+This project is provided as a trial version. All rights reserved.
