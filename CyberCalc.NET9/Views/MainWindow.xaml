@@ -7,29 +7,31 @@
         Title="Cyberpunk Calculator" Height="450" Width="320"
         ResizeMode="NoResize" WindowStartupLocation="CenterScreen"
         Background="{DynamicResource WindowBackground}" WindowStyle="None"
-        AllowsTransparency="True" MouseLeftButtonDown="Window_MouseLeftButtonDown">
-	<Border Background="{DynamicResource WindowBackground}" CornerRadius="0">
-		<Border.Effect>
-			<DropShadowEffect Color="Black" BlurRadius="20" ShadowDepth="5" Opacity="0.8"/>
-		</Border.Effect>
-		<Grid Margin="5">
-			<Grid.RowDefinitions>
-				<RowDefinition Height="25"/>
-				<RowDefinition Height="25"/>
-				<RowDefinition Height="*"/>
-			</Grid.RowDefinitions>
-			<!-- Nagłówek z tytułem i ikonką -->
-			<StackPanel Orientation="Horizontal" HorizontalAlignment="Left" Grid.Row="0" VerticalAlignment="Center">
-				<Label Content="CYBERPUNK CALC" Foreground="{DynamicResource TextColor}"
+        AllowsTransparency="True" MouseLeftButtonDown="Window_MouseLeftButtonDown"
+        Icon="/Assets/app_icon.ico">
+    <Border Background="{DynamicResource WindowBackground}" CornerRadius="0">
+        <Border.Effect>
+            <DropShadowEffect Color="Black" BlurRadius="20" ShadowDepth="5" Opacity="0.8"/>
+        </Border.Effect>
+        <Grid Margin="5">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="25"/>
+                <RowDefinition Height="25"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <!-- Nagłówek z tytułem i ikonką -->
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" Grid.Row="0" VerticalAlignment="Center">
+                <Image Source="/Assets/app_icon.ico" Width="15" Height="15" Margin="5,0,5,0"/>
+                <Label Content="CYBERPUNK CALC" Foreground="{DynamicResource TextColor}"
                        FontFamily="Consolas" FontWeight="Bold" FontSize="12"/>
-			</StackPanel>
-			<!-- Przyciski minimalizacji i zamknięcia -->
-			<StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Grid.Row="0">
-				<Button Content="─" Style="{StaticResource HeaderButton}"
+            </StackPanel>
+            <!-- Przyciski minimalizacji i zamknięcia -->
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Grid.Row="0">
+                <Button Content="─" Style="{StaticResource HeaderButton}"
                         Command="{Binding MinimizeCommand}" Margin="2,0"/>
-				<Button Content="X" Style="{StaticResource HeaderButton}"
+                <Button Content="X" Style="{StaticResource HeaderButton}"
                         Command="{Binding CloseCommand}" Margin="2,0"/>
-			</StackPanel>
+            </StackPanel>
             <!-- Przyciski ustawień i informacji -->
             <StackPanel Orientation="Horizontal" Grid.Row="1" Margin="5,0">
                 <Button Content="Settings" Command="{Binding ShowSettingsCommand}" Style="{StaticResource CyberButton}" Margin="2" Background="Transparent" BorderThickness="0"/>
