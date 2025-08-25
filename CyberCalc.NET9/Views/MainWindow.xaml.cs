@@ -77,6 +77,12 @@ namespace WPF_CALC_NET_9.Views
                 case Key.Enter: viewModel.CalculateCommand.Execute(null); break;
                 case Key.Delete: case Key.Back: viewModel.ClearEntryCommand.Execute(null); break;
                 case Key.Escape: viewModel.ClearCommand.Execute(null); break;
+                // Dodano obsługę funkcji
+                case Key.S: if (shiftPressed) viewModel.FunctionCommand.Execute("sin"); break;
+                case Key.C: if (shiftPressed) viewModel.FunctionCommand.Execute("cos"); break;
+                case Key.T: if (shiftPressed) viewModel.FunctionCommand.Execute("tan"); break;
+                case Key.L: if (shiftPressed) viewModel.FunctionCommand.Execute("log"); break;
+                case Key.Q: if (shiftPressed) viewModel.FunctionCommand.Execute("sqrt"); break;
             }
             e.Handled = true;
         }

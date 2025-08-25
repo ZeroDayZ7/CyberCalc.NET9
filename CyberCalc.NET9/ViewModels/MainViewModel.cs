@@ -1,3 +1,4 @@
+using System;
 using System.ComponentModel;
 using System.IO;
 using System.Linq;
@@ -30,6 +31,7 @@ namespace WPF_CALC_NET_9.ViewModels
             MinimizeCommand = new RelayCommand(Minimize);
             CloseCommand = new RelayCommand(Close);
             ClearHistoryCommand = new RelayCommand(ClearHistory);
+            FunctionCommand = new RelayCommand(ProcessFunction); // Nowy command dla funkcji
         }
 
         public string ResultText
@@ -63,6 +65,7 @@ namespace WPF_CALC_NET_9.ViewModels
         public ICommand MinimizeCommand { get; }
         public ICommand CloseCommand { get; }
         public ICommand ClearHistoryCommand { get; }
+        public ICommand FunctionCommand { get; } // Nowy command
 
         private void ClearHistory(object? parameter)
         {
@@ -99,11 +102,11 @@ namespace WPF_CALC_NET_9.ViewModels
             var input = parameter?.ToString() ?? "";
             switch (input)
             {
-                case "+" or "-" or "*" or "/" or "%" when !string.IsNullOrEmpty(ResultText) && !IsOperator(ResultText.Last().ToString()):
+                case "+" or "-" or "*" or "/" or "%" or "^" when !string.IsNullOrEmpty(ResultText) && !IsOperatorOrParen(ResultText.Last().ToString()):
                     ResultText += input;
                     break;
                 case "," when !string.IsNullOrEmpty(ResultText) && ResultText.Last() != ',':
-                    var parts = ResultText.Split('+', '-', '*', '/', '%', '^').LastOrDefault() ?? "";
+                    var parts = ResultText.Split('+', '-', '*', '/', '%', '^', '(').LastOrDefault() ?? "";
                     if (!parts.Contains(','))
                     {
                         ResultText += input;
@@ -112,13 +115,19 @@ namespace WPF_CALC_NET_9.ViewModels
                 case "(" or ")":
                     ResultText += input;
                     break;
-                case "^":
-                    ResultText += input;
-                    break;
             }
         }
 
-        private static bool IsOperator(string str) => str is "+" or "-" or "*" or "/" or "%" or "^";
+        private void ProcessFunction(object? parameter)
+        {
+            var input = parameter?.ToString() ?? "";
+            if (!string.IsNullOrEmpty(input))
+            {
+                ResultText = ResultText == "0" ? input + "(" : ResultText + input + "(";
+            }
+        }
+
+        private static bool IsOperatorOrParen(string str) => str is "+" or "-" or "*" or "/" or "%" or "^" or "(" or ")";
 
         private void Clear(object? parameter)
         {
@@ -143,7 +152,7 @@ namespace WPF_CALC_NET_9.ViewModels
             {
                 if (string.IsNullOrWhiteSpace(ResultText)) return;
                 var expression = ResultText.Replace(',', '.');
-                var result = CalculatorModel.Calculate(expression);
+                var result = _calculator.Calculate(expression);
                 SaveResult($"{ResultText} = {result}");
                 ResultText = result;
                 LoadLastResults();
@@ -218,13 +227,20 @@ namespace WPF_CALC_NET_9.ViewModels
         }
     }
 
-    public class RelayCommand(Action<object?> execute, Func<object?, bool>? canExecute = null) : ICommand
+    public class RelayCommand : ICommand
     {
-        private readonly Action<object?> _execute = execute;
-        private readonly Func<object?, bool>? _canExecute = canExecute;
+        private readonly Action<object?> _execute;
+        private readonly Func<object?, bool>? _canExecute;
+
+        public RelayCommand(Action<object?> execute, Func<object?, bool>? canExecute = null)
+        {
+            _execute = execute;
+            _canExecute = canExecute;
+        }
 
         public bool CanExecute(object? parameter) => _canExecute == null || _canExecute(parameter);
         public void Execute(object? parameter) => _execute(parameter);
+
         public event EventHandler? CanExecuteChanged
         {
             add => CommandManager.RequerySuggested += value;

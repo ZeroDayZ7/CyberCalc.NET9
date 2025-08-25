@@ -6,8 +6,8 @@
 
   // Wykluczenie z eksploratora plików
   "files.exclude": {
-    "**/obj": true,
-    "**/Properties": true,
+    // "**/obj": true,
+    // "**/Properties": true,
   },
 
   // Wyłączenie zawijania linii w edytorze

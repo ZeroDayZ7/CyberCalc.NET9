@@ -246,4 +246,39 @@
             </Setter.Value>
         </Setter>
     </Style>
+    <!--FunctionButton -->
+    <Style x:Key="FunctionButton"
+           TargetType="Button"
+           BasedOn="{StaticResource CyberButton}">
+        <Setter Property="Background"
+                Value="{DynamicResource CyberSecondary}" />
+        <Setter Property="Foreground"
+                Value="{DynamicResource TextColor}" />
+        <Setter Property="FontSize"
+                Value="12" />
+        <Setter Property="Padding"
+                Value="4" />
+        <Setter Property="Margin"
+                Value="2" />
+        <Style.Triggers>
+            <Trigger Property="IsMouseOver"
+                     Value="True">
+                <Setter Property="Background"
+                        Value="{DynamicResource CyberPrimary}" />
+                <Setter Property="Effect">
+                    <Setter.Value>
+                        <DropShadowEffect Color="{DynamicResource CyberPrimary}"
+                                          BlurRadius="8"
+                                          ShadowDepth="0"
+                                          Opacity="0.6" />
+                    </Setter.Value>
+                </Setter>
+            </Trigger>
+            <Trigger Property="IsPressed"
+                     Value="True">
+                <Setter Property="Background"
+                        Value="{DynamicResource CyberTertiary}" />
+            </Trigger>
+        </Style.Triggers>
+    </Style>
 </ResourceDictionary>
