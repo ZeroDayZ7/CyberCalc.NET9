@@ -13,6 +13,7 @@
   <ItemGroup>
     <Folder Include="Helpers\" />
     <Folder Include="Views\" />
+    <Folder Include="Controls\" />
   </ItemGroup>
 
   <ItemGroup>

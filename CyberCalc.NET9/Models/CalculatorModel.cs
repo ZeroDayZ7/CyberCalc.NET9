@@ -4,18 +4,18 @@ namespace WPF_CALC_NET_9.Models;
 
 public class CalculatorModel
 {
-    public string Calculate(string expression)
+    public static string Calculate(string expression)
     {
         try
         {
             if (string.IsNullOrWhiteSpace(expression))
                 return "0";
 
-            if (expression.Contains("%"))
+            if (expression.Contains('%'))
             {
                 return HandlePercentage(expression);
             }
-            else if (expression.Contains("^"))
+            else if (expression.Contains('^'))
             {
                 return HandlePower(expression);
             }
@@ -25,7 +25,7 @@ public class CalculatorModel
                 return "Błąd: Dzielenie przez zero";
             }
 
-            DataTable dt = new DataTable();
+            DataTable dt = new();
             var result = dt.Compute(expression, "");
 
             if (result == DBNull.Value)
@@ -57,9 +57,9 @@ public class CalculatorModel
 
             switch (true)
             {
-                case var _ when expression.Contains("+"):
+                case var _ when expression.Contains('+'):
                     var partsAdd = expression.Split('+');
-                    if (partsAdd.Length > 1 && partsAdd[1].Contains("%"))
+                    if (partsAdd.Length > 1 && partsAdd[1].Contains('%'))
                     {
                         double numberPart = double.Parse(partsAdd[0].Trim());
                         string secondPart = partsAdd[1].Replace("%", "").Trim();
@@ -68,9 +68,9 @@ public class CalculatorModel
                         return addResult.ToString();
                     }
                     break;
-                case var _ when expression.Contains("-"):
+                case var _ when expression.Contains('-'):
                     var partsSub = expression.Split('-');
-                    if (partsSub.Length > 1 && partsSub[1].Contains("%"))
+                    if (partsSub.Length > 1 && partsSub[1].Contains('%'))
                     {
                         double numberPart = double.Parse(partsSub[0].Trim());
                         double percentValue = double.Parse(partsSub[1].Replace("%", "").Trim()) / 100.0;
@@ -78,16 +78,16 @@ public class CalculatorModel
                         return subResult.ToString();
                     }
                     break;
-                case var _ when expression.Contains("*"):
+                case var _ when expression.Contains('*'):
                     expression = expression.Replace("%", "/100");
-                    DataTable dt = new DataTable();
+                    DataTable dt = new();
                     var mulResult = dt.Compute(expression, "");
                     if (mulResult == DBNull.Value || mulResult == null)
                         return "Błąd obliczenia";
                     return mulResult.ToString() ?? "0"; // Zabezpieczenie przed null
-                case var _ when expression.Contains("/"):
+                case var _ when expression.Contains('/'):
                     var partsDiv = expression.Split('/');
-                    if (partsDiv.Length > 1 && partsDiv[1].Contains("%"))
+                    if (partsDiv.Length > 1 && partsDiv[1].Contains('%'))
                     {
                         double dividend = double.Parse(partsDiv[0].Trim());
                         double divisor = double.Parse(partsDiv[1].Replace("%", "").Trim()) / 100.0;

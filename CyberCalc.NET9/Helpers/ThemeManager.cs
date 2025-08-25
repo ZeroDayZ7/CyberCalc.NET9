@@ -8,15 +8,27 @@ public static class ThemeManager
     {
         try
         {
-            var dict = new ResourceDictionary();
-            dict.MergedDictionaries.Add(new ResourceDictionary { Source = new Uri("/Styles/CommonStyles.xaml", UriKind.Relative) });
-            dict.MergedDictionaries.Add(new ResourceDictionary { Source = new Uri($"/Styles/{themeName}.xaml", UriKind.Relative) });
+            var appResources = Application.Current.Resources;
 
-            Application.Current.Resources = dict;
+            // Usuń poprzedni motyw (ale nie CommonStyles ani AppVersion)
+            for (int i = appResources.MergedDictionaries.Count - 1; i >= 0; i--)
+            {
+                var dict = appResources.MergedDictionaries[i];
+                if (dict.Source != null && dict.Source.OriginalString.EndsWith(".xaml") &&
+                    !dict.Source.OriginalString.EndsWith("CommonStyles.xaml"))
+                {
+                    appResources.MergedDictionaries.RemoveAt(i);
+                }
+            }
+
+            // Dodaj nowy motyw
+            var themeDict = new ResourceDictionary { Source = new Uri($"/Styles/{themeName}.xaml", UriKind.Relative) };
+            appResources.MergedDictionaries.Add(themeDict);
         }
         catch (Exception ex)
         {
             MessageBox.Show($"Error loading theme {themeName}: {ex.Message}", "Theme Error", MessageBoxButton.OK, MessageBoxImage.Error);
         }
     }
+
 }
