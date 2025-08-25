@@ -75,7 +75,7 @@
                     <TextBox Text="{Binding ResultText, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource CyberTextBox}" IsReadOnly="True"
                              Foreground="{DynamicResource TextColor}" HorizontalContentAlignment="Right"
                              VerticalContentAlignment="Center" Background="{DynamicResource WindowBackground}"
-                             BorderThickness="0" FontSize="24" FontWeight="Bold"/>
+                             BorderThickness="0" FontSize="12" FontWeight="Bold" Padding="2,2,2,2"/>
                 </Border>
                 <!-- Siatka przycisków kalkulatora -->
                 <Grid Grid.Row="2" Margin="0,10,0,0">
