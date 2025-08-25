@@ -1,6 +1,3 @@
-using System;
-using System.Threading;
-
 namespace WPF_CALC_NET_9.Helpers;
 
 public static class SingleInstanceChecker

@@ -4,146 +4,314 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d"
-        Title="Cyberpunk Calculator" Height="450" Width="320"
-        ResizeMode="NoResize" WindowStartupLocation="CenterScreen"
-        Background="{DynamicResource WindowBackground}" WindowStyle="None"
-        AllowsTransparency="True" MouseLeftButtonDown="Window_MouseLeftButtonDown">
-    <Border Background="{DynamicResource WindowBackground}" CornerRadius="0">
+        Title="Cyberpunk Calculator"
+        Height="450"
+        Width="320"
+        ResizeMode="NoResize"
+        WindowStartupLocation="CenterScreen"
+        Background="{DynamicResource WindowBackground}"
+        WindowStyle="None"
+        AllowsTransparency="True"
+        MouseLeftButtonDown="Window_MouseLeftButtonDown">
+    <Border Background="{DynamicResource WindowBackground}"
+            CornerRadius="0">
         <Border.Effect>
-            <DropShadowEffect Color="Black" BlurRadius="20" ShadowDepth="5" Opacity="0.8"/>
+            <DropShadowEffect Color="Black"
+                              BlurRadius="20"
+                              ShadowDepth="5"
+                              Opacity="0.8" />
         </Border.Effect>
         <Grid Margin="5">
             <Grid.RowDefinitions>
-                <RowDefinition Height="25"/>
-                <RowDefinition Height="25"/>
-                <RowDefinition Height="*"/>
+                <RowDefinition Height="25" />
+                <RowDefinition Height="25" />
+                <RowDefinition Height="*" />
             </Grid.RowDefinitions>
             <!-- Nagłówek z tytułem i ikonką -->
-            <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" Grid.Row="0" VerticalAlignment="Center">
-                <Label Content="CYBERPUNK CALC" Foreground="{DynamicResource TextColor}"
-                       FontFamily="Consolas" FontWeight="Bold" FontSize="12"/>
+            <StackPanel Orientation="Horizontal"
+                        HorizontalAlignment="Left"
+                        Grid.Row="0"
+                        VerticalAlignment="Center">
+                <Label Content="CYBERPUNK CALC"
+                       Foreground="{DynamicResource TextColor}"
+                       FontFamily="Consolas"
+                       FontWeight="Bold"
+                       FontSize="12" />
             </StackPanel>
             <!-- Przyciski minimalizacji i zamknięcia -->
-			<StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Grid.Row="0">
-				<Button Content="─" Style="{StaticResource HeaderButton}"
-						Command="{Binding MinimizeCommand}" Padding="0,0,0,0" />
-				<Button Content="❌" Style="{StaticResource HeaderButton}"
-						Command="{Binding CloseCommand}" Padding="0,0,0,0" />
-			</StackPanel>
+            <StackPanel Orientation="Horizontal"
+                        HorizontalAlignment="Right"
+                        Grid.Row="0">
+                <Button Content="─"
+                        Style="{StaticResource HeaderButton}"
+                        Command="{Binding MinimizeCommand}"
+                        Padding="0,0,0,0" />
+                <Button Content="❌"
+                        Style="{StaticResource HeaderButton}"
+                        Command="{Binding CloseCommand}"
+                        Padding="0,0,0,0" />
+            </StackPanel>
             <!-- Przyciski ustawień i informacji -->
-			<StackPanel Orientation="Horizontal" Grid.Row="1" Margin="5,0">
-				<!-- Settings button z symbolem ⚙ (U+2699) -->
-				<Button Command="{Binding ShowSettingsCommand}" Style="{StaticResource CyberButton}" Padding="4" Background="Transparent" BorderThickness="0">
-					<StackPanel Orientation="Horizontal" VerticalAlignment="Center">
-						<TextBlock Text="Settings"/>
-					</StackPanel>
-				</Button>
-
-				<!-- About button z symbolem ℹ (U+2139) -->
-				<Button Command="{Binding ShowAboutCommand}" Style="{StaticResource CyberButton}" Padding="4" Background="Transparent" BorderThickness="0">
-					<StackPanel Orientation="Horizontal" VerticalAlignment="Center">
-						<TextBlock Text="About"/>
-					</StackPanel>
-				</Button>
-			</StackPanel>
-
-			<!-- Główna siatka kalkulatora -->
-            <Grid Grid.Row="2" Margin="10">
+            <StackPanel Orientation="Horizontal"
+                        Grid.Row="1"
+                        Margin="5,0">
+                <!-- Settings button z symbolem ⚙ (U+2699) -->
+                <Button Command="{Binding ShowSettingsCommand}"
+                        Style="{StaticResource CyberButton}"
+                        Padding="4"
+                        Background="Transparent"
+                        BorderThickness="0">
+                    <StackPanel Orientation="Horizontal"
+                                VerticalAlignment="Center">
+                        <TextBlock Text="Settings" />
+                    </StackPanel>
+                </Button>
+                <!-- About button z symbolem ℹ (U+2139) -->
+                <Button Command="{Binding ShowAboutCommand}"
+                        Style="{StaticResource CyberButton}"
+                        Padding="4"
+                        Background="Transparent"
+                        BorderThickness="0">
+                    <StackPanel Orientation="Horizontal"
+                                VerticalAlignment="Center">
+                        <TextBlock Text="About" />
+                    </StackPanel>
+                </Button>
+            </StackPanel>
+            <!-- Główna siatka kalkulatora -->
+            <Grid Grid.Row="2"
+                  Margin="10">
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="100"/>
+                    <RowDefinition Height="100" />
                     <!-- Pole historii -->
-                    <RowDefinition Height="50"/>
+                    <RowDefinition Height="50" />
                     <!-- Pole wyniku/inputu -->
-                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*" />
                     <!-- Siatka przycisków -->
                 </Grid.RowDefinitions>
                 <!-- Pole historii obliczeń -->
-                <Border Grid.Row="0" Background="{DynamicResource WindowBackground}" BorderBrush="{DynamicResource BorderBrush}"
-                        BorderThickness="1" CornerRadius="5" Margin="0,5">
+                <Border Grid.Row="0"
+                        Background="{DynamicResource WindowBackground}"
+                        BorderBrush="{DynamicResource BorderBrush}"
+                        BorderThickness="1"
+                        CornerRadius="5"
+                        Margin="0,5">
                     <Border.Effect>
-                        <DropShadowEffect Color="{DynamicResource CyberPrimary}" BlurRadius="8" ShadowDepth="0" Opacity="0.3"/>
+                        <DropShadowEffect Color="{DynamicResource CyberPrimary}"
+                                          BlurRadius="8"
+                                          ShadowDepth="0"
+                                          Opacity="0.3" />
                     </Border.Effect>
-                    <TextBox Text="{Binding HistoryText}" Style="{StaticResource CyberTextBox}" IsReadOnly="True"
-                             VerticalScrollBarVisibility="Auto" Background="{DynamicResource WindowBackground}"
-                             BorderThickness="0" FontSize="14" TextWrapping="Wrap"/>
+                    <TextBox Text="{Binding HistoryText}"
+                             Style="{StaticResource CyberTextBox}"
+                             IsReadOnly="True"
+                             VerticalScrollBarVisibility="Auto"
+                             Background="{DynamicResource WindowBackground}"
+                             BorderThickness="0"
+                             FontSize="14"
+                             TextWrapping="Wrap" />
                 </Border>
                 <!-- Pole wyniku/inputu -->
-                <Border Grid.Row="1" Background="{DynamicResource WindowBackground}" BorderBrush="{DynamicResource BorderBrush}"
-                        BorderThickness="2" CornerRadius="5" Margin="0,5">
+                <Border Grid.Row="1"
+                        Background="{DynamicResource WindowBackground}"
+                        BorderBrush="{DynamicResource BorderBrush}"
+                        BorderThickness="2"
+                        CornerRadius="5"
+                        Margin="0,5">
                     <Border.Effect>
-                        <DropShadowEffect Color="{DynamicResource CyberPrimary}" BlurRadius="12" ShadowDepth="0" Opacity="0.6"/>
+                        <DropShadowEffect Color="{DynamicResource CyberPrimary}"
+                                          BlurRadius="12"
+                                          ShadowDepth="0"
+                                          Opacity="0.6" />
                     </Border.Effect>
-                    <TextBox Text="{Binding ResultText, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource CyberTextBox}" IsReadOnly="True"
-                             Foreground="{DynamicResource TextColor}" HorizontalContentAlignment="Right"
-                             VerticalContentAlignment="Center" Background="{DynamicResource WindowBackground}"
-                             BorderThickness="0" FontSize="24" FontWeight="Bold" Padding="2,2,2,2"/>
+                    <TextBox Text="{Binding ResultText, UpdateSourceTrigger=PropertyChanged}"
+                             Style="{StaticResource CyberTextBox}"
+                             IsReadOnly="True"
+                             Foreground="{DynamicResource TextColor}"
+                             HorizontalContentAlignment="Right"
+                             VerticalContentAlignment="Center"
+                             Background="{DynamicResource WindowBackground}"
+                             BorderThickness="0"
+                             FontSize="24"
+                             FontWeight="Bold"
+                             Padding="2,2,2,2" />
                 </Border>
                 <!-- Siatka przycisków kalkulatora -->
-                <Grid Grid.Row="2" Margin="0,10,0,0">
+                <Grid Grid.Row="2"
+                      Margin="0,10,0,0">
                     <Grid.RowDefinitions>
-                        <RowDefinition Height="*"/>
-                        <RowDefinition Height="*"/>
-                        <RowDefinition Height="*"/>
-                        <RowDefinition Height="*"/>
-                        <RowDefinition Height="*"/>
-                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="*" />
                     </Grid.RowDefinitions>
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="*" />
                     </Grid.ColumnDefinitions>
                     <!-- Przyciski czyszczenia i operatorów specjalnych -->
-                    <Button Content="C" Grid.Row="0" Grid.Column="0" Style="{StaticResource ClearButton}"
-                            Command="{Binding ClearCommand}" Margin="2"/>
-                    <Button Content="CE" Grid.Row="0" Grid.Column="1" Style="{StaticResource ClearButton}"
-                            Command="{Binding ClearEntryCommand}" Margin="2"/>
-                    <Button Content="%" Grid.Row="0" Grid.Column="2" Style="{StaticResource OperatorButton}"
-                            Command="{Binding OperatorCommand}" CommandParameter="%" Margin="2"/>
-                    <Button Content="X^" Grid.Row="0" Grid.Column="3" Style="{StaticResource OperatorButton}"
-                            Command="{Binding OperatorCommand}" CommandParameter="^" Margin="2"/>
+                    <Button Content="C"
+                            Grid.Row="0"
+                            Grid.Column="0"
+                            Style="{StaticResource ClearButton}"
+                            Command="{Binding ClearCommand}"
+                            Margin="2" />
+                    <Button Content="CE"
+                            Grid.Row="0"
+                            Grid.Column="1"
+                            Style="{StaticResource ClearButton}"
+                            Command="{Binding ClearEntryCommand}"
+                            Margin="2" />
+                    <Button Content="%"
+                            Grid.Row="0"
+                            Grid.Column="2"
+                            Style="{StaticResource OperatorButton}"
+                            Command="{Binding OperatorCommand}"
+                            CommandParameter="%"
+                            Margin="2" />
+                    <Button Content="X^"
+                            Grid.Row="0"
+                            Grid.Column="3"
+                            Style="{StaticResource OperatorButton}"
+                            Command="{Binding OperatorCommand}"
+                            CommandParameter="^"
+                            Margin="2" />
                     <!-- Przyciski nawiasów i operatorów -->
-                    <Button Content="(" Grid.Row="1" Grid.Column="0" Style="{StaticResource OperatorButton}"
-                            Command="{Binding OperatorCommand}" CommandParameter="(" Margin="2"/>
-                    <Button Content=")" Grid.Row="1" Grid.Column="1" Style="{StaticResource OperatorButton}"
-                            Command="{Binding OperatorCommand}" CommandParameter=")" Margin="2"/>
-                    <Button Content="/" Grid.Row="1" Grid.Column="2" Style="{StaticResource OperatorButton}"
-                            Command="{Binding OperatorCommand}" CommandParameter="/" Margin="2"/>
-                    <Button Content="*" Grid.Row="1" Grid.Column="3" Style="{StaticResource OperatorButton}"
-                            Command="{Binding OperatorCommand}" CommandParameter="*" Margin="2"/>
+                    <Button Content="("
+                            Grid.Row="1"
+                            Grid.Column="0"
+                            Style="{StaticResource OperatorButton}"
+                            Command="{Binding OperatorCommand}"
+                            CommandParameter="("
+                            Margin="2" />
+                    <Button Content=")"
+                            Grid.Row="1"
+                            Grid.Column="1"
+                            Style="{StaticResource OperatorButton}"
+                            Command="{Binding OperatorCommand}"
+                            CommandParameter=")"
+                            Margin="2" />
+                    <Button Content="/"
+                            Grid.Row="1"
+                            Grid.Column="2"
+                            Style="{StaticResource OperatorButton}"
+                            Command="{Binding OperatorCommand}"
+                            CommandParameter="/"
+                            Margin="2" />
+                    <Button Content="*"
+                            Grid.Row="1"
+                            Grid.Column="3"
+                            Style="{StaticResource OperatorButton}"
+                            Command="{Binding OperatorCommand}"
+                            CommandParameter="*"
+                            Margin="2" />
                     <!-- Przyciski numeryczne (7-9) i operator odejmowania -->
-                    <Button Content="7" Grid.Row="2" Grid.Column="0" Style="{StaticResource CyberButton}"
-                            Command="{Binding NumberCommand}" CommandParameter="7" Margin="2"/>
-                    <Button Content="8" Grid.Row="2" Grid.Column="1" Style="{StaticResource CyberButton}"
-                            Command="{Binding NumberCommand}" CommandParameter="8" Margin="2"/>
-                    <Button Content="9" Grid.Row="2" Grid.Column="2" Style="{StaticResource CyberButton}"
-                            Command="{Binding NumberCommand}" CommandParameter="9" Margin="2"/>
-                    <Button Content="-" Grid.Row="2" Grid.Column="3" Style="{StaticResource OperatorButton}"
-                            Command="{Binding OperatorCommand}" CommandParameter="-" Margin="2"/>
+                    <Button Content="7"
+                            Grid.Row="2"
+                            Grid.Column="0"
+                            Style="{StaticResource CyberButton}"
+                            Command="{Binding NumberCommand}"
+                            CommandParameter="7"
+                            Margin="2" />
+                    <Button Content="8"
+                            Grid.Row="2"
+                            Grid.Column="1"
+                            Style="{StaticResource CyberButton}"
+                            Command="{Binding NumberCommand}"
+                            CommandParameter="8"
+                            Margin="2" />
+                    <Button Content="9"
+                            Grid.Row="2"
+                            Grid.Column="2"
+                            Style="{StaticResource CyberButton}"
+                            Command="{Binding NumberCommand}"
+                            CommandParameter="9"
+                            Margin="2" />
+                    <Button Content="-"
+                            Grid.Row="2"
+                            Grid.Column="3"
+                            Style="{StaticResource OperatorButton}"
+                            Command="{Binding OperatorCommand}"
+                            CommandParameter="-"
+                            Margin="2" />
                     <!-- Przyciski numeryczne (4-6) i operator dodawania -->
-                    <Button Content="4" Grid.Row="3" Grid.Column="0" Style="{StaticResource CyberButton}"
-                            Command="{Binding NumberCommand}" CommandParameter="4" Margin="2"/>
-                    <Button Content="5" Grid.Row="3" Grid.Column="1" Style="{StaticResource CyberButton}"
-                            Command="{Binding NumberCommand}" CommandParameter="5" Margin="2"/>
-                    <Button Content="6" Grid.Row="3" Grid.Column="2" Style="{StaticResource CyberButton}"
-                            Command="{Binding NumberCommand}" CommandParameter="6" Margin="2"/>
-                    <Button Content="+" Grid.Row="3" Grid.Column="3" Style="{StaticResource OperatorButton}"
-                            Command="{Binding OperatorCommand}" CommandParameter="+" Margin="2"/>
+                    <Button Content="4"
+                            Grid.Row="3"
+                            Grid.Column="0"
+                            Style="{StaticResource CyberButton}"
+                            Command="{Binding NumberCommand}"
+                            CommandParameter="4"
+                            Margin="2" />
+                    <Button Content="5"
+                            Grid.Row="3"
+                            Grid.Column="1"
+                            Style="{StaticResource CyberButton}"
+                            Command="{Binding NumberCommand}"
+                            CommandParameter="5"
+                            Margin="2" />
+                    <Button Content="6"
+                            Grid.Row="3"
+                            Grid.Column="2"
+                            Style="{StaticResource CyberButton}"
+                            Command="{Binding NumberCommand}"
+                            CommandParameter="6"
+                            Margin="2" />
+                    <Button Content="+"
+                            Grid.Row="3"
+                            Grid.Column="3"
+                            Style="{StaticResource OperatorButton}"
+                            Command="{Binding OperatorCommand}"
+                            CommandParameter="+"
+                            Margin="2" />
                     <!-- Przyciski numeryczne (1-3) i przycisk równości -->
-                    <Button Content="1" Grid.Row="4" Grid.Column="0" Style="{StaticResource CyberButton}"
-                            Command="{Binding NumberCommand}" CommandParameter="1" Margin="2"/>
-                    <Button Content="2" Grid.Row="4" Grid.Column="1" Style="{StaticResource CyberButton}"
-                            Command="{Binding NumberCommand}" CommandParameter="2" Margin="2"/>
-                    <Button Content="3" Grid.Row="4" Grid.Column="2" Style="{StaticResource CyberButton}"
-                            Command="{Binding NumberCommand}" CommandParameter="3" Margin="2"/>
-                    <Button Content="=" Grid.Row="4" Grid.Column="3" Grid.RowSpan="2" Style="{StaticResource EqualsButton}"
-                            Command="{Binding CalculateCommand}" Margin="2"/>
+                    <Button Content="1"
+                            Grid.Row="4"
+                            Grid.Column="0"
+                            Style="{StaticResource CyberButton}"
+                            Command="{Binding NumberCommand}"
+                            CommandParameter="1"
+                            Margin="2" />
+                    <Button Content="2"
+                            Grid.Row="4"
+                            Grid.Column="1"
+                            Style="{StaticResource CyberButton}"
+                            Command="{Binding NumberCommand}"
+                            CommandParameter="2"
+                            Margin="2" />
+                    <Button Content="3"
+                            Grid.Row="4"
+                            Grid.Column="2"
+                            Style="{StaticResource CyberButton}"
+                            Command="{Binding NumberCommand}"
+                            CommandParameter="3"
+                            Margin="2" />
+                    <Button Content="="
+                            Grid.Row="4"
+                            Grid.Column="3"
+                            Grid.RowSpan="2"
+                            Style="{StaticResource EqualsButton}"
+                            Command="{Binding CalculateCommand}"
+                            Margin="2" />
                     <!-- Przyciski zero i przecinka -->
-                    <Button Content="0" Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="2" Style="{StaticResource CyberButton}"
-                            Command="{Binding NumberCommand}" CommandParameter="0" Margin="2"/>
-                    <Button Content="," Grid.Row="5" Grid.Column="2" Style="{StaticResource CyberButton}"
-                            Command="{Binding OperatorCommand}" CommandParameter="," Margin="2"/>
+                    <Button Content="0"
+                            Grid.Row="5"
+                            Grid.Column="0"
+                            Grid.ColumnSpan="2"
+                            Style="{StaticResource CyberButton}"
+                            Command="{Binding NumberCommand}"
+                            CommandParameter="0"
+                            Margin="2" />
+                    <Button Content=","
+                            Grid.Row="5"
+                            Grid.Column="2"
+                            Style="{StaticResource CyberButton}"
+                            Command="{Binding OperatorCommand}"
+                            CommandParameter=","
+                            Margin="2" />
                 </Grid>
             </Grid>
         </Grid>

@@ -1,0 +1,17 @@
+{
+  // Wykluczenie z wyszukiwania
+  "search.exclude": {
+    "out": true,
+  },
+
+  // Wykluczenie z eksploratora plików
+  "files.exclude": {
+    "**/obj": true,
+    "**/Properties": true,
+  },
+
+  // Wyłączenie zawijania linii w edytorze
+  "editor.wordWrap": "wordWrapColumn",
+  "editor.formatOnPaste": false,
+  "editor.formatOnSave": false,
+}

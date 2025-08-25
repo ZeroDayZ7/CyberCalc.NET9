@@ -4,11 +4,18 @@
     <Color x:Key="CyberSecondary">#00FFFF</Color>
     <Color x:Key="CyberAccent">#39FF14</Color>
     <Color x:Key="CyberBackground">#0D1B2A</Color>
-    <SolidColorBrush x:Key="WindowBackground" Color="{StaticResource CyberBackground}"/>
-    <SolidColorBrush x:Key="ButtonBackground" Color="#1B263B"/>
-    <SolidColorBrush x:Key="ButtonForeground" Color="#E0E1DD"/>
-    <SolidColorBrush x:Key="BorderBrush" Color="{StaticResource CyberPrimary}"/>
-    <SolidColorBrush x:Key="TextColor" Color="#00FFFF"/>
-    <SolidColorBrush x:Key="CyberSecondaryBrush" Color="{StaticResource CyberSecondary}"/>
-    <SolidColorBrush x:Key="CyberAccentBrush" Color="{StaticResource CyberAccent}"/>
+    <SolidColorBrush x:Key="WindowBackground"
+                     Color="{StaticResource CyberBackground}" />
+    <SolidColorBrush x:Key="ButtonBackground"
+                     Color="#1B263B" />
+    <SolidColorBrush x:Key="ButtonForeground"
+                     Color="#E0E1DD" />
+    <SolidColorBrush x:Key="BorderBrush"
+                     Color="{StaticResource CyberPrimary}" />
+    <SolidColorBrush x:Key="TextColor"
+                     Color="#00FFFF" />
+    <SolidColorBrush x:Key="CyberSecondaryBrush"
+                     Color="{StaticResource CyberSecondary}" />
+    <SolidColorBrush x:Key="CyberAccentBrush"
+                     Color="{StaticResource CyberAccent}" />
 </ResourceDictionary>
