@@ -12,7 +12,7 @@ This project is a modernized port of the classic WPF-CALC, rewritten from .NET F
 
 ## Screenshots
 
-![Main Window](CyberCalc.NET9/assets/git.png)
+![Main Window](CyberCalc.NET9/Assets/git.png)
 
 ## Quick Start
 
