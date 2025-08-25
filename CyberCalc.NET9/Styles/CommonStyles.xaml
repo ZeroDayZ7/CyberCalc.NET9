@@ -93,7 +93,7 @@
 
     <!-- Styl dla przycisków operatorów -->
     <Style x:Key="OperatorButton" TargetType="Button" BasedOn="{StaticResource CyberButton}">
-        <Setter Property="Background" Value="#2D1B69"/>
+        <Setter Property="Background" Value="#2d6787"/>
         <Setter Property="BorderBrush" Value="{DynamicResource CyberSecondaryBrush}"/>
         <Setter Property="Foreground" Value="{DynamicResource CyberSecondaryBrush}"/>
     </Style>
@@ -109,7 +109,7 @@
     <Style x:Key="ClearButton" TargetType="Button" BasedOn="{StaticResource CyberButton}">
         <Setter Property="Background" Value="#5D1A1A"/>
         <Setter Property="BorderBrush" Value="#FF4444"/>
-        <Setter Property="Foreground" Value="#FF4444"/>
+        <Setter Property="Foreground" Value="#FFFFFF"/>
     </Style>
 
     <!-- Styl dla pól tekstowych (z poprawką Padding w ScrollViewer) -->
@@ -147,7 +147,7 @@
     <Setter Property="Background" Value="Transparent"/>
     <Setter Property="BorderThickness" Value="0"/>
     <Setter Property="Foreground" Value="{DynamicResource TextColor}"/>
-    <Setter Property="FontSize" Value="8"/>
+    <Setter Property="FontSize" Value="12"/>
     <Setter Property="Width" Value="30"/>
     <Setter Property="Height" Value="20"/>
     <Setter Property="Template">

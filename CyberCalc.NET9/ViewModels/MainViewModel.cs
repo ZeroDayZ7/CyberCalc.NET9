@@ -29,6 +29,7 @@ public class MainViewModel : INotifyPropertyChanged
         ShowAboutCommand = new RelayCommand(ShowAbout);
         MinimizeCommand = new RelayCommand(Minimize);
         CloseCommand = new RelayCommand(Close);
+        ClearHistoryCommand = new RelayCommand(ClearHistory); // Dodano
     }
 
     public string ResultText
@@ -61,6 +62,24 @@ public class MainViewModel : INotifyPropertyChanged
     public ICommand ShowAboutCommand { get; }
     public ICommand MinimizeCommand { get; }
     public ICommand CloseCommand { get; }
+    public ICommand ClearHistoryCommand { get; } // Dodano
+
+    private void ClearHistory(object? parameter)
+    {
+        try
+        {
+            if (File.Exists("wyniki.txt"))
+            {
+                File.WriteAllText("wyniki.txt", string.Empty);
+            }
+            HistoryText = string.Empty; // Czyści pole historii
+            MessageBox.Show("Historia została wyczyszczona.", "Sukces", MessageBoxButton.OK, MessageBoxImage.Information);
+        }
+        catch (Exception ex)
+        {
+            MessageBox.Show($"Błąd podczas czyszczenia historii: {ex.Message}", "Błąd", MessageBoxButton.OK, MessageBoxImage.Error);
+        }
+    }
 
     private void ProcessNumber(object? parameter)
     {
@@ -99,7 +118,7 @@ public class MainViewModel : INotifyPropertyChanged
         }
     }
 
-    private bool IsOperator(string str) => str is "+" or "-" or "*" or "/" or "%" or "^";
+    private static bool IsOperator(string str) => str is "+" or "-" or "*" or "/" or "%" or "^";
 
     private void Clear(object? parameter)
     {
@@ -135,7 +154,7 @@ public class MainViewModel : INotifyPropertyChanged
         }
     }
 
-    private void SaveResult(string result)
+    private static void SaveResult(string result)
     {
         try
         {
@@ -201,16 +220,10 @@ public class MainViewModel : INotifyPropertyChanged
     }
 }
 
-public class RelayCommand : ICommand
+public class RelayCommand(Action<object?> execute, Func<object?, bool>? canExecute = null) : ICommand
 {
-    private readonly Action<object?> _execute;
-    private readonly Func<object?, bool>? _canExecute;
-
-    public RelayCommand(Action<object?> execute, Func<object?, bool>? canExecute = null)
-    {
-        _execute = execute;
-        _canExecute = canExecute;
-    }
+    private readonly Action<object?> _execute = execute;
+    private readonly Func<object?, bool>? _canExecute = canExecute;
 
     public bool CanExecute(object? parameter) => _canExecute == null || _canExecute(parameter);
     public void Execute(object? parameter) => _execute(parameter);

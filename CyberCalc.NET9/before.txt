@@ -1,0 +1,6 @@
+Cyberpunk Calculator v1.1
+Autor: ZeroDayZ7
+Wersja .NET 9, WPF
+Opis: Nowoczesny, cyberpunkowy kalkulator z jasnym i ciemnym motywem.
+Wymagania: Windows 10/11
+Kliknij "Dalej", aby kontynuować instalację.

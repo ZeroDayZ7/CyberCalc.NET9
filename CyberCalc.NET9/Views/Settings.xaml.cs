@@ -1,4 +1,3 @@
-using System.IO;
 using System.Windows;
 using System.Windows.Input;
 using WPF_CALC_NET_9.ViewModels;
@@ -10,23 +9,13 @@ public partial class Settings : Window
     public Settings()
     {
         InitializeComponent();
-        DataContext = new MainViewModel(); // Ustawienie DataContext na MainViewModel dla ThemeCommand
+        DataContext = Application.Current.MainWindow.DataContext; // U¿yj DataContext z MainWindow
     }
 
     private void ClearHistory_Click(object sender, RoutedEventArgs e)
     {
-        try
-        {
-            if (File.Exists("wyniki.txt"))
-            {
-                File.WriteAllText("wyniki.txt", string.Empty);
-                MessageBox.Show("Historia zosta³a wyczyszczona.", "Sukces", MessageBoxButton.OK, MessageBoxImage.Information);
-            }
-        }
-        catch (Exception ex)
-        {
-            MessageBox.Show($"B³¹d podczas czyszczenia historii: {ex.Message}", "B³¹d", MessageBoxButton.OK, MessageBoxImage.Error);
-        }
+        var viewModel = (MainViewModel)DataContext;
+        viewModel.ClearHistoryCommand.Execute(null);
     }
 
     private void Header_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)

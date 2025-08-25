@@ -94,14 +94,4 @@ public partial class MainWindow : Window
         SingleInstanceChecker.ReleaseMutex();
         base.OnClosed(e);
     }
-
-    private void TextBox_TextChanged()
-    {
-
-    }
-
-    private void Button_Click(object sender, RoutedEventArgs e)
-    {
-
-    }
 }

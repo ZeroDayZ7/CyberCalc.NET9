@@ -9,12 +9,14 @@ public static class ThemeManager
     {
         try
         {
-            var dict = new ResourceDictionary
-            {
-                Source = new Uri($"/Styles/{themeName}.xaml", UriKind.Relative)
-            };
-            Application.Current.Resources.MergedDictionaries.Clear();
-            Application.Current.Resources.MergedDictionaries.Add(dict);
+            var dict = new ResourceDictionary();
+            // Do³¹cz CommonStyles.xaml
+            dict.MergedDictionaries.Add(new ResourceDictionary { Source = new Uri("/Styles/CommonStyles.xaml", UriKind.Relative) });
+            // Do³¹cz wybrany motyw
+            dict.MergedDictionaries.Add(new ResourceDictionary { Source = new Uri($"/Styles/{themeName}.xaml", UriKind.Relative) });
+
+            // Zast¹p zasoby aplikacji
+            Application.Current.Resources = dict;
         }
         catch (Exception ex)
         {

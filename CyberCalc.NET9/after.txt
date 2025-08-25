@@ -1,0 +1,3 @@
+Instalacja zakończona pomyślnie!
+Teraz możesz uruchomić Cyberpunk Calculator z menu Start lub z pulpitu.
+Miłego użytkowania!

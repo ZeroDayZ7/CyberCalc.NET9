@@ -6,7 +6,7 @@
     <Color x:Key="CyberBackground">#C0C0C0</Color>
     <SolidColorBrush x:Key="WindowBackground" Color="{StaticResource CyberBackground}"/>
     <SolidColorBrush x:Key="ButtonBackground" Color="#808080"/>
-    <SolidColorBrush x:Key="ButtonForeground" Color="#E0E1DD"/>
+    <SolidColorBrush x:Key="ButtonForeground" Color="#FFFFFF"/>
     <SolidColorBrush x:Key="BorderBrush" Color="{StaticResource CyberPrimary}"/>
-    <SolidColorBrush x:Key="TextColor" Color="#C0C0C0"/>
+    <SolidColorBrush x:Key="TextColor" Color="#000000"/>
 </ResourceDictionary>
