@@ -1,6 +1,6 @@
 using System;
 
-namespace WPF_CALC_NET_9.Models
+namespace WPF_CALC_NET_9.Core.Math
 {
     public enum TokenType
     {
@@ -12,21 +12,14 @@ namespace WPF_CALC_NET_9.Models
         Variable
     }
 
-    public class Token
+    public class Token(TokenType type, string value, int precedence = 0, bool isRightAssociative = false)
     {
-        public TokenType Type { get; }
-        public string Value { get; }
-        public int Precedence { get; }
-        public bool IsRightAssociative { get; }
-
-        public Token(TokenType type, string value, int precedence = 0, bool isRightAssociative = false)
-        {
-            Type = type;
-            Value = value;
-            Precedence = precedence;
-            IsRightAssociative = isRightAssociative;
-        }
+        public TokenType Type { get; } = type;
+        public string Value { get; } = value;
+        public int Precedence { get; } = precedence;
+        public bool IsRightAssociative { get; } = isRightAssociative;
 
         public override string ToString() => $"{Type}: {Value}";
     }
+
 }

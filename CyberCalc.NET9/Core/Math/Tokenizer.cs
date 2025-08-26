@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Globalization;
 
-namespace WPF_CALC_NET_9.Models
+namespace WPF_CALC_NET_9.Core.Math
 {
     public class Tokenizer
     {

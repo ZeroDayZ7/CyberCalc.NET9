@@ -1,8 +1,11 @@
 using System;
 using System.Collections.Generic;
 using System.Globalization;
+using SysMath = System.Math;
 
-namespace WPF_CALC_NET_9.Models
+
+namespace WPF_CALC_NET_9.Core.Math
+
 {
     public class MathEvaluator : IEvaluator
     {
@@ -12,16 +15,16 @@ namespace WPF_CALC_NET_9.Models
             { "-", (a, b) => a - b },
             { "*", (a, b) => a * b },
             { "/", (a, b) => b == 0 ? throw new DivideByZeroException() : a / b },
-            { "^", (a, b) => Math.Pow(a, b) }
+            { "^", (a, b) => SysMath.Pow(a, b) }
         };
 
         private readonly Dictionary<string, Func<double, double>> _functions = new()
         {
-            { "sin", Math.Sin },
-            { "cos", Math.Cos },
-            { "tan", Math.Tan },
-            { "log", Math.Log },
-            { "sqrt", Math.Sqrt }
+            { "sin", SysMath.Sin },
+            { "cos", SysMath.Cos },
+            { "tan", SysMath.Tan },
+            { "log", SysMath.Log },
+            { "sqrt", SysMath.Sqrt }
         };
 
         public double Evaluate(List<Token> rpnTokens)
@@ -80,5 +83,5 @@ namespace WPF_CALC_NET_9.Models
             if (stack.Count != 1) throw new ArgumentException("Błędne wyrażenie");
             return stack.Pop();
         }
-    }
+  }
 }

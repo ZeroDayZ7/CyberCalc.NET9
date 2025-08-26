@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Globalization;
+using WPF_CALC_NET_9.Core.Math;
 
 namespace WPF_CALC_NET_9.Models
 {
@@ -7,7 +8,7 @@ namespace WPF_CALC_NET_9.Models
     {
         private readonly Tokenizer _tokenizer;
         private readonly ShuntingYard _shuntingYard;
-        private readonly IEvaluator _evaluator;
+        private readonly MathEvaluator _evaluator;
 
         public CalculatorModel()
         {
