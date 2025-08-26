@@ -3,7 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:WPF_CALC_NET_9.Views"
+        xmlns:local="clr-namespace:WPF_CALC_NET_9.Controls"
         mc:Ignorable="d"
         Title="Cyberpunk Calculator"
         Height="450"
@@ -43,10 +43,7 @@
                             VerticalAlignment="Center"
                             Margin="5,0,0,0">
                     <Label Content="{StaticResource AppTitle}"
-                           Foreground="{DynamicResource TextColor}"
-                           FontFamily="Consolas"
-                           FontWeight="Bold"
-                           FontSize="12" />
+                           Style="{StaticResource HeaderTextStyle}" />
                 </StackPanel>
                 <!-- Przyciski -->
                 <StackPanel Grid.Column="1"
@@ -61,29 +58,9 @@
                 </StackPanel>
             </Grid>
             <!-- Przyciski ustawień i informacji -->
-            <StackPanel Orientation="Horizontal"
-                        Grid.Row="1"
-                        Margin="5,0">
-                <Button Command="{Binding ShowSettingsCommand}"
-                        Style="{StaticResource CyberButton}"
-                        Padding="4"
-                        Background="Transparent"
-                        BorderThickness="0">
-                    <StackPanel Orientation="Horizontal"
-                                VerticalAlignment="Center">
-                        <TextBlock Text="Settings" />
-                    </StackPanel>
-                </Button>
-                <Button Command="{Binding ShowAboutCommand}"
-                        Style="{StaticResource CyberButton}"
-                        Padding="4"
-                        Background="Transparent"
-                        BorderThickness="0">
-                    <StackPanel Orientation="Horizontal"
-                                VerticalAlignment="Center">
-                        <TextBlock Text="About" />
-                    </StackPanel>
-                </Button>
+            <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Left" Margin="5,0">
+                <local:HeaderButton Text="Settings" Command="{Binding ShowSettingsCommand}" Margin="0,0,5,0"/>
+                <local:HeaderButton Text="About" Command="{Binding ShowAboutCommand}"/>
             </StackPanel>
             <!-- Główna siatka kalkulatora -->
             <Grid Grid.Row="2"

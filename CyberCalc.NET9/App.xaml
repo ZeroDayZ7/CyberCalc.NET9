@@ -6,15 +6,6 @@
              StartupUri="Views/MainWindow.xaml">
     <Application.Resources>
         <ResourceDictionary>
-            <Style x:Key="HeaderTextStyle" TargetType="TextBlock">
-                <Setter Property="Foreground" Value="{DynamicResource TextColor}" />
-                <Setter Property="FontFamily" Value="Consolas" />
-                <Setter Property="FontWeight" Value="Bold" />
-                <Setter Property="FontSize" Value="14" />
-                <Setter Property="VerticalAlignment" Value="Center" />
-                <Setter Property="HorizontalAlignment" Value="Center" />
-            </Style>
-
             <sys:String x:Key="AppVersion">v1.0.4</sys:String>
             <sys:String x:Key="AppTitle">CYBERPUNK CALC</sys:String>
             <!-- Włączanie motywów z folderu Styles -->

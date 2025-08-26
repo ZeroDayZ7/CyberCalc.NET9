@@ -156,7 +156,7 @@
 		<Setter Property="Foreground"
                 Value="#FFFFFF" />
 	</Style>
-	<!-- Styl dla pól tekstowych (z poprawką Padding w ScrollViewer) -->
+	<!-- Styl dla pól tekstowych  -->
 	<Style x:Key="CyberTextBox"
            TargetType="TextBox">
 		<Setter Property="Background"
@@ -199,7 +199,7 @@
 			</Setter.Value>
 		</Setter>
 	</Style>
-	<!-- Dedykowany styl dla przycisków nagłówka -->
+	<!-- Styl dla przycisków nagłówka -->
 	<Style x:Key="HeaderButton"
            TargetType="Button"
            BasedOn="{StaticResource CyberButton}">
@@ -344,7 +344,7 @@
             </Setter.Value>
         </Setter>
     </Style>
-    <!-- Opcjonalny styl dla przycisku czyszczenia w Settings -->
+    <!-- Settings -->
     <Style x:Key="SettingsClearButton"
            TargetType="Button"
            BasedOn="{StaticResource SettingsButton}">
@@ -355,5 +355,14 @@
         <Setter Property="Foreground"
                 Value="#FF4444" />
     </Style>
+	<!-- HeaderTextStyle -->
+	<Style x:Key="HeaderTextStyle" TargetType="Label">
+		<Setter Property="Foreground" Value="{DynamicResource TextColor}" />
+		<Setter Property="FontFamily" Value="Consolas" />
+		<Setter Property="FontWeight" Value="Bold" />
+		<Setter Property="FontSize" Value="14" />
+		<Setter Property="VerticalAlignment" Value="Center" />
+		<Setter Property="HorizontalAlignment" Value="Center" />
+	</Style>
 
 </ResourceDictionary>
