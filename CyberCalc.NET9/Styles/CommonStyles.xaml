@@ -10,7 +10,7 @@
 			<Setter.Value>
 				<ControlTemplate TargetType="Thumb">
 					<Border Background="{TemplateBinding Background}"
-                            CornerRadius="6">
+                            CornerRadius="2">
 						<Border.Effect>
 							<DropShadowEffect Color="{DynamicResource CyberPrimary}"
                                               BlurRadius="3"
@@ -215,6 +215,8 @@
                 Value="30" />
 		<Setter Property="Height"
                 Value="20" />
+		<Setter Property="Padding" 
+				Value="0" />
 		<Setter Property="Template">
 			<Setter.Value>
 				<ControlTemplate TargetType="Button">

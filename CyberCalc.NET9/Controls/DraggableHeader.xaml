@@ -5,11 +5,7 @@
     <Border Background="#FF1E2A38"
             MouseLeftButtonDown="Header_MouseLeftButtonDown">
         <TextBlock x:Name="HeaderTextBlock"
-                   Foreground="#FFD0D0D0"
-                   FontFamily="Consolas"
-                   FontWeight="Bold"
-                   FontSize="14"
-                   VerticalAlignment="Center"
-                   HorizontalAlignment="Center"/>
+                   Style="{StaticResource HeaderTextStyle}"
+                   Text="{Binding HeaderText, RelativeSource={RelativeSource AncestorType=UserControl}}" />
     </Border>
 </UserControl>

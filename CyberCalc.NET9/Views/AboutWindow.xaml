@@ -30,7 +30,7 @@
                 <!-- Przycisk zamykania -->
             </Grid.RowDefinitions>
             <!-- Nagłówek (dragable) -->
-           <local:DraggableHeader Grid.Row="0" HeaderText="ABOUT CYBERPUNK CALC"/>
+            <local:DraggableHeader Grid.Row="0" HeaderText="ABOUT {StaticResource AppTitle}" />
             <!-- Treść okna -->
             <StackPanel Grid.Row="1"
                         VerticalAlignment="Center"
@@ -40,7 +40,7 @@
                            FontSize="14"
                            TextAlignment="Center"
                            Margin="0,5">
-                    <Run Text="CYBERPUNK CALC " />
+                    <Run Text="{StaticResource AppTitle}" />
                     <Run Text="{StaticResource AppVersion}" />
                 </TextBlock>
                 <TextBlock Text="Created by ZeroDayZ7"

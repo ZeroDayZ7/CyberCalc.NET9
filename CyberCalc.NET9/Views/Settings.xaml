@@ -27,7 +27,7 @@
                 <RowDefinition Height="50" />
             </Grid.RowDefinitions>
             <!-- Nagłówek -->
-            <local:DraggableHeader Grid.Row="0" HeaderText="SETTINGS CYBERPUNK CALC"/>
+            <local:DraggableHeader Grid.Row="0" HeaderText="SETTINGS {StaticResource AppTitle}" />
             <!-- Treść okna -->
             <StackPanel Grid.Row="1"
                         Margin="10"

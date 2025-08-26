@@ -42,7 +42,7 @@
                 <StackPanel Orientation="Horizontal"
                             VerticalAlignment="Center"
                             Margin="5,0,0,0">
-                    <Label Content="CYBERPUNK CALC"
+                    <Label Content="{StaticResource AppTitle}"
                            Foreground="{DynamicResource TextColor}"
                            FontFamily="Consolas"
                            FontWeight="Bold"
