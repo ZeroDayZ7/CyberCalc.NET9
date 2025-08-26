@@ -356,7 +356,7 @@
                 Value="#FF4444" />
     </Style>
 	<!-- HeaderTextStyle -->
-	<Style x:Key="HeaderTextStyle" TargetType="Label">
+	<Style x:Key="HeaderTextStyle" TargetType="TextBlock">
 		<Setter Property="Foreground" Value="{DynamicResource TextColor}" />
 		<Setter Property="FontFamily" Value="Consolas" />
 		<Setter Property="FontWeight" Value="Bold" />

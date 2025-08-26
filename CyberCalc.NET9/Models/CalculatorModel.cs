@@ -24,16 +24,12 @@ namespace WPF_CALC_NET_9.Models
                 if (string.IsNullOrWhiteSpace(expression))
                     return "0";
 
-                // Zamień przecinek na kropkę dla spójności
                 expression = expression.Replace(',', '.');
 
-                // Tokenizacja
                 var tokens = _tokenizer.Tokenize(expression);
 
-                // Konwersja na ONP
                 var rpnTokens = _shuntingYard.ToRPN(tokens);
 
-                // Ewaluacja
                 var result = _evaluator.Evaluate(rpnTokens);
 
                 // Formatowanie wyniku

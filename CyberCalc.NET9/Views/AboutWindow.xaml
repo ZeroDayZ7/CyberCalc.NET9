@@ -30,7 +30,7 @@
                 <!-- Przycisk zamykania -->
             </Grid.RowDefinitions>
             <!-- Nagłówek (dragable) -->
-            <local:DraggableHeader Grid.Row="0" HeaderText="ABOUT {StaticResource AppTitle}" />
+            <local:DraggableHeader Grid.Row="0" HeaderText="ABOUT" />
             <!-- Treść okna -->
             <StackPanel Grid.Row="1"
                         VerticalAlignment="Center"
