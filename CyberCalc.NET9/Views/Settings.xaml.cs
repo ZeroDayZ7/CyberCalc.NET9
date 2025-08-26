@@ -9,7 +9,7 @@ public partial class Settings : Window
     public Settings()
     {
         InitializeComponent();
-        DataContext = Application.Current.MainWindow.DataContext; // U¿yj DataContext z MainWindow
+        DataContext = Application.Current.MainWindow.DataContext;
     }
 
     private void ClearHistory_Click(object sender, RoutedEventArgs e)

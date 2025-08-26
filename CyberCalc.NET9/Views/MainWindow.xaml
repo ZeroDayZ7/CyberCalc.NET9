@@ -28,30 +28,38 @@
                 <RowDefinition Height="25" />
                 <RowDefinition Height="*" />
             </Grid.RowDefinitions>
-            <!-- Nagłówek z tytułem -->
-            <StackPanel Orientation="Horizontal"
-                        HorizontalAlignment="Left"
-                        Grid.Row="0"
-                        VerticalAlignment="Center">
-                <Label Content="CYBERPUNK CALC"
-                       Foreground="{DynamicResource TextColor}"
-                       FontFamily="Consolas"
-                       FontWeight="Bold"
-                       FontSize="12" />
-            </StackPanel>
-            <!-- Przyciski minimalizacji i zamknięcia -->
-            <StackPanel Orientation="Horizontal"
-                        HorizontalAlignment="Right"
-                        Grid.Row="0">
-                <Button Content="─"
-                        Style="{StaticResource HeaderButton}"
-                        Command="{Binding MinimizeCommand}"
-                        Padding="0,0,0,0" />
-                <Button Content="❌"
-                        Style="{StaticResource HeaderButton}"
-                        Command="{Binding CloseCommand}"
-                        Padding="0,0,0,0" />
-            </StackPanel>
+            <!-- Nagłówek -->
+            <Grid Grid.Row="0"
+                  Background="{DynamicResource HeaderBackground}"
+                  Height="30">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <!-- Lewa część (tytuł) -->
+                    <ColumnDefinition Width="Auto" />
+                    <!-- Prawa część (przyciski) -->
+                </Grid.ColumnDefinitions>
+                <!-- Tytuł -->
+                <StackPanel Orientation="Horizontal"
+                            VerticalAlignment="Center"
+                            Margin="5,0,0,0">
+                    <Label Content="CYBERPUNK CALC"
+                           Foreground="{DynamicResource TextColor}"
+                           FontFamily="Consolas"
+                           FontWeight="Bold"
+                           FontSize="12" />
+                </StackPanel>
+                <!-- Przyciski -->
+                <StackPanel Grid.Column="1"
+                            Orientation="Horizontal"
+                            VerticalAlignment="Center">
+                    <Button Content="─"
+                            Style="{StaticResource HeaderButton}"
+                            Command="{Binding MinimizeCommand}" />
+                    <Button Content="❌"
+                            Style="{StaticResource HeaderButton}"
+                            Command="{Binding CloseCommand}" />
+                </StackPanel>
+            </Grid>
             <!-- Przyciski ustawień i informacji -->
             <StackPanel Orientation="Horizontal"
                         Grid.Row="1"

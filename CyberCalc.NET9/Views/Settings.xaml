@@ -10,13 +10,6 @@
         Background="{DynamicResource WindowBackground}"
         WindowStyle="None"
         AllowsTransparency="True">
-    <Window.Resources>
-        <ResourceDictionary>
-            <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="/Styles/SettingsStyles.xaml" />
-            </ResourceDictionary.MergedDictionaries>
-        </ResourceDictionary>
-    </Window.Resources>
     <Border Background="{DynamicResource WindowBackground}"
             BorderBrush="{DynamicResource BorderBrush}"
             BorderThickness="2"
