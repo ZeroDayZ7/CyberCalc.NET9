@@ -12,7 +12,19 @@ This project is a modernized port of the classic WPF-CALC, rewritten from .NET F
 
 ## Screenshots
 
-![Main Window](CyberCalc.NET9/Assets/git.png)
+Version 1.0.5 – Core & Interface Evolution
+- Implemented new calculation core for better performance and stability
+- Added new mathematical functions: sin, cos, tan, log, sqrt
+- Refined Cyberpunk-themed interface
+- Minor bug fixes and optimizations
+
+
+### Version 1.0.5 – Interface Evolution
+![Version 1.0.5](CyberCalc.NET9/Assets/cybercalc-1.0.5.png)
+
+### Version 1.0.4
+![Version 1.0.4](CyberCalc.NET9/Assets/cybercalc-1.0.4.png)
+
 
 ## Quick Start
 
