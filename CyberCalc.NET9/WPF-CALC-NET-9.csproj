@@ -16,11 +16,5 @@
     <Folder Include="Controls\" />
   </ItemGroup>
 
-  <ItemGroup>
-    <None Update="Assets\app_icon.ico">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-  </ItemGroup>
-  
 
 </Project>
