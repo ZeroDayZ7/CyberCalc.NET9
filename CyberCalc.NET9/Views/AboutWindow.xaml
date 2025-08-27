@@ -30,7 +30,8 @@
                 <!-- Przycisk zamykania -->
             </Grid.RowDefinitions>
             <!-- Nagłówek (dragable) -->
-           <local:DraggableHeader Grid.Row="0" HeaderText="ABOUT CYBERPUNK CALC"/>
+            <local:DraggableHeader Grid.Row="0"
+                                   HeaderText="ABOUT" />
             <!-- Treść okna -->
             <StackPanel Grid.Row="1"
                         VerticalAlignment="Center"
@@ -40,7 +41,7 @@
                            FontSize="14"
                            TextAlignment="Center"
                            Margin="0,5">
-                    <Run Text="CYBERPUNK CALC " />
+                    <Run Text="{StaticResource AppTitle}" />
                     <Run Text="{StaticResource AppVersion}" />
                 </TextBlock>
                 <TextBlock Text="Created by ZeroDayZ7"
@@ -57,14 +58,7 @@
                            Margin="0,5" />
             </StackPanel>
             <!-- Przycisk zamknięcia -->
-            <Button Grid.Row="2"
-                    Content="CLOSE"
-                    Width="100"
-                    Height="30"
-                    HorizontalAlignment="Center"
-                    Style="{StaticResource CyberButton}"
-                    Click="Close_Click"
-                    Margin="0,10" />
+            <local:CloseButton Grid.Row="2" />
         </Grid>
     </Border>
 </Window>

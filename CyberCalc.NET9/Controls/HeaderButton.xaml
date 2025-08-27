@@ -1,0 +1,10 @@
+<UserControl x:Class="WPF_CALC_NET_9.Controls.HeaderButton"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <Button Command="{Binding Command, RelativeSource={RelativeSource AncestorType=UserControl}}"
+            Style="{StaticResource CyberButton}">
+        <TextBlock Text="{Binding Text, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                   VerticalAlignment="Center"
+                   HorizontalAlignment="Center" />
+    </Button>
+</UserControl>

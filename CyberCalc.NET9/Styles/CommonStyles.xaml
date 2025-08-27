@@ -10,7 +10,7 @@
             <Setter.Value>
                 <ControlTemplate TargetType="Thumb">
                     <Border Background="{TemplateBinding Background}"
-                            CornerRadius="6">
+                            CornerRadius="2">
                         <Border.Effect>
                             <DropShadowEffect Color="{DynamicResource CyberPrimary}"
                                               BlurRadius="3"
@@ -62,7 +62,7 @@
             </Setter.Value>
         </Setter>
     </Style>
-    <!-- Styl podstawowy dla przycisków (z poprawką Padding) -->
+    <!-- Styl podstawowy dla przycisków -->
     <Style x:Key="CyberButton"
            TargetType="Button">
         <Setter Property="Background"
@@ -156,7 +156,7 @@
         <Setter Property="Foreground"
                 Value="#FFFFFF" />
     </Style>
-    <!-- Styl dla pól tekstowych (z poprawką Padding w ScrollViewer) -->
+    <!-- Styl dla pól tekstowych -->
     <Style x:Key="CyberTextBox"
            TargetType="TextBox">
         <Setter Property="Background"
@@ -199,7 +199,7 @@
             </Setter.Value>
         </Setter>
     </Style>
-    <!-- Dedykowany styl dla przycisków nagłówka -->
+    <!-- Styl dla przycisków nagłówka -->
     <Style x:Key="HeaderButton"
            TargetType="Button"
            BasedOn="{StaticResource CyberButton}">
@@ -215,6 +215,8 @@
                 Value="30" />
         <Setter Property="Height"
                 Value="20" />
+        <Setter Property="Padding"
+                Value="0" />
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="Button">
@@ -246,7 +248,7 @@
             </Setter.Value>
         </Setter>
     </Style>
-    <!--FunctionButton -->
+    <!-- FunctionButton -->
     <Style x:Key="FunctionButton"
            TargetType="Button"
            BasedOn="{StaticResource CyberButton}">
@@ -280,5 +282,93 @@
                         Value="{DynamicResource CyberTertiary}" />
             </Trigger>
         </Style.Triggers>
+    </Style>
+    <!-- SettingsButton -->
+    <Style x:Key="SettingsButton"
+           TargetType="Button">
+        <Setter Property="Background"
+                Value="{DynamicResource ButtonBackground}" />
+        <Setter Property="Foreground"
+                Value="{DynamicResource ButtonForeground}" />
+        <Setter Property="BorderBrush"
+                Value="{DynamicResource BorderBrush}" />
+        <Setter Property="BorderThickness"
+                Value="0" />
+        <!-- Bez obramowania, jak w Settings -->
+        <Setter Property="FontFamily"
+                Value="Consolas" />
+        <Setter Property="FontWeight"
+                Value="Bold" />
+        <Setter Property="FontSize"
+                Value="12" />
+        <Setter Property="Cursor"
+                Value="Hand" />
+        <Setter Property="Padding"
+                Value="5" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="Button">
+                    <Border Background="{TemplateBinding Background}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}"
+                            CornerRadius="3">
+                        <Border.Effect>
+                            <DropShadowEffect Color="{DynamicResource CyberPrimary}"
+                                              BlurRadius="5"
+                                              ShadowDepth="0"
+                                              Opacity="0.3" />
+                        </Border.Effect>
+                        <ContentPresenter HorizontalAlignment="Center"
+                                          VerticalAlignment="Center"
+                                          Margin="{TemplateBinding Padding}" />
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver"
+                                 Value="True">
+                            <Setter Property="Background"
+                                    Value="#2D3E50" />
+                            <Setter Property="Foreground"
+                                    Value="#FFFFFF" />
+                            <Setter Property="BorderBrush"
+                                    Value="{DynamicResource CyberSecondaryBrush}" />
+                        </Trigger>
+                        <Trigger Property="IsPressed"
+                                 Value="True">
+                            <Setter Property="Background"
+                                    Value="{DynamicResource CyberPrimary}" />
+                            <Setter Property="Foreground"
+                                    Value="{DynamicResource WindowBackground}" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    <!-- Settings -->
+    <Style x:Key="SettingsClearButton"
+           TargetType="Button"
+           BasedOn="{StaticResource SettingsButton}">
+        <Setter Property="Background"
+                Value="#5D1A1A" />
+        <Setter Property="BorderBrush"
+                Value="#FF4444" />
+        <Setter Property="Foreground"
+                Value="#FF4444" />
+    </Style>
+    <!-- HeaderTextStyle -->
+    <Style x:Key="HeaderTextStyle"
+           TargetType="TextBlock">
+        <Setter Property="Foreground"
+                Value="{DynamicResource TextColor}" />
+        <Setter Property="FontFamily"
+                Value="Consolas" />
+        <Setter Property="FontWeight"
+                Value="Bold" />
+        <Setter Property="FontSize"
+                Value="14" />
+        <Setter Property="VerticalAlignment"
+                Value="Center" />
+        <Setter Property="HorizontalAlignment"
+                Value="Center" />
     </Style>
 </ResourceDictionary>

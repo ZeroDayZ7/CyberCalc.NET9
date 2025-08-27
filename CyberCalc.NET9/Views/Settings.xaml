@@ -10,13 +10,6 @@
         Background="{DynamicResource WindowBackground}"
         WindowStyle="None"
         AllowsTransparency="True">
-    <Window.Resources>
-        <ResourceDictionary>
-            <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="/Styles/SettingsStyles.xaml" />
-            </ResourceDictionary.MergedDictionaries>
-        </ResourceDictionary>
-    </Window.Resources>
     <Border Background="{DynamicResource WindowBackground}"
             BorderBrush="{DynamicResource BorderBrush}"
             BorderThickness="2"
@@ -34,7 +27,8 @@
                 <RowDefinition Height="50" />
             </Grid.RowDefinitions>
             <!-- Nagłówek -->
-            <local:DraggableHeader Grid.Row="0" HeaderText="SETTINGS CYBERPUNK CALC"/>
+            <local:DraggableHeader Grid.Row="0"
+                                   HeaderText="SETTINGS" />
             <!-- Treść okna -->
             <StackPanel Grid.Row="1"
                         Margin="10"
@@ -81,14 +75,7 @@
                 </GroupBox>
             </StackPanel>
             <!-- Przycisk zamknięcia -->
-            <Button Grid.Row="2"
-                    Content="CLOSE"
-                    Width="100"
-                    Height="30"
-                    HorizontalAlignment="Center"
-                    Style="{StaticResource CyberButton}"
-                    Click="Close_Click"
-                    Margin="0,10" />
+            <local:CloseButton Grid.Row="2" />
         </Grid>
     </Border>
 </Window>
