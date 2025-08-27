@@ -1,0 +1,11 @@
+<UserControl x:Class="WPF_CALC_NET_9.Controls.CloseButton"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <Button Content="CLOSE"
+            Width="100"
+            Height="30"
+            HorizontalAlignment="Center"
+            Margin="0,10"
+            Style="{StaticResource CyberButton}"
+            Click="Close_Click" />
+</UserControl>

@@ -57,14 +57,7 @@
                            Margin="0,5" />
             </StackPanel>
             <!-- Przycisk zamknięcia -->
-            <Button Grid.Row="2"
-                    Content="CLOSE"
-                    Width="100"
-                    Height="30"
-                    HorizontalAlignment="Center"
-                    Style="{StaticResource CyberButton}"
-                    Click="Close_Click"
-                    Margin="0,10" />
+            <local:CloseButton Grid.Row="2" />
         </Grid>
     </Border>
 </Window>

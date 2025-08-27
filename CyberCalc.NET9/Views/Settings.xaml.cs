@@ -17,15 +17,4 @@ public partial class Settings : Window
         var viewModel = (MainViewModel)DataContext;
         viewModel.ClearHistoryCommand.Execute(null);
     }
-
-    private void Header_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
-    {
-        if (e.ChangedButton == MouseButton.Left)
-            this.DragMove();
-    }
-
-    private void Close_Click(object sender, RoutedEventArgs e)
-    {
-        Close();
-    }
 }

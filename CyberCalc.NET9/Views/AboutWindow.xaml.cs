@@ -9,16 +9,5 @@ namespace WPF_CALC_NET_9.Views
         {
             InitializeComponent();
         }
-
-        private void Header_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
-        {
-            if (e.ChangedButton == MouseButton.Left)
-                this.DragMove();
-        }
-
-        private void Close_Click(object sender, RoutedEventArgs e)
-        {
-            this.Close();
-        }
     }
 }
