@@ -5,6 +5,6 @@
             Style="{StaticResource CyberButton}">
         <TextBlock Text="{Binding Text, RelativeSource={RelativeSource AncestorType=UserControl}}"
                    VerticalAlignment="Center"
-                   HorizontalAlignment="Center"/>
+                   HorizontalAlignment="Center" />
     </Button>
 </UserControl>

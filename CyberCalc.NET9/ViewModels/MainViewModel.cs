@@ -19,7 +19,7 @@ namespace WPF_CALC_NET_9.ViewModels
         public MainViewModel()
         {
             _calculator = new CalculatorModel();
-            LoadLastResults();
+            LoadCalculationHistory();
             NumberCommand = new RelayCommand(ProcessNumber);
             OperatorCommand = new RelayCommand(ProcessOperator);
             ClearCommand = new RelayCommand(Clear);
@@ -31,7 +31,7 @@ namespace WPF_CALC_NET_9.ViewModels
             MinimizeCommand = new RelayCommand(Minimize);
             CloseCommand = new RelayCommand(Close);
             ClearHistoryCommand = new RelayCommand(ClearHistory);
-            FunctionCommand = new RelayCommand(ProcessFunction); // Nowy command dla funkcji
+            FunctionCommand = new RelayCommand(ProcessFunction);
         }
 
         public string ResultText
@@ -65,22 +65,22 @@ namespace WPF_CALC_NET_9.ViewModels
         public ICommand MinimizeCommand { get; }
         public ICommand CloseCommand { get; }
         public ICommand ClearHistoryCommand { get; }
-        public ICommand FunctionCommand { get; } // Nowy command
+        public ICommand FunctionCommand { get; } // New command
 
         private void ClearHistory(object? parameter)
         {
             try
             {
-                if (File.Exists("wyniki.txt"))
+                if (File.Exists("calculation_history.txt"))
                 {
-                    File.WriteAllText("wyniki.txt", string.Empty);
+                    File.WriteAllText("calculation_history.txt", string.Empty);
                 }
                 HistoryText = string.Empty;
-                MessageBox.Show("Historia została wyczyszczona.", "Sukces", MessageBoxButton.OK, MessageBoxImage.Information);
+                MessageBox.Show("Calculation history has been cleared.", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Błąd podczas czyszczenia historii: {ex.Message}", "Błąd", MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show($"Error while clearing history: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
 
@@ -102,7 +102,7 @@ namespace WPF_CALC_NET_9.ViewModels
             var input = parameter?.ToString() ?? "";
             switch (input)
             {
-                case "+" or "-" or "*" or "/" or "%" or "^" when !string.IsNullOrEmpty(ResultText) && !IsOperatorOrParen(ResultText.Last().ToString()):
+                case "+" or "-" or "*" or "/" or "%" or "^" when !string.IsNullOrEmpty(ResultText) && !IsOperatorOrParenthesis(ResultText.Last().ToString()):
                     ResultText += input;
                     break;
                 case "," when !string.IsNullOrEmpty(ResultText) && ResultText.Last() != ',':
@@ -127,7 +127,8 @@ namespace WPF_CALC_NET_9.ViewModels
             }
         }
 
-        private static bool IsOperatorOrParen(string str) => str is "+" or "-" or "*" or "/" or "%" or "^" or "(" or ")";
+        private static bool IsOperatorOrParenthesis(string str) =>
+            str is "+" or "-" or "*" or "/" or "%" or "^" or "(" or ")";
 
         private void Clear(object? parameter)
         {
@@ -138,7 +139,7 @@ namespace WPF_CALC_NET_9.ViewModels
         {
             if (ResultText.Length > 1)
             {
-                ResultText = ResultText.Substring(0, ResultText.Length - 1);
+                ResultText = ResultText[..^1];
             }
             else
             {
@@ -153,35 +154,35 @@ namespace WPF_CALC_NET_9.ViewModels
                 if (string.IsNullOrWhiteSpace(ResultText)) return;
                 var expression = ResultText.Replace(',', '.');
                 var result = _calculator.Calculate(expression);
-                SaveResult($"{ResultText} = {result}");
+                SaveCalculation($"{ResultText} = {result}");
                 ResultText = result;
-                LoadLastResults();
+                LoadCalculationHistory();
             }
             catch (Exception ex)
             {
-                ResultText = "Błąd: " + ex.Message;
+                ResultText = "Error: " + ex.Message;
             }
         }
 
-        private static void SaveResult(string result)
+        private static void SaveCalculation(string result)
         {
             try
             {
-                File.AppendAllText("wyniki.txt", result + Environment.NewLine);
+                File.AppendAllText("calculation_history.txt", result + Environment.NewLine);
             }
             catch (Exception ex)
             {
-                Console.WriteLine("Błąd zapisu: " + ex.Message);
+                Console.WriteLine("Error saving history: " + ex.Message);
             }
         }
 
-        private void LoadLastResults()
+        private void LoadCalculationHistory()
         {
             try
             {
-                if (File.Exists("wyniki.txt"))
+                if (File.Exists("calculation_history.txt"))
                 {
-                    var allLines = File.ReadAllLines("wyniki.txt");
+                    var allLines = File.ReadAllLines("calculation_history.txt");
                     Array.Reverse(allLines);
                     var lastFiveLines = allLines.Take(6).ToArray();
                     HistoryText = string.Join(Environment.NewLine, lastFiveLines);
@@ -189,7 +190,7 @@ namespace WPF_CALC_NET_9.ViewModels
             }
             catch (Exception ex)
             {
-                HistoryText = "Błąd wczytywania historii: " + ex.Message;
+                HistoryText = "Error loading history: " + ex.Message;
             }
         }
 
@@ -227,16 +228,11 @@ namespace WPF_CALC_NET_9.ViewModels
         }
     }
 
-    public class RelayCommand : ICommand
+    // Primary constructor version (C# 12)
+    public class RelayCommand(Action<object?> execute, Func<object?, bool>? canExecute = null) : ICommand
     {
-        private readonly Action<object?> _execute;
-        private readonly Func<object?, bool>? _canExecute;
-
-        public RelayCommand(Action<object?> execute, Func<object?, bool>? canExecute = null)
-        {
-            _execute = execute;
-            _canExecute = canExecute;
-        }
+        private readonly Action<object?> _execute = execute;
+        private readonly Func<object?, bool>? _canExecute = canExecute;
 
         public bool CanExecute(object? parameter) => _canExecute == null || _canExecute(parameter);
         public void Execute(object? parameter) => _execute(parameter);

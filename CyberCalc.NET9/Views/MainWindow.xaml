@@ -46,7 +46,6 @@
                         <Run Text="{StaticResource AppTitle}" />
                         <Run Text="{StaticResource AppVersion}" />
                     </TextBlock>
-
                 </StackPanel>
                 <!-- Przyciski -->
                 <StackPanel Grid.Column="1"
@@ -61,9 +60,15 @@
                 </StackPanel>
             </Grid>
             <!-- Przyciski ustawień i informacji -->
-            <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Left" Margin="5,0">
-                <local:HeaderButton Text="Settings" Command="{Binding ShowSettingsCommand}" Margin="0,0,5,0"/>
-                <local:HeaderButton Text="About" Command="{Binding ShowAboutCommand}"/>
+            <StackPanel Grid.Row="1"
+                        Orientation="Horizontal"
+                        HorizontalAlignment="Left"
+                        Margin="5,0">
+                <local:HeaderButton Text="Settings"
+                                    Command="{Binding ShowSettingsCommand}"
+                                    Margin="0,0,5,0" />
+                <local:HeaderButton Text="About"
+                                    Command="{Binding ShowAboutCommand}" />
             </StackPanel>
             <!-- Główna siatka kalkulatora -->
             <Grid Grid.Row="2"
