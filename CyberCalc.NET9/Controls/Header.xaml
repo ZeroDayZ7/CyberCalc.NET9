@@ -1,0 +1,16 @@
+<UserControl x:Class="WPF_CALC_NET_9.Controls.Header"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             Height="35">
+    <Grid>
+        <TextBlock x:Name="HeaderTextBlock"
+                   Style="{StaticResource HeaderTextStyle}"
+                   Text="{Binding HeaderText, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                   VerticalAlignment="Center"
+                   Margin="5,0"/>
+        <!-- Linia dolna dynamiczna -->
+        <Rectangle Height="2"
+                   Fill="{DynamicResource BorderBrush}"
+                   VerticalAlignment="Bottom"/>
+    </Grid>
+</UserControl>

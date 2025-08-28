@@ -28,6 +28,12 @@ namespace WPF_CALC_NET_9
         {
             base.OnStartup(e);
 
+            var version = Assembly.GetExecutingAssembly().GetName().Version?.ToString() ?? "0.0.0";
+            Resources["AppVersion"] = $"v{version}";
+            var titleAttr = Assembly.GetExecutingAssembly()
+                                    .GetCustomAttribute<AssemblyTitleAttribute>();
+            Resources["AppTitle"] = titleAttr?.Title ?? "CYBERPUNK CALC";
+
             if (!EnsureSingleInstance())
             {
                 MessageBox.Show("The application is already running!", "Error",

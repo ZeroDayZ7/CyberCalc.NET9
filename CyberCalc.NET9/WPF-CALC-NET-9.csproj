@@ -1,20 +1,28 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
+    <PropertyGroup>
+        <OutputType>WinExe</OutputType>
+        <TargetFramework>net9.0-windows</TargetFramework>
+        <RootNamespace>WPF_CALC_NET_9</RootNamespace>
+        <Nullable>enable</Nullable>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <UseWPF>true</UseWPF>
+        <ApplicationIcon>Assets\app_icon.ico</ApplicationIcon>
 
-  <PropertyGroup>
-    <OutputType>WinExe</OutputType>
-    <TargetFramework>net9.0-windows</TargetFramework>
-    <RootNamespace>WPF_CALC_NET_9</RootNamespace>
-    <Nullable>enable</Nullable>
-    <ImplicitUsings>enable</ImplicitUsings>
-    <UseWPF>true</UseWPF>
-    <ApplicationIcon>Assets\app_icon.ico</ApplicationIcon>
-  </PropertyGroup>
+        <Version>1.0.5</Version>
+        <FileVersion>1.0.5</FileVersion>
 
-  <ItemGroup>
-    <Folder Include="Helpers\" />
-    <Folder Include="Views\" />
-    <Folder Include="Controls\" />
-  </ItemGroup>
+        <AssemblyVersion>1.0.5.4</AssemblyVersion>
+        <AssemblyTitle>CYBERPUNK CALC</AssemblyTitle>
 
-
+        <Authors>ZeroDayZ7</Authors>
+        <Company>Skyline Systems</Company>
+        <Description>CYBERPUNK CALC - Advanced WPF calculator</Description>
+        <LangVersion>latest</LangVersion>
+        <Optimize>true</Optimize>
+    </PropertyGroup>
+    <ItemGroup>
+        <Folder Include="Helpers\" />
+        <Folder Include="Views\" />
+        <Folder Include="Controls\" />
+    </ItemGroup>
 </Project>

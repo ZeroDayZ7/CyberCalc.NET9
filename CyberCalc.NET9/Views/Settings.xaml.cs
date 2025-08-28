@@ -17,4 +17,9 @@ public partial class Settings : Window
         var viewModel = (MainViewModel)DataContext;
         viewModel.ClearHistoryCommand.Execute(null);
     }
+    private void Window_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+    {
+        if (e.ButtonState == MouseButtonState.Pressed)
+            this.DragMove();
+    }
 }

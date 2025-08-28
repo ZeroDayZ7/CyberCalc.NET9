@@ -9,7 +9,8 @@
         WindowStartupLocation="CenterOwner"
         Background="{DynamicResource WindowBackground}"
         WindowStyle="None"
-        AllowsTransparency="True">
+        AllowsTransparency="True"
+        MouseLeftButtonDown="Window_MouseLeftButtonDown">
     <Border Background="{DynamicResource WindowBackground}"
             BorderBrush="{DynamicResource BorderBrush}"
             BorderThickness="2"
@@ -30,8 +31,8 @@
                 <!-- Przycisk zamykania -->
             </Grid.RowDefinitions>
             <!-- Nagłówek (dragable) -->
-            <local:DraggableHeader Grid.Row="0"
-                                   HeaderText="ABOUT" />
+            <local:Header Grid.Row="0"
+                          HeaderText="ABOUT" />
             <!-- Treść okna -->
             <StackPanel Grid.Row="1"
                         VerticalAlignment="Center"
@@ -41,8 +42,8 @@
                            FontSize="14"
                            TextAlignment="Center"
                            Margin="0,5">
-                    <Run Text="{StaticResource AppTitle}" />
-                    <Run Text="{StaticResource AppVersion}" />
+                    <Run Text="{DynamicResource AppTitle}" />
+                    <Run Text="{DynamicResource AppVersion}" />
                 </TextBlock>
                 <TextBlock Text="Created by ZeroDayZ7"
                            Foreground="{DynamicResource TextColor}"
