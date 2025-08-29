@@ -5,19 +5,12 @@
     <Style x:Key="CyberScrollThumb"
            TargetType="Thumb">
         <Setter Property="Background"
-                Value="{DynamicResource ButtonBackground}" />
+                Value="{DynamicResource CyberSecondaryBrush}" />
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="Thumb">
                     <Border Background="{TemplateBinding Background}"
-                            CornerRadius="2">
-                        <Border.Effect>
-                            <DropShadowEffect Color="{DynamicResource CyberPrimary}"
-                                              BlurRadius="3"
-                                              ShadowDepth="0"
-                                              Opacity="0.5" />
-                        </Border.Effect>
-                    </Border>
+                            CornerRadius="2" />
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsMouseOver"
                                  Value="True">
@@ -46,16 +39,6 @@
                             <Track.Thumb>
                                 <Thumb Style="{DynamicResource CyberScrollThumb}" />
                             </Track.Thumb>
-                            <Track.IncreaseRepeatButton>
-                                <RepeatButton Command="ScrollBar.PageDownCommand"
-                                              Background="Transparent"
-                                              BorderThickness="0" />
-                            </Track.IncreaseRepeatButton>
-                            <Track.DecreaseRepeatButton>
-                                <RepeatButton Command="ScrollBar.PageUpCommand"
-                                              Background="Transparent"
-                                              BorderThickness="0" />
-                            </Track.DecreaseRepeatButton>
                         </Track>
                     </Grid>
                 </ControlTemplate>
@@ -90,12 +73,6 @@
                             BorderBrush="{TemplateBinding BorderBrush}"
                             BorderThickness="{TemplateBinding BorderThickness}"
                             CornerRadius="3">
-                        <Border.Effect>
-                            <DropShadowEffect Color="{DynamicResource CyberPrimary}"
-                                              BlurRadius="5"
-                                              ShadowDepth="0"
-                                              Opacity="0.3" />
-                        </Border.Effect>
                         <ContentPresenter HorizontalAlignment="Center"
                                           VerticalAlignment="Center"
                                           Margin="{TemplateBinding Padding}" />
@@ -181,12 +158,6 @@
                             BorderThickness="{TemplateBinding BorderThickness}"
                             CornerRadius="5"
                             SnapsToDevicePixels="True">
-                        <Border.Effect>
-                            <DropShadowEffect Color="{DynamicResource CyberPrimary}"
-                                              BlurRadius="10"
-                                              ShadowDepth="0"
-                                              Opacity="0.4" />
-                        </Border.Effect>
                         <ScrollViewer x:Name="PART_ContentHost"
                                       Focusable="False"
                                       HorizontalScrollBarVisibility="Hidden"
@@ -211,12 +182,8 @@
                 Value="{DynamicResource TextColor}" />
         <Setter Property="FontSize"
                 Value="12" />
-        <Setter Property="Width"
-                Value="30" />
-        <Setter Property="Height"
-                Value="20" />
         <Setter Property="Padding"
-                Value="0" />
+                Value="5" />
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="Button">

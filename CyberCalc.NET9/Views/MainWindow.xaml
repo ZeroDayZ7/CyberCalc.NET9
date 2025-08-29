@@ -104,7 +104,7 @@
                 <Border Grid.Row="1"
                         Background="{DynamicResource WindowBackground}"
                         BorderBrush="{DynamicResource BorderBrush}"
-                        BorderThickness="2"
+                        BorderThickness="1"
                         CornerRadius="5"
                         Margin="0,5">
                     <Border.Effect>
