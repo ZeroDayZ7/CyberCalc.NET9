@@ -84,7 +84,65 @@ namespace WPF_CALC_NET_9.ViewModels
             }
         }
 
-        private void ProcessNumber(object? parameter)
+        public void ProcessInput(string input)
+        {
+            if (string.IsNullOrEmpty(input)) return;
+
+            char last = ResultText.LastOrDefault();
+            int open = ResultText.Count(c => c == '(');
+            int close = ResultText.Count(c => c == ')');
+
+            // Cyfra
+            if (char.IsDigit(input[0]))
+            {
+                ResultText = ResultText == "0" ? input : ResultText + input;
+                return;
+            }
+
+            // Operator
+            if ("+-*/%^".Contains(input))
+            {
+                // Nie wstawiaj operatora na początku lub po "("
+                if (ResultText.Length == 0 || last == '(') return;
+
+                // Zamień ostatni operator, jeśli ostatni znak to operator
+                if ("+-*/%^".Contains(last))
+                    ResultText = ResultText[..^1] + input;
+                else
+                    ResultText += input;
+                return;
+            }
+
+            // Nawias otwierający
+            if (input == "(")
+            {
+                if (char.IsDigit(last) || last == ')')
+                    ResultText += "*(";
+                else
+                    ResultText += "(";
+                return;
+            }
+
+            // Nawias zamykający
+            if (input == ")")
+            {
+                if (open > close && !" +-*/%^(".Contains(last))
+                    ResultText += ")";
+                return;
+            }
+
+            // Funkcje matematyczne (np. sin, cos, sqrt)
+            if (!string.IsNullOrWhiteSpace(input))
+            {
+                // Jeżeli ostatni znak jest cyfrą lub ")", dodaj "*"
+                if (char.IsDigit(last) || last == ')')
+                    ResultText += "*" + input + "(";
+                else
+                    ResultText += input + "(";
+            }
+        }
+
+        public void ProcessNumber(object? parameter)
         {
             var input = parameter?.ToString() ?? "";
             switch (input)
@@ -97,28 +155,63 @@ namespace WPF_CALC_NET_9.ViewModels
             }
         }
 
-        private void ProcessOperator(object? parameter)
+        public void ProcessOperator(object? parameter)
         {
             var input = parameter?.ToString() ?? "";
-            switch (input)
+            if (string.IsNullOrEmpty(ResultText)) return;
+
+            char last = ResultText.Last();
+
+            // 1. Obsługa operatorów matematycznych
+            if ("+-*/%^".Contains(input))
             {
-                case "+" or "-" or "*" or "/" or "%" or "^" when !string.IsNullOrEmpty(ResultText) && !IsOperatorOrParenthesis(ResultText.Last().ToString()):
+                if ("+-*/%^".Contains(last))
+                {
+                    // zamień ostatni operator na nowy
+                    ResultText = ResultText[..^1] + input;
+                }
+                else
+                {
                     ResultText += input;
-                    break;
-                case "," when !string.IsNullOrEmpty(ResultText) && ResultText.Last() != ',':
+                }
+                return;
+            }
+
+            // 2. Obsługa przecinka (tylko jeden w liczbie)
+            if (input == ",")
+            {
+                if (last != ',')
+                {
                     var parts = ResultText.Split('+', '-', '*', '/', '%', '^', '(').LastOrDefault() ?? "";
                     if (!parts.Contains(','))
-                    {
                         ResultText += input;
-                    }
-                    break;
-                case "(" or ")":
-                    ResultText += input;
-                    break;
+                }
+                return;
+            }
+
+            // 3. Obsługa nawiasów
+            if (input == "(")
+            {
+                ResultText += "(";
+                return;
+            }
+
+            if (input == ")")
+            {
+                // sprawdzamy, czy nawias zamykający ma sens
+                int open = ResultText.Count(c => c == '(');
+                int close = ResultText.Count(c => c == ')');
+
+                if (open > close && !" +-*/%^(".Contains(last))
+                {
+                    ResultText += ")";
+                }
+                return;
             }
         }
 
-        private void ProcessFunction(object? parameter)
+
+        public void ProcessFunction(object? parameter)
         {
             var input = parameter?.ToString() ?? "";
             if (!string.IsNullOrEmpty(input))
