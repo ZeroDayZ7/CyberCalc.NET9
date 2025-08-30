@@ -40,7 +40,6 @@
                             Margin="5,0,0,0">
                     <TextBlock Style="{StaticResource HeaderTextStyle}">
                         <Run Text="{StaticResource AppTitle}" />
-                        <Run Text="{StaticResource AppVersion}" />
                     </TextBlock>
                 </StackPanel>
                 <!-- Przyciski nagłówka -->
