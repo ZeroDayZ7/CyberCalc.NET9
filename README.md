@@ -19,8 +19,8 @@ Version 1.0.5 – Core & Interface Evolution
 - Minor bug fixes and optimizations
 
 
-### Version 1.0.5 – Interface Evolution
-![Version 1.0.5](CyberCalc.NET9/Assets/cybercalc-1.0.5.png)
+### Version 1.0.6 – Interface Evolution
+![Version 1.0.5](CyberCalc.NET9/Assets/cybercalc-1.0.6.png)
 
 ### Version 1.0.4
 ![Version 1.0.4](CyberCalc.NET9/Assets/cybercalc-1.0.4.png)

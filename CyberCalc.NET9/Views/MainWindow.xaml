@@ -14,29 +14,25 @@
         WindowStyle="None"
         AllowsTransparency="True"
         MouseLeftButtonDown="Window_MouseLeftButtonDown">
-    <Border Background="{DynamicResource WindowBackground}"
-            CornerRadius="0">
-        <Border.Effect>
-            <DropShadowEffect Color="Black"
-                              BlurRadius="20"
-                              ShadowDepth="5"
-                              Opacity="0.8" />
-        </Border.Effect>
+    <Border CornerRadius="5"
+            BorderThickness="1"
+            BorderBrush="{DynamicResource TextColor}"
+            Background="{DynamicResource WindowBackground}">
         <Grid Margin="5">
             <Grid.RowDefinitions>
-                <RowDefinition Height="25" />
-                <RowDefinition Height="25" />
+                <RowDefinition Height="Auto" />
+                <!-- Header -->
+                <RowDefinition Height="Auto" />
+                <!-- Settings -->
                 <RowDefinition Height="*" />
+                <!-- Kalkulator -->
             </Grid.RowDefinitions>
             <!-- Nagłówek -->
             <Grid Grid.Row="0"
-                  Background="{DynamicResource HeaderBackground}"
-                  Height="30">
+                  Background="{DynamicResource HeaderBackground}">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*" />
-                    <!-- Lewa część (tytuł) -->
                     <ColumnDefinition Width="Auto" />
-                    <!-- Prawa część (przyciski) -->
                 </Grid.ColumnDefinitions>
                 <!-- Tytuł -->
                 <StackPanel Orientation="Horizontal"
@@ -44,88 +40,64 @@
                             Margin="5,0,0,0">
                     <TextBlock Style="{StaticResource HeaderTextStyle}">
                         <Run Text="{StaticResource AppTitle}" />
-                        <Run Text="{StaticResource AppVersion}" />
                     </TextBlock>
                 </StackPanel>
-                <!-- Przyciski -->
-                <StackPanel Grid.Column="1"
-                            Orientation="Horizontal"
-                            VerticalAlignment="Center">
-                    <Button Content="─"
-                            Style="{StaticResource HeaderButton}"
-                            Command="{Binding MinimizeCommand}" />
-                    <Button Content="❌"
-                            Style="{StaticResource HeaderButton}"
-                            Command="{Binding CloseCommand}" />
-                </StackPanel>
+                <!-- Przyciski nagłówka -->
+                <UniformGrid Grid.Column="1"
+                             Rows="1"
+                             Columns="2">
+                    <local:HeaderButton Text="─"
+                                        Command="{Binding MinimizeCommand}" />
+                    <local:HeaderButton Text="❌"
+                                        Command="{Binding CloseCommand}" />
+                </UniformGrid>
             </Grid>
-            <!-- Przyciski ustawień i informacji -->
-            <StackPanel Grid.Row="1"
-                        Orientation="Horizontal"
-                        HorizontalAlignment="Left"
-                        Margin="5,0">
+            <!-- Przyciski ustawień i About -->
+            <UniformGrid Grid.Row="1"
+                         Rows="1"
+                         Columns="2"
+                         HorizontalAlignment="Left"
+                         Margin="5,5,0,0">
                 <local:HeaderButton Text="Settings"
                                     Command="{Binding ShowSettingsCommand}"
                                     Margin="0,0,5,0" />
                 <local:HeaderButton Text="About"
                                     Command="{Binding ShowAboutCommand}" />
-            </StackPanel>
-            <!-- Główna siatka kalkulatora -->
+            </UniformGrid>
+            <!-- Kalkulator -->
             <Grid Grid.Row="2"
                   Margin="10">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="100" />
+                    <!-- Historia -->
                     <RowDefinition Height="50" />
+                    <!-- Wynik -->
                     <RowDefinition Height="*" />
+                    <!-- Przyciski -->
                 </Grid.RowDefinitions>
-                <!-- Pole historii obliczeń -->
+                <!-- Historia -->
                 <Border Grid.Row="0"
-                        Background="{DynamicResource WindowBackground}"
-                        BorderBrush="{DynamicResource BorderBrush}"
-                        BorderThickness="1"
-                        CornerRadius="5"
-                        Margin="0,5">
-                    <Border.Effect>
-                        <DropShadowEffect Color="{DynamicResource CyberPrimary}"
-                                          BlurRadius="8"
-                                          ShadowDepth="0"
-                                          Opacity="0.3" />
-                    </Border.Effect>
+                        Height="80"
+                        Margin="0,0,0,0">
                     <TextBox Text="{Binding HistoryText}"
                              Style="{StaticResource CyberTextBox}"
                              IsReadOnly="True"
                              VerticalScrollBarVisibility="Auto"
-                             Background="{DynamicResource WindowBackground}"
-                             BorderThickness="0"
-                             FontSize="14"
-                             TextWrapping="Wrap" />
+                             HorizontalScrollBarVisibility="Disabled" />
                 </Border>
-                <!-- Pole wyniku/inputu -->
+                <!-- Wynik -->
                 <Border Grid.Row="1"
-                        Background="{DynamicResource WindowBackground}"
-                        BorderBrush="{DynamicResource BorderBrush}"
-                        BorderThickness="2"
-                        CornerRadius="5"
-                        Margin="0,5">
-                    <Border.Effect>
-                        <DropShadowEffect Color="{DynamicResource CyberPrimary}"
-                                          BlurRadius="12"
-                                          ShadowDepth="0"
-                                          Opacity="0.6" />
-                    </Border.Effect>
+                        Margin="0,0,0,0">
                     <TextBox Text="{Binding ResultText, UpdateSourceTrigger=PropertyChanged}"
                              Style="{StaticResource CyberTextBox}"
                              IsReadOnly="True"
                              Foreground="{DynamicResource TextColor}"
                              HorizontalContentAlignment="Right"
                              VerticalContentAlignment="Center"
-                             Background="{DynamicResource WindowBackground}"
-                             BorderThickness="0"
                              FontSize="24"
-                             FontWeight="Bold"
-                             Padding="2,2,2,2" />
+                             Padding="2" />
                 </Border>
-                <!-- Siatka przycisków kalkulatora -->
+                <!-- Przyciski kalkulatora -->
                 <local:ButtonsControl Grid.Row="2" />
             </Grid>
         </Grid>

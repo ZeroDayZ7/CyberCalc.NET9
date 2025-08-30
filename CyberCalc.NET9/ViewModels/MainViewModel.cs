@@ -3,6 +3,7 @@ using System.ComponentModel;
 using System.IO;
 using System.Linq;
 using System.Runtime.CompilerServices;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
 using WPF_CALC_NET_9.Helpers;
@@ -10,16 +11,60 @@ using WPF_CALC_NET_9.Models;
 
 namespace WPF_CALC_NET_9.ViewModels
 {
-    public class MainViewModel : INotifyPropertyChanged
+    public sealed class MainViewModel : INotifyPropertyChanged
     {
         private readonly CalculatorModel _calculator;
         private string _resultText = "0";
         private string _historyText = "";
 
+        // Constants for better maintainability
+        private const string DefaultValue = "0";
+        private const string HistoryFileName = "calculation_history.txt";
+        private const string Operators = "+-*/%^";
+        private const string OpenParentheses = "(";
+        private const string CloseParentheses = ")";
+        private const string DecimalSeparator = ",";
+        private const int MaxHistoryLines = 6;
+
         public MainViewModel()
         {
             _calculator = new CalculatorModel();
-            LoadCalculationHistory();
+            InitializeCommands();
+            _ = LoadCalculationHistoryAsync(); // Fire and forget async initialization
+        }
+
+        #region Properties
+        public string ResultText
+        {
+            get => _resultText;
+            set => SetProperty(ref _resultText, value);
+        }
+
+        public string HistoryText
+        {
+            get => _historyText;
+            set => SetProperty(ref _historyText, value);
+        }
+        #endregion
+
+        #region Commands
+        public ICommand NumberCommand { get; private set; } = null!;
+        public ICommand OperatorCommand { get; private set; } = null!;
+        public ICommand ClearCommand { get; private set; } = null!;
+        public ICommand ClearEntryCommand { get; private set; } = null!;
+        public ICommand CalculateCommand { get; private set; } = null!;
+        public ICommand ThemeCommand { get; private set; } = null!;
+        public ICommand ShowSettingsCommand { get; private set; } = null!;
+        public ICommand ShowAboutCommand { get; private set; } = null!;
+        public ICommand MinimizeCommand { get; private set; } = null!;
+        public ICommand CloseCommand { get; private set; } = null!;
+        public ICommand ClearHistoryCommand { get; private set; } = null!;
+        public ICommand FunctionCommand { get; private set; } = null!;
+        #endregion
+
+        #region Command Initialization
+        private void InitializeCommands()
+        {
             NumberCommand = new RelayCommand(ProcessNumber);
             OperatorCommand = new RelayCommand(ProcessOperator);
             ClearCommand = new RelayCommand(Clear);
@@ -33,214 +78,378 @@ namespace WPF_CALC_NET_9.ViewModels
             ClearHistoryCommand = new RelayCommand(ClearHistory);
             FunctionCommand = new RelayCommand(ProcessFunction);
         }
+        #endregion
 
-        public string ResultText
+        #region Input Processing - Improved and Unified
+        public void ProcessInput(string input)
         {
-            get => _resultText;
-            set
+            if (string.IsNullOrWhiteSpace(input)) return;
+
+            // Handle different input types through a cleaner switch expression
+            _ = input switch
             {
-                _resultText = value;
-                OnPropertyChanged();
-            }
+                var digit when char.IsDigit(digit[0]) => ProcessNumberInput(digit),
+                var op when Operators.Contains(op) => ProcessOperatorInput(op),
+                OpenParentheses => ProcessOpenParenthesis(),
+                CloseParentheses => ProcessCloseParenthesis(),
+                DecimalSeparator => ProcessDecimalSeparator(),
+                var func when IsValidFunction(func) => ProcessFunctionInput(func),
+                _ => false // Unknown input, ignore
+            };
         }
 
-        public string HistoryText
+        private bool ProcessNumberInput(string digit)
         {
-            get => _historyText;
-            set
-            {
-                _historyText = value;
-                OnPropertyChanged();
-            }
+            ResultText = ResultText == DefaultValue ? digit : ResultText + digit;
+            return true;
         }
 
-        public ICommand NumberCommand { get; }
-        public ICommand OperatorCommand { get; }
-        public ICommand ClearCommand { get; }
-        public ICommand ClearEntryCommand { get; }
-        public ICommand CalculateCommand { get; }
-        public ICommand ThemeCommand { get; }
-        public ICommand ShowSettingsCommand { get; }
-        public ICommand ShowAboutCommand { get; }
-        public ICommand MinimizeCommand { get; }
-        public ICommand CloseCommand { get; }
-        public ICommand ClearHistoryCommand { get; }
-        public ICommand FunctionCommand { get; } // New command
-
-        private void ClearHistory(object? parameter)
+        private bool ProcessOperatorInput(string operatorChar)
         {
-            try
+            if (string.IsNullOrEmpty(ResultText)) return false;
+
+            var lastChar = ResultText[^1];
+
+            // Don't insert operator at the beginning or after opening parenthesis
+            if (ResultText.Length == 0 || lastChar == '(') return false;
+
+            // Replace last operator if the last character is an operator
+            if (Operators.Contains(lastChar))
             {
-                if (File.Exists("calculation_history.txt"))
+                ResultText = ResultText[..^1] + operatorChar;
+            }
+            else
+            {
+                ResultText += operatorChar;
+            }
+            return true;
+        }
+
+        private bool ProcessOpenParenthesis()
+        {
+            var lastChar = ResultText.Length > 0 ? ResultText[^1] : '\0';
+
+            // Add multiplication before parenthesis if needed
+            if (char.IsDigit(lastChar) || lastChar == ')')
+            {
+                ResultText += "*" + OpenParentheses;
+            }
+            else
+            {
+                ResultText += OpenParentheses;
+            }
+            return true;
+        }
+
+        private bool ProcessCloseParenthesis()
+        {
+            var openCount = ResultText.Count(c => c == '(');
+            var closeCount = ResultText.Count(c => c == ')');
+            var lastChar = ResultText.Length > 0 ? ResultText[^1] : '\0';
+
+            // Only add closing parenthesis if there are unmatched opening ones
+            // and the last character is not an operator or opening parenthesis
+            if (openCount > closeCount && !$" {Operators}(".Contains(lastChar))
+            {
+                ResultText += CloseParentheses;
+                return true;
+            }
+            return false;
+        }
+
+        private bool ProcessDecimalSeparator()
+        {
+            if (string.IsNullOrEmpty(ResultText))
+            {
+                ResultText = "0" + DecimalSeparator;
+                return true;
+            }
+
+            var lastChar = ResultText[^1];
+
+            // Don't add decimal if last character is already a decimal
+            if (lastChar == ',') return false;
+
+            // Get the current number (last part after any operator or parenthesis)
+            var operators = new char[] { '+', '-', '*', '/', '%', '^', '(' };
+            var lastOperatorIndex = -1;
+
+            for (int i = ResultText.Length - 1; i >= 0; i--)
+            {
+                if (operators.Contains(ResultText[i]))
                 {
-                    File.WriteAllText("calculation_history.txt", string.Empty);
+                    lastOperatorIndex = i;
+                    break;
                 }
-                HistoryText = string.Empty;
-                MessageBox.Show("Calculation history has been cleared.", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
             }
-            catch (Exception ex)
+
+            var currentNumber = lastOperatorIndex >= 0
+                ? ResultText[(lastOperatorIndex + 1)..]
+                : ResultText;
+
+            // Only add decimal separator if current number doesn't already have one
+            if (!currentNumber.Contains(DecimalSeparator))
             {
-                MessageBox.Show($"Error while clearing history: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                // If we're at the start or after an operator, add "0,"
+                if (ResultText == DefaultValue || Operators.Contains(lastChar) || lastChar == '(')
+                {
+                    ResultText = ResultText == DefaultValue ? "0" + DecimalSeparator : ResultText + "0" + DecimalSeparator;
+                }
+                else
+                {
+                    ResultText += DecimalSeparator;
+                }
+                return true;
             }
+            return false;
         }
 
+        private bool ProcessFunctionInput(string function)
+        {
+            var lastChar = ResultText.Length > 0 ? ResultText[^1] : '\0';
+
+            // Add multiplication before function if needed
+            if (char.IsDigit(lastChar) || lastChar == ')')
+            {
+                ResultText += "*" + function + OpenParentheses;
+            }
+            else
+            {
+                ResultText = ResultText == DefaultValue ? function + OpenParentheses : ResultText + function + OpenParentheses;
+            }
+            return true;
+        }
+
+        private static bool IsValidFunction(string input) =>
+            input is "sin" or "cos" or "tan" or "log" or "sqrt" or "ln" or "abs";
+        #endregion
+
+        #region Command Handlers - Simplified
         private void ProcessNumber(object? parameter)
         {
-            var input = parameter?.ToString() ?? "";
-            switch (input)
-            {
-                case "0" when ResultText == "0":
-                    return;
-                default:
-                    ResultText = ResultText == "0" ? input : ResultText + input;
-                    break;
-            }
+            var input = parameter?.ToString();
+            if (string.IsNullOrEmpty(input)) return;
+
+            ProcessNumberInput(input);
         }
 
         private void ProcessOperator(object? parameter)
         {
-            var input = parameter?.ToString() ?? "";
-            switch (input)
+            var input = parameter?.ToString();
+            if (string.IsNullOrEmpty(input)) return;
+
+            // Handle decimal separator with improved logic
+            if (input == DecimalSeparator)
             {
-                case "+" or "-" or "*" or "/" or "%" or "^" when !string.IsNullOrEmpty(ResultText) && !IsOperatorOrParenthesis(ResultText.Last().ToString()):
-                    ResultText += input;
-                    break;
-                case "," when !string.IsNullOrEmpty(ResultText) && ResultText.Last() != ',':
-                    var parts = ResultText.Split('+', '-', '*', '/', '%', '^', '(').LastOrDefault() ?? "";
-                    if (!parts.Contains(','))
-                    {
-                        ResultText += input;
-                    }
-                    break;
-                case "(" or ")":
-                    ResultText += input;
-                    break;
+                ProcessDecimalSeparator();
+                return;
+            }
+
+            // Handle parentheses
+            if (input is OpenParentheses or CloseParentheses)
+            {
+                if (input == OpenParentheses)
+                    ProcessOpenParenthesis();
+                else
+                    ProcessCloseParenthesis();
+                return;
+            }
+
+            // Handle operators
+            if (Operators.Contains(input))
+            {
+                ProcessOperatorInput(input);
             }
         }
 
-        private void ProcessFunction(object? parameter)
+        public void ProcessFunction(object? parameter)
         {
-            var input = parameter?.ToString() ?? "";
-            if (!string.IsNullOrEmpty(input))
-            {
-                ResultText = ResultText == "0" ? input + "(" : ResultText + input + "(";
-            }
+            var input = parameter?.ToString();
+            if (string.IsNullOrEmpty(input)) return;
+
+            ProcessFunctionInput(input);
         }
 
-        private static bool IsOperatorOrParenthesis(string str) =>
-            str is "+" or "-" or "*" or "/" or "%" or "^" or "(" or ")";
-
-        private void Clear(object? parameter)
-        {
-            ResultText = "0";
-        }
+        private void Clear(object? parameter) => ResultText = DefaultValue;
 
         private void ClearEntry(object? parameter)
         {
-            if (ResultText.Length > 1)
-            {
-                ResultText = ResultText[..^1];
-            }
-            else
-            {
-                ResultText = "0";
-            }
+            ResultText = ResultText.Length > 1 ? ResultText[..^1] : DefaultValue;
         }
 
-        private void Calculate(object? parameter)
+        private async void Calculate(object? parameter)
         {
             try
             {
                 if (string.IsNullOrWhiteSpace(ResultText)) return;
-                var expression = ResultText.Replace(',', '.');
+
+                var expression = ResultText.Replace(DecimalSeparator, ".");
                 var result = _calculator.Calculate(expression);
-                SaveCalculation($"{ResultText} = {result}");
-                ResultText = result;
-                LoadCalculationHistory();
+
+                // Formatuj wynik, zamieniając kropkę na przecinek
+                string formattedResult = result.Replace(".", DecimalSeparator);
+
+                await SaveCalculationAsync($"{ResultText} = {formattedResult}");
+                ResultText = formattedResult;
+                await LoadCalculationHistoryAsync();
             }
             catch (Exception ex)
             {
-                ResultText = "Error: " + ex.Message;
+                ResultText = $"Error: {ex.Message}";
             }
         }
 
-        private static void SaveCalculation(string result)
+        private async void ClearHistory(object? parameter)
         {
             try
             {
-                File.AppendAllText("calculation_history.txt", result + Environment.NewLine);
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine("Error saving history: " + ex.Message);
-            }
-        }
-
-        private void LoadCalculationHistory()
-        {
-            try
-            {
-                if (File.Exists("calculation_history.txt"))
+                if (File.Exists(HistoryFileName))
                 {
-                    var allLines = File.ReadAllLines("calculation_history.txt");
-                    Array.Reverse(allLines);
-                    var lastFiveLines = allLines.Take(6).ToArray();
-                    HistoryText = string.Join(Environment.NewLine, lastFiveLines);
+                    await File.WriteAllTextAsync(HistoryFileName, string.Empty);
                 }
+                HistoryText = string.Empty;
+
+                MessageBox.Show("Calculation history has been cleared.", "Success",
+                    MessageBoxButton.OK, MessageBoxImage.Information);
             }
             catch (Exception ex)
             {
-                HistoryText = "Error loading history: " + ex.Message;
+                MessageBox.Show($"Error while clearing history: {ex.Message}", "Error",
+                    MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+        #endregion
+
+        #region File Operations - Async for better performance
+        private static async Task SaveCalculationAsync(string result)
+        {
+            try
+            {
+                await File.AppendAllTextAsync(HistoryFileName, result + Environment.NewLine);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error saving history: {ex.Message}");
             }
         }
 
-        private void ChangeTheme(object? parameter)
+        private async Task LoadCalculationHistoryAsync()
+        {
+            try
+            {
+                if (!File.Exists(HistoryFileName))
+                {
+                    HistoryText = string.Empty;
+                    return;
+                }
+
+                var allLines = await File.ReadAllLinesAsync(HistoryFileName);
+                var lastLines = allLines
+                    .Reverse()
+                    .Take(MaxHistoryLines)
+                    .ToArray();
+
+                HistoryText = string.Join(Environment.NewLine, lastLines);
+            }
+            catch (Exception ex)
+            {
+                HistoryText = $"Error loading history: {ex.Message}";
+            }
+        }
+        #endregion
+
+        #region Window Operations
+        private static void ChangeTheme(object? parameter)
         {
             ThemeManager.ApplyTheme(parameter?.ToString() ?? "Cyberpunk");
         }
 
-        private void ShowSettings(object? parameter)
+        private static void ShowSettings(object? parameter)
         {
             var settingsWindow = new Views.Settings { Owner = Application.Current.MainWindow };
             settingsWindow.ShowDialog();
         }
 
-        private void ShowAbout(object? parameter)
+        private static void ShowAbout(object? parameter)
         {
             var aboutWindow = new Views.AboutWindow { Owner = Application.Current.MainWindow };
             aboutWindow.ShowDialog();
         }
 
-        private void Minimize(object? parameter)
+        private static void Minimize(object? parameter)
         {
-            Application.Current.MainWindow.WindowState = WindowState.Minimized;
+            if (Application.Current.MainWindow != null)
+                Application.Current.MainWindow.WindowState = WindowState.Minimized;
         }
 
-        private void Close(object? parameter)
+        private static void Close(object? parameter)
         {
             Application.Current.Shutdown();
         }
+        #endregion
 
+        #region INotifyPropertyChanged - Modern approach
         public event PropertyChangedEventHandler? PropertyChanged;
-        protected void OnPropertyChanged([CallerMemberName] string? propertyName = null)
+
+        private void SetProperty<T>(ref T field, T value, [CallerMemberName] string? propertyName = null)
+        {
+            if (EqualityComparer<T>.Default.Equals(field, value)) return;
+
+            field = value;
+            OnPropertyChanged(propertyName);
+        }
+
+        private void OnPropertyChanged([CallerMemberName] string? propertyName = null)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
+        #endregion
     }
 
-    // Primary constructor version (C# 12)
-    public class RelayCommand(Action<object?> execute, Func<object?, bool>? canExecute = null) : ICommand
+    // Modern RelayCommand using primary constructor (C# 12) with improved null safety
+    public sealed class RelayCommand(Action<object?> execute, Func<object?, bool>? canExecute = null) : ICommand
     {
-        private readonly Action<object?> _execute = execute;
+        private readonly Action<object?> _execute = execute ?? throw new ArgumentNullException(nameof(execute));
         private readonly Func<object?, bool>? _canExecute = canExecute;
 
-        public bool CanExecute(object? parameter) => _canExecute == null || _canExecute(parameter);
+        public bool CanExecute(object? parameter) => _canExecute?.Invoke(parameter) ?? true;
+
         public void Execute(object? parameter) => _execute(parameter);
 
         public event EventHandler? CanExecuteChanged
         {
             add => CommandManager.RequerySuggested += value;
             remove => CommandManager.RequerySuggested -= value;
+        }
+    }
+
+    // Extension methods for better code organization
+    public static class StringExtensions
+    {
+        public static bool ContainsAny(this string source, params char[] characters)
+        {
+            return characters.Any(source.Contains);
+        }
+
+        public static string GetLastNumberPart(this string expression)
+        {
+            if (string.IsNullOrEmpty(expression)) return string.Empty;
+
+            var operators = new[] { '+', '-', '*', '/', '%', '^', '(' };
+            var lastOperatorIndex = -1;
+
+            for (int i = expression.Length - 1; i >= 0; i--)
+            {
+                if (operators.Contains(expression[i]))
+                {
+                    lastOperatorIndex = i;
+                    break;
+                }
+            }
+
+            return lastOperatorIndex >= 0
+                ? expression[(lastOperatorIndex + 1)..]
+                : expression;
         }
     }
 }
