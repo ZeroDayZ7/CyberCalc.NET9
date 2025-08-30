@@ -14,4 +14,8 @@
                      Color="{StaticResource CyberPrimary}" />
     <SolidColorBrush x:Key="TextColor"
                      Color="#000000" />
+    <SolidColorBrush x:Key="CyberSecondaryBrush"
+                     Color="{StaticResource CyberSecondary}" />
+    <SolidColorBrush x:Key="CyberAccentBrush"
+                     Color="{StaticResource CyberAccent}" />
 </ResourceDictionary>

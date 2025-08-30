@@ -76,7 +76,6 @@
                         <ContentPresenter HorizontalAlignment="Center"
                                           VerticalAlignment="Center"
                                           Margin="{TemplateBinding Padding}" />
-                        <!-- Poprawka dla Padding -->
                     </Border>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsMouseOver"
@@ -172,8 +171,7 @@
     </Style>
     <!-- Styl dla przycisków nagłówka -->
     <Style x:Key="HeaderButton"
-           TargetType="Button"
-           BasedOn="{StaticResource CyberButton}">
+           TargetType="Button">
         <Setter Property="Background"
                 Value="Transparent" />
         <Setter Property="BorderThickness"
@@ -193,22 +191,14 @@
                             CornerRadius="3">
                         <ContentPresenter HorizontalAlignment="Center"
                                           VerticalAlignment="Center"
-                                          Margin="{TemplateBinding Padding}" />
+                                          Margin="{TemplateBinding Padding}"
+                                          TextElement.Foreground="{TemplateBinding Foreground}" />
                     </Border>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsMouseOver"
                                  Value="True">
-                            <Setter Property="Background"
-                                    Value="#2D3E50" />
                             <Setter Property="Foreground"
-                                    Value="#FFFFFF" />
-                        </Trigger>
-                        <Trigger Property="IsPressed"
-                                 Value="True">
-                            <Setter Property="Background"
-                                    Value="{DynamicResource CyberPrimary}" />
-                            <Setter Property="Foreground"
-                                    Value="{DynamicResource WindowBackground}" />
+                                    Value="{DynamicResource CyberAccentBrush}" />
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
@@ -234,14 +224,6 @@
                      Value="True">
                 <Setter Property="Background"
                         Value="{DynamicResource CyberPrimary}" />
-                <Setter Property="Effect">
-                    <Setter.Value>
-                        <DropShadowEffect Color="{DynamicResource CyberPrimary}"
-                                          BlurRadius="8"
-                                          ShadowDepth="0"
-                                          Opacity="0.6" />
-                    </Setter.Value>
-                </Setter>
             </Trigger>
             <Trigger Property="IsPressed"
                      Value="True">
@@ -261,7 +243,6 @@
                 Value="{DynamicResource BorderBrush}" />
         <Setter Property="BorderThickness"
                 Value="0" />
-        <!-- Bez obramowania, jak w Settings -->
         <Setter Property="FontFamily"
                 Value="Consolas" />
         <Setter Property="FontWeight"
@@ -279,12 +260,6 @@
                             BorderBrush="{TemplateBinding BorderBrush}"
                             BorderThickness="{TemplateBinding BorderThickness}"
                             CornerRadius="3">
-                        <Border.Effect>
-                            <DropShadowEffect Color="{DynamicResource CyberPrimary}"
-                                              BlurRadius="5"
-                                              ShadowDepth="0"
-                                              Opacity="0.3" />
-                        </Border.Effect>
                         <ContentPresenter HorizontalAlignment="Center"
                                           VerticalAlignment="Center"
                                           Margin="{TemplateBinding Padding}" />
