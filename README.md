@@ -22,6 +22,9 @@ Version 2.1.7 – Core & Interface Evolution
 ### Version 2.1.7 – Interface Evolution
 ![Version 2.1.7](CyberCalc.NET9/Assets/cybercalc-2.1.7.png)
 
+### Version 1.0.5
+![Version 1.0.4](CyberCalc.NET9/Assets/cybercalc-1.0.5.png)
+
 ### Version 1.0.4
 ![Version 1.0.4](CyberCalc.NET9/Assets/cybercalc-1.0.4.png)
 
