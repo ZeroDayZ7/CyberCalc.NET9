@@ -1,3 +1,5 @@
+using System;
+using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Input;
 using WPF_CALC_NET_9.ViewModels;
@@ -6,86 +8,153 @@ namespace WPF_CALC_NET_9.Views
 {
     public partial class MainWindow : Window
     {
-        private MainViewModel viewModel;
+        private readonly MainViewModel _viewModel;
+
+        // Modern dictionary approach for key mappings
+        private readonly Dictionary<Key, Func<bool, string?>> _keyMappings = new()
+        {
+            // Numbers - NumPad
+            [Key.NumPad0] = _ => "0",
+            [Key.NumPad1] = _ => "1",
+            [Key.NumPad2] = _ => "2",
+            [Key.NumPad3] = _ => "3",
+            [Key.NumPad4] = _ => "4",
+            [Key.NumPad5] = _ => "5",
+            [Key.NumPad6] = _ => "6",
+            [Key.NumPad7] = _ => "7",
+            [Key.NumPad8] = _ => "8",
+            [Key.NumPad9] = _ => "9",
+            
+            // Numbers - Main keyboard with shift handling
+            [Key.D0] = shift => shift ? ")" : "0",
+            [Key.D1] = _ => "1",
+            [Key.D2] = _ => "2",
+            [Key.D3] = _ => "3",
+            [Key.D4] = _ => "4",
+            [Key.D5] = shift => shift ? "%" : "5",
+            [Key.D6] = shift => shift ? "^" : "6",
+            [Key.D7] = _ => "7",
+            [Key.D8] = shift => shift ? "*" : "8",
+            [Key.D9] = shift => shift ? "(" : "9",
+            
+            // Operators
+            [Key.Add] = _ => "+",
+            [Key.OemPlus] = _ => "+",
+            [Key.Subtract] = _ => "-",
+            [Key.OemMinus] = _ => "-",
+            [Key.Multiply] = _ => "*",
+            [Key.Divide] = _ => "/",
+            [Key.OemQuestion] = _ => "/",
+            
+            // Decimal separator
+            [Key.OemComma] = _ => ",",
+            [Key.Decimal] = _ => ",",
+            [Key.OemPeriod] = _ => ",",
+            
+            // Parentheses
+            [Key.OemOpenBrackets] = _ => "(",
+            [Key.OemCloseBrackets] = _ => ")"
+        };
+
+        private readonly Dictionary<Key, Func<bool, string?>> _functionMappings = new()
+        {
+            [Key.S] = shift => shift ? "sin" : null,
+            [Key.C] = shift => shift ? "cos" : null,
+            [Key.T] = shift => shift ? "tan" : null,
+            [Key.L] = shift => shift ? "log" : null,
+            [Key.Q] = shift => shift ? "sqrt" : null
+        };
 
         public MainWindow()
         {
             InitializeComponent();
-            viewModel = new MainViewModel();
-            DataContext = viewModel;
+            _viewModel = new MainViewModel();
+            DataContext = _viewModel;
+            AttachEventHandlers();
+        }
 
-            this.PreviewKeyDown += MainWindow_PreviewKeyDown;
+        private void AttachEventHandlers()
+        {
+            PreviewKeyDown += MainWindow_PreviewKeyDown;
+            MouseLeftButtonDown += Window_MouseLeftButtonDown;
+            Closed += MainWindow_Closed;
         }
 
         private void MainWindow_PreviewKeyDown(object sender, KeyEventArgs e)
         {
-            bool shiftPressed = Keyboard.Modifiers == ModifierKeys.Shift;
-
-            switch (e.Key)
+            var shiftPressed = Keyboard.Modifiers.HasFlag(ModifierKeys.Shift);
+            
+            try
             {
-                // Cyfry z NumPad
-                case Key.NumPad0: viewModel.ProcessNumber("0"); break;
-                case Key.NumPad1: viewModel.ProcessNumber("1"); break;
-                case Key.NumPad2: viewModel.ProcessNumber("2"); break;
-                case Key.NumPad3: viewModel.ProcessNumber("3"); break;
-                case Key.NumPad4: viewModel.ProcessNumber("4"); break;
-                case Key.NumPad5: viewModel.ProcessNumber("5"); break;
-                case Key.NumPad6: viewModel.ProcessNumber("6"); break;
-                case Key.NumPad7: viewModel.ProcessNumber("7"); break;
-                case Key.NumPad8: viewModel.ProcessNumber("8"); break;
-                case Key.NumPad9: viewModel.ProcessNumber("9"); break;
+                // Handle special keys first
+                switch (e.Key)
+                {
+                    case Key.Enter:
+                        _viewModel.CalculateCommand.Execute(null);
+                        e.Handled = true;
+                        return;
+                        
+                    case Key.Delete:
+                    case Key.Back:
+                        _viewModel.ClearEntryCommand.Execute(null);
+                        e.Handled = true;
+                        return;
+                        
+                    case Key.Escape:
+                        _viewModel.ClearCommand.Execute(null);
+                        e.Handled = true;
+                        return;
+                }
 
-                // Cyfry z głównej klawiatury
-                case Key.D0: viewModel.ProcessInput(shiftPressed ? ")" : "0"); break;
-                case Key.D1: viewModel.ProcessNumber("1"); break;
-                case Key.D2: viewModel.ProcessNumber("2"); break;
-                case Key.D3: viewModel.ProcessNumber("3"); break;
-                case Key.D4: viewModel.ProcessNumber("4"); break;
-                case Key.D5: viewModel.ProcessInput(shiftPressed ? "%" : "5"); break;
-                case Key.D6: viewModel.ProcessInput(shiftPressed ? "^" : "6"); break;
-                case Key.D7: viewModel.ProcessNumber("7"); break;
-                case Key.D8: viewModel.ProcessInput(shiftPressed ? "*" : "8"); break;
-                case Key.D9: viewModel.ProcessInput(shiftPressed ? "(" : "9"); break;
+                // Handle function keys (with Shift)
+                if (shiftPressed && _functionMappings.TryGetValue(e.Key, out var functionMapping))
+                {
+                    var function = functionMapping(shiftPressed);
+                    if (!string.IsNullOrEmpty(function))
+                    {
+                        _viewModel.ProcessFunction(function);
+                        e.Handled = true;
+                        return;
+                    }
+                }
 
-                // Operatory
-                case Key.Add:
-                case Key.OemPlus: viewModel.ProcessInput("+"); break;
-                case Key.Subtract:
-                case Key.OemMinus: viewModel.ProcessInput("-"); break;
-                case Key.Multiply: viewModel.ProcessInput("*"); break;
-                case Key.Divide:
-                case Key.OemQuestion: viewModel.ProcessInput("/"); break;
-                case Key.OemComma:
-                case Key.Decimal:
-                case Key.OemPeriod: viewModel.ProcessInput(","); break;
-
-                // Nawiasy
-                case Key.OemOpenBrackets: viewModel.ProcessInput("("); break;
-                case Key.OemCloseBrackets: viewModel.ProcessInput(")"); break;
-
-                // Enter do obliczeń
-                case Key.Enter: viewModel.CalculateCommand.Execute(null); break;
-
-                // Czyszczenie
-                case Key.Delete:
-                case Key.Back: viewModel.ClearEntryCommand.Execute(null); break;
-                case Key.Escape: viewModel.ClearCommand.Execute(null); break;
-
-                // Funkcje
-                case Key.S: if (shiftPressed) viewModel.ProcessFunction("sin"); break;
-                case Key.C: if (shiftPressed) viewModel.ProcessFunction("cos"); break;
-                case Key.T: if (shiftPressed) viewModel.ProcessFunction("tan"); break;
-                case Key.L: if (shiftPressed) viewModel.ProcessFunction("log"); break;
-                case Key.Q: if (shiftPressed) viewModel.ProcessFunction("sqrt"); break;
+                // Handle regular input mappings
+                if (_keyMappings.TryGetValue(e.Key, out var mapping))
+                {
+                    var input = mapping(shiftPressed);
+                    if (!string.IsNullOrEmpty(input))
+                    {
+                        _viewModel.ProcessInput(input);
+                        e.Handled = true;
+                    }
+                }
             }
-
-            e.Handled = true;
+            catch (Exception ex)
+            {
+                // Log error or show user-friendly message
+                MessageBox.Show($"An error occurred while processing input: {ex.Message}", 
+                    "Input Error", MessageBoxButton.OK, MessageBoxImage.Warning);
+            }
         }
 
         private void Window_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             if (e.ChangedButton == MouseButton.Left)
-                DragMove();
+            {
+                try
+                {
+                    DragMove();
+                }
+                catch (InvalidOperationException)
+                {
+                    // Ignore - can happen if window is not in correct state for dragging
+                }
+            }
+        }
+
+        private void MainWindow_Closed(object? sender, EventArgs e)
+        {
+            // Dispose()
         }
     }
 }

@@ -143,13 +143,13 @@
         <Setter Property="BorderBrush"
                 Value="{DynamicResource BorderBrush}" />
         <Setter Property="BorderThickness"
-                Value="2" />
+                Value="1" />
         <Setter Property="FontFamily"
                 Value="Consolas" />
         <Setter Property="FontSize"
-                Value="24" />
+                Value="14" />
         <Setter Property="Padding"
-                Value="10" />
+                Value="5" />
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="TextBox">
