@@ -25,194 +25,167 @@
                 Grid.Row="0"
                 Grid.Column="0"
                 Style="{StaticResource ClearButton}"
-                Command="{Binding ClearCommand}"
-                Margin="2" />
+                Command="{Binding ClearCommand, RelativeSource={RelativeSource AncestorType=UserControl}}" />
         <Button Content="CE"
                 Grid.Row="0"
                 Grid.Column="1"
                 Style="{StaticResource ClearButton}"
-                Command="{Binding ClearEntryCommand}"
-                Margin="2" />
+                Command="{Binding ClearEntryCommand, RelativeSource={RelativeSource AncestorType=UserControl}}" />
         <Button Content="%"
                 Grid.Row="0"
                 Grid.Column="2"
                 Style="{StaticResource OperatorButton}"
-                Command="{Binding OperatorCommand}"
-                CommandParameter="%"
-                Margin="2" />
+                Command="{Binding OperatorCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                CommandParameter="%" />
         <Button Content="X^"
                 Grid.Row="0"
                 Grid.Column="3"
                 Style="{StaticResource OperatorButton}"
-                Command="{Binding OperatorCommand}"
-                CommandParameter="^"
-                Margin="2" />
+                Command="{Binding OperatorCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                CommandParameter="^" />
         <Button Content="sin"
                 Grid.Row="0"
                 Grid.Column="4"
                 Style="{StaticResource OperatorButton}"
-                Command="{Binding FunctionCommand}"
-                CommandParameter="sin"
-                Margin="2" />
+                Command="{Binding FunctionCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                CommandParameter="sin" />
         <!-- Przyciski nawiasów i operatorów -->
         <Button Content="("
                 Grid.Row="1"
                 Grid.Column="0"
                 Style="{StaticResource OperatorButton}"
-                Command="{Binding OperatorCommand}"
-                CommandParameter="("
-                Margin="2" />
+                Command="{Binding OperatorCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                CommandParameter="(" />
         <Button Content=")"
                 Grid.Row="1"
                 Grid.Column="1"
                 Style="{StaticResource OperatorButton}"
-                Command="{Binding OperatorCommand}"
-                CommandParameter=")"
-                Margin="2" />
+                Command="{Binding OperatorCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                CommandParameter=")" />
         <Button Content="/"
                 Grid.Row="1"
                 Grid.Column="2"
                 Style="{StaticResource OperatorButton}"
-                Command="{Binding OperatorCommand}"
-                CommandParameter="/"
-                Margin="2" />
+                Command="{Binding OperatorCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                CommandParameter="/" />
         <Button Content="*"
                 Grid.Row="1"
                 Grid.Column="3"
                 Style="{StaticResource OperatorButton}"
-                Command="{Binding OperatorCommand}"
-                CommandParameter="*"
-                Margin="2" />
+                Command="{Binding OperatorCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                CommandParameter="*" />
         <Button Content="cos"
                 Grid.Row="1"
                 Grid.Column="4"
                 Style="{StaticResource OperatorButton}"
-                Command="{Binding FunctionCommand}"
-                CommandParameter="cos"
-                Margin="2" />
+                Command="{Binding FunctionCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                CommandParameter="cos" />
         <!-- Przyciski numeryczne (7-9) i operator odejmowania -->
         <Button Content="7"
                 Grid.Row="2"
                 Grid.Column="0"
-                Style="{StaticResource CyberButton}"
-                Command="{Binding NumberCommand}"
-                CommandParameter="7"
-                Margin="2" />
+                Style="{StaticResource KeyButton}"
+                Command="{Binding NumberCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                CommandParameter="7" />
         <Button Content="8"
                 Grid.Row="2"
                 Grid.Column="1"
-                Style="{StaticResource CyberButton}"
-                Command="{Binding NumberCommand}"
-                CommandParameter="8"
-                Margin="2" />
+                Style="{StaticResource KeyButton}"
+                Command="{Binding NumberCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                CommandParameter="8" />
         <Button Content="9"
                 Grid.Row="2"
                 Grid.Column="2"
-                Style="{StaticResource CyberButton}"
-                Command="{Binding NumberCommand}"
-                CommandParameter="9"
-                Margin="2" />
+                Style="{StaticResource KeyButton}"
+                Command="{Binding NumberCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                CommandParameter="9" />
         <Button Content="-"
                 Grid.Row="2"
                 Grid.Column="3"
                 Style="{StaticResource OperatorButton}"
-                Command="{Binding OperatorCommand}"
-                CommandParameter="-"
-                Margin="2" />
+                Command="{Binding OperatorCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                CommandParameter="-" />
         <Button Content="tan"
                 Grid.Row="2"
                 Grid.Column="4"
                 Style="{StaticResource OperatorButton}"
-                Command="{Binding FunctionCommand}"
-                CommandParameter="tan"
-                Margin="2" />
+                Command="{Binding FunctionCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                CommandParameter="tan" />
         <!-- Przyciski numeryczne (4-6) i operator dodawania -->
         <Button Content="4"
                 Grid.Row="3"
                 Grid.Column="0"
-                Style="{StaticResource CyberButton}"
-                Command="{Binding NumberCommand}"
-                CommandParameter="4"
-                Margin="2" />
+                Style="{StaticResource KeyButton}"
+                Command="{Binding NumberCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                CommandParameter="4" />
         <Button Content="5"
                 Grid.Row="3"
                 Grid.Column="1"
-                Style="{StaticResource CyberButton}"
-                Command="{Binding NumberCommand}"
-                CommandParameter="5"
-                Margin="2" />
+                Style="{StaticResource KeyButton}"
+                Command="{Binding NumberCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                CommandParameter="5" />
         <Button Content="6"
                 Grid.Row="3"
                 Grid.Column="2"
-                Style="{StaticResource CyberButton}"
-                Command="{Binding NumberCommand}"
-                CommandParameter="6"
-                Margin="2" />
+                Style="{StaticResource KeyButton}"
+                Command="{Binding NumberCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                CommandParameter="6" />
         <Button Content="+"
                 Grid.Row="3"
                 Grid.Column="3"
                 Style="{StaticResource OperatorButton}"
-                Command="{Binding OperatorCommand}"
-                CommandParameter="+"
-                Margin="2" />
+                Command="{Binding OperatorCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                CommandParameter="+" />
         <Button Content="log"
                 Grid.Row="3"
                 Grid.Column="4"
                 Style="{StaticResource OperatorButton}"
-                Command="{Binding FunctionCommand}"
-                CommandParameter="log"
-                Margin="2" />
+                Command="{Binding FunctionCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                CommandParameter="log" />
         <!-- Przyciski numeryczne (1-3) i przycisk równości -->
         <Button Content="1"
                 Grid.Row="4"
                 Grid.Column="0"
-                Style="{StaticResource CyberButton}"
-                Command="{Binding NumberCommand}"
-                CommandParameter="1"
-                Margin="2" />
+                Style="{StaticResource KeyButton}"
+                Command="{Binding NumberCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                CommandParameter="1" />
         <Button Content="2"
                 Grid.Row="4"
                 Grid.Column="1"
-                Style="{StaticResource CyberButton}"
-                Command="{Binding NumberCommand}"
-                CommandParameter="2"
-                Margin="2" />
+                Style="{StaticResource KeyButton}"
+                Command="{Binding NumberCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                CommandParameter="2" />
         <Button Content="3"
                 Grid.Row="4"
                 Grid.Column="2"
-                Style="{StaticResource CyberButton}"
-                Command="{Binding NumberCommand}"
-                CommandParameter="3"
-                Margin="2" />
+                Style="{StaticResource KeyButton}"
+                Command="{Binding NumberCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                CommandParameter="3" />
         <Button Content="="
                 Grid.Row="4"
                 Grid.Column="3"
                 Grid.RowSpan="2"
                 Style="{StaticResource EqualsButton}"
-                Command="{Binding CalculateCommand}"
-                Margin="2" />
+                Command="{Binding CalculateCommand, RelativeSource={RelativeSource AncestorType=UserControl}}" />
         <Button Content="sqrt"
                 Grid.Row="4"
                 Grid.Column="4"
                 Style="{StaticResource OperatorButton}"
-                Command="{Binding FunctionCommand}"
-                CommandParameter="sqrt"
-                Margin="2" />
+                Command="{Binding FunctionCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                CommandParameter="sqrt" />
         <!-- Przyciski zero i przecinka -->
         <Button Content="0"
                 Grid.Row="5"
                 Grid.Column="0"
                 Grid.ColumnSpan="2"
-                Style="{StaticResource CyberButton}"
-                Command="{Binding NumberCommand}"
-                CommandParameter="0"
-                Margin="2" />
+                Style="{StaticResource KeyButton}"
+                Command="{Binding NumberCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                CommandParameter="0" />
         <Button Content=","
                 Grid.Row="5"
                 Grid.Column="2"
-                Style="{StaticResource CyberButton}"
-                Command="{Binding OperatorCommand}"
-                CommandParameter=","
-                Margin="2" />
+                Style="{StaticResource KeyButton}"
+                Command="{Binding OperatorCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                CommandParameter="," />
     </Grid>
 </UserControl>

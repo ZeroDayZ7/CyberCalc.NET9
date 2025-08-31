@@ -1,5 +1,6 @@
-// ButtonsControl.xaml.cs
+using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
 
 namespace WPF_CALC_NET_9.Controls
 {
@@ -8,6 +9,45 @@ namespace WPF_CALC_NET_9.Controls
         public ButtonsControl()
         {
             InitializeComponent();
+        }
+
+        public static readonly DependencyProperty OperatorCommandProperty =
+            DependencyProperty.Register(
+                "OperatorCommand",
+                typeof(ICommand),
+                typeof(ButtonsControl),
+                new PropertyMetadata(null));
+
+        public ICommand OperatorCommand
+        {
+            get { return (ICommand)GetValue(OperatorCommandProperty); }
+            set { SetValue(OperatorCommandProperty, value); }
+        }
+
+        public static readonly DependencyProperty ClearCommandProperty =
+            DependencyProperty.Register(
+                "ClearCommand",
+                typeof(ICommand),
+                typeof(ButtonsControl),
+                new PropertyMetadata(null));
+
+        public ICommand ClearCommand
+        {
+            get { return (ICommand)GetValue(ClearCommandProperty); }
+            set { SetValue(ClearCommandProperty, value); }
+        }
+
+        public static readonly DependencyProperty ClearEntryCommandProperty =
+            DependencyProperty.Register(
+                "ClearEntryCommand",
+                typeof(ICommand),
+                typeof(ButtonsControl),
+                new PropertyMetadata(null));
+
+        public ICommand ClearEntryCommand
+        {
+            get { return (ICommand)GetValue(ClearEntryCommandProperty); }
+            set { SetValue(ClearEntryCommandProperty, value); }
         }
     }
 }

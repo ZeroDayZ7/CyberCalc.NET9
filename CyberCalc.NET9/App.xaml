@@ -6,7 +6,6 @@
     <Application.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="Styles/Cyberpunk.xaml" />
                 <ResourceDictionary Source="Styles/CommonStyles.xaml" />
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>

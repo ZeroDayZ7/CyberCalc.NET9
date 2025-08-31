@@ -1,8 +1,8 @@
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
     <Color x:Key="CyberPrimary">#555555</Color>
-    <Color x:Key="CyberSecondary">#AAAAAA</Color>
-    <Color x:Key="CyberAccent">#cf5d1b</Color>
+    <Color x:Key="CyberSecondary">#FFFFFF</Color>
+    <Color x:Key="CyberAccent">#458e96</Color>
     <Color x:Key="CyberBackground">#1C2526</Color>
     <SolidColorBrush x:Key="WindowBackground"
                      Color="{StaticResource CyberBackground}" />
@@ -13,7 +13,7 @@
     <SolidColorBrush x:Key="BorderBrush"
                      Color="{StaticResource CyberPrimary}" />
     <SolidColorBrush x:Key="TextColor"
-                     Color="#FFFFFF" />
+                     Color="#d8d8d8ff" />
     <SolidColorBrush x:Key="CyberSecondaryBrush"
                      Color="{StaticResource CyberSecondary}" />
     <SolidColorBrush x:Key="CyberAccentBrush"

@@ -1,4 +1,6 @@
+using System.Diagnostics;
 using System.Windows;
+using WPF_CALC_NET_9.Properties;
 
 namespace WPF_CALC_NET_9.Helpers;
 
@@ -10,25 +12,31 @@ public static class ThemeManager
         {
             var appResources = Application.Current.Resources;
 
-            // Usuń poprzedni motyw (ale nie CommonStyles ani AppVersion)
             for (int i = appResources.MergedDictionaries.Count - 1; i >= 0; i--)
             {
                 var dict = appResources.MergedDictionaries[i];
-                if (dict.Source != null && dict.Source.OriginalString.EndsWith(".xaml") &&
+                if (dict.Source != null &&
+                    dict.Source.OriginalString.EndsWith(".xaml") &&
                     !dict.Source.OriginalString.EndsWith("CommonStyles.xaml"))
                 {
                     appResources.MergedDictionaries.RemoveAt(i);
                 }
             }
 
-            // Dodaj nowy motyw
-            var themeDict = new ResourceDictionary { Source = new Uri($"/Styles/{themeName}.xaml", UriKind.Relative) };
+            var themePath = $"/Styles/{themeName}.xaml";
+            Debug.WriteLine($"Loading theme: {themePath}");
+            var themeDict = new ResourceDictionary
+            {
+                Source = new Uri(themePath, UriKind.Relative)
+            };
             appResources.MergedDictionaries.Add(themeDict);
+
+            Settings.Default.ThemeName = themeName;
+            Settings.Default.Save();
         }
         catch (Exception ex)
         {
             MessageBox.Show($"Error loading theme {themeName}: {ex.Message}", "Theme Error", MessageBoxButton.OK, MessageBoxImage.Error);
         }
     }
-
 }

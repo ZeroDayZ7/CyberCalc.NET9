@@ -9,19 +9,13 @@
         Width="350"
         ResizeMode="NoResize"
         WindowStartupLocation="CenterOwner"
-        Background="{DynamicResource WindowBackground}"
+        Background="Transparent"
         WindowStyle="None"
         AllowsTransparency="True">
     <Border Background="{DynamicResource WindowBackground}"
             BorderBrush="{DynamicResource BorderBrush}"
-            BorderThickness="2"
-            CornerRadius="8">
-        <Border.Effect>
-            <DropShadowEffect Color="Black"
-                              BlurRadius="15"
-                              ShadowDepth="5"
-                              Opacity="0.7" />
-        </Border.Effect>
+            BorderThickness="1"
+            CornerRadius="5">
         <Grid Margin="0">
             <Grid.RowDefinitions>
                 <RowDefinition Height="35" />

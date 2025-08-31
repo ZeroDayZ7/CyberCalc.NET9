@@ -3,6 +3,7 @@ using System.IO;
 using System.Reflection;
 using System.Windows;
 using System.Windows.Threading;
+using WPF_CALC_NET_9.Properties;
 
 namespace WPF_CALC_NET_9
 {
@@ -29,6 +30,12 @@ namespace WPF_CALC_NET_9
             try
             {
                 base.OnStartup(e);
+
+                string savedTheme = Settings.Default.ThemeName;
+                if (!string.IsNullOrEmpty(savedTheme))
+                {
+                    Helpers.ThemeManager.ApplyTheme(savedTheme);
+                }
 
                 var version = Assembly.GetExecutingAssembly().GetName().Version?.ToString() ?? "0.0.0";
                 Resources["AppVersion"] = $"v{version}";

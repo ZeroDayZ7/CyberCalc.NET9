@@ -13,6 +13,7 @@
         ResizeMode="NoResize"
         WindowStartupLocation="CenterScreen"
         WindowStyle="None"
+        Background="Transparent"
         AllowsTransparency="True">
     <Border CornerRadius="5"
             BorderThickness="1"
@@ -88,7 +89,14 @@
                              Style="{StaticResource InputBox}" />
                 </Border>
                 <!-- Przyciski kalkulatora -->
-                <local:ButtonsControl Grid.Row="2" />
+                <local:ButtonsControl Grid.Row="2"
+                      ClearCommand="{Binding ClearCommand}"
+                      ClearEntryCommand="{Binding ClearEntryCommand}"
+                      OperatorCommand="{Binding OperatorCommand}"
+                      NumberCommand="{Binding NumberCommand}"
+                      FunctionCommand="{Binding FunctionCommand}"
+                      CalculateCommand="{Binding CalculateCommand}" />
+
             </Grid>
         </Grid>
     </Border>
