@@ -2,6 +2,8 @@
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:local="clr-namespace:WPF_CALC_NET_9.Controls"
+        xmlns:helpers="clr-namespace:WPF_CALC_NET_9.Helpers"
+        helpers:DragBehavior.IsDraggable="True"
         Title="Settings"
         Height="300"
         Width="400"
@@ -27,7 +29,7 @@
                 <RowDefinition Height="50" />
             </Grid.RowDefinitions>
             <!-- Nagłówek -->
-            <local:DraggableHeader Grid.Row="0"
+            <local:Header Grid.Row="0"
                                    HeaderText="SETTINGS" />
             <!-- Treść okna -->
             <StackPanel Grid.Row="1"

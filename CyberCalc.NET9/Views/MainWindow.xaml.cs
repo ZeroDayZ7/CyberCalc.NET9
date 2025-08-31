@@ -24,7 +24,7 @@ namespace WPF_CALC_NET_9.Views
             [Key.NumPad7] = _ => "7",
             [Key.NumPad8] = _ => "8",
             [Key.NumPad9] = _ => "9",
-            
+
             // Numbers - Main keyboard with shift handling
             [Key.D0] = shift => shift ? ")" : "0",
             [Key.D1] = _ => "1",
@@ -36,7 +36,7 @@ namespace WPF_CALC_NET_9.Views
             [Key.D7] = _ => "7",
             [Key.D8] = shift => shift ? "*" : "8",
             [Key.D9] = shift => shift ? "(" : "9",
-            
+
             // Operators
             [Key.Add] = _ => "+",
             [Key.OemPlus] = _ => "+",
@@ -45,12 +45,12 @@ namespace WPF_CALC_NET_9.Views
             [Key.Multiply] = _ => "*",
             [Key.Divide] = _ => "/",
             [Key.OemQuestion] = _ => "/",
-            
+
             // Decimal separator
             [Key.OemComma] = _ => ",",
             [Key.Decimal] = _ => ",",
             [Key.OemPeriod] = _ => ",",
-            
+
             // Parentheses
             [Key.OemOpenBrackets] = _ => "(",
             [Key.OemCloseBrackets] = _ => ")"
@@ -76,14 +76,13 @@ namespace WPF_CALC_NET_9.Views
         private void AttachEventHandlers()
         {
             PreviewKeyDown += MainWindow_PreviewKeyDown;
-            MouseLeftButtonDown += Window_MouseLeftButtonDown;
             Closed += MainWindow_Closed;
         }
 
         private void MainWindow_PreviewKeyDown(object sender, KeyEventArgs e)
         {
             var shiftPressed = Keyboard.Modifiers.HasFlag(ModifierKeys.Shift);
-            
+
             try
             {
                 // Handle special keys first
@@ -93,13 +92,13 @@ namespace WPF_CALC_NET_9.Views
                         _viewModel.CalculateCommand.Execute(null);
                         e.Handled = true;
                         return;
-                        
+
                     case Key.Delete:
                     case Key.Back:
                         _viewModel.ClearEntryCommand.Execute(null);
                         e.Handled = true;
                         return;
-                        
+
                     case Key.Escape:
                         _viewModel.ClearCommand.Execute(null);
                         e.Handled = true;
@@ -132,25 +131,11 @@ namespace WPF_CALC_NET_9.Views
             catch (Exception ex)
             {
                 // Log error or show user-friendly message
-                MessageBox.Show($"An error occurred while processing input: {ex.Message}", 
+                MessageBox.Show($"An error occurred while processing input: {ex.Message}",
                     "Input Error", MessageBoxButton.OK, MessageBoxImage.Warning);
             }
         }
 
-        private void Window_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
-        {
-            if (e.ChangedButton == MouseButton.Left)
-            {
-                try
-                {
-                    DragMove();
-                }
-                catch (InvalidOperationException)
-                {
-                    // Ignore - can happen if window is not in correct state for dragging
-                }
-            }
-        }
 
         private void MainWindow_Closed(object? sender, EventArgs e)
         {

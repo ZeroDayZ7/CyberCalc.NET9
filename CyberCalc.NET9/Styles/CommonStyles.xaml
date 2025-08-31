@@ -145,10 +145,10 @@
                 Value="1" />
         <Setter Property="FontFamily"
                 Value="Consolas" />
-        <Setter Property="FontSize"
-                Value="14" />
         <Setter Property="Padding"
                 Value="5" />
+        <Setter Property="IsReadOnly"
+                Value="True" />
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="TextBox">
@@ -160,14 +160,29 @@
                         <ScrollViewer x:Name="PART_ContentHost"
                                       Focusable="False"
                                       HorizontalScrollBarVisibility="Hidden"
-                                      VerticalScrollBarVisibility="Hidden"
-                                      Background="{TemplateBinding Background}"
-                                      Padding="{TemplateBinding Padding}" />
-                        <!-- Poprawka dla Padding -->
+                                      VerticalScrollBarVisibility="Hidden" />
                     </Border>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
+    </Style>
+    <!-- InputBox -->
+    <Style x:Key="InputBox"
+           TargetType="TextBox"
+           BasedOn="{StaticResource CyberTextBox}">
+        <Setter Property="HorizontalContentAlignment"
+                Value="Right" />
+        <Setter Property="VerticalContentAlignment"
+                Value="Center" />
+        <Setter Property="FontSize"
+                Value="20" />
+    </Style>
+     <!-- HistoryBox -->
+    <Style x:Key="HistoryBox"
+           TargetType="TextBox"
+           BasedOn="{StaticResource CyberTextBox}">
+        <Setter Property="FontSize"
+                Value="14" />
     </Style>
     <!-- Styl dla przycisków nagłówka -->
     <Style x:Key="HeaderButton"

@@ -4,16 +4,16 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WPF_CALC_NET_9.Controls"
+        xmlns:helpers="clr-namespace:WPF_CALC_NET_9.Helpers"
+        helpers:DragBehavior.IsDraggable="True"
         mc:Ignorable="d"
         Title="Cyberpunk Calculator"
         Height="450"
         Width="380"
         ResizeMode="NoResize"
         WindowStartupLocation="CenterScreen"
-        Background="{DynamicResource WindowBackground}"
         WindowStyle="None"
-        AllowsTransparency="True"
-        MouseLeftButtonDown="Window_MouseLeftButtonDown">
+        AllowsTransparency="True">
     <Border CornerRadius="5"
             BorderThickness="1"
             BorderBrush="{DynamicResource TextColor}"
@@ -77,25 +77,15 @@
                 </Grid.RowDefinitions>
                 <!-- Historia -->
                 <Border Grid.Row="0"
-                        Height="80"
-                        Margin="0,0,0,0">
+                        Height="80">
                     <TextBox Text="{Binding HistoryText}"
-                             Style="{StaticResource CyberTextBox}"
-                             IsReadOnly="True"
-                             VerticalScrollBarVisibility="Auto"
-                             HorizontalScrollBarVisibility="Disabled" />
+                             Style="{StaticResource HistoryBox}"
+                             VerticalScrollBarVisibility="Auto" />
                 </Border>
                 <!-- Wynik -->
-                <Border Grid.Row="1"
-                        Margin="0,0,0,0">
+                <Border Grid.Row="1">
                     <TextBox Text="{Binding ResultText, UpdateSourceTrigger=PropertyChanged}"
-                             Style="{StaticResource CyberTextBox}"
-                             IsReadOnly="True"
-                             Foreground="{DynamicResource TextColor}"
-                             HorizontalContentAlignment="Right"
-                             VerticalContentAlignment="Center"
-                             FontSize="24"
-                             Padding="2" />
+                             Style="{StaticResource InputBox}" />
                 </Border>
                 <!-- Przyciski kalkulatora -->
                 <local:ButtonsControl Grid.Row="2" />
