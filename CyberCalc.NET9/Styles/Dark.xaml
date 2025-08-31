@@ -7,13 +7,13 @@
     <SolidColorBrush x:Key="WindowBackground"
                      Color="{StaticResource CyberBackground}" />
     <SolidColorBrush x:Key="ButtonBackground"
-                     Color="#c9c9c9ff" />
+                     Color="{StaticResource CyberPrimary}" />
     <SolidColorBrush x:Key="ButtonForeground"
                      Color="#FFFFFF" />
     <SolidColorBrush x:Key="BorderBrush"
                      Color="{StaticResource CyberPrimary}" />
     <SolidColorBrush x:Key="TextColor"
-                     Color="#d8d8d8ff" />
+                     Color="#d8d8d8" />
     <SolidColorBrush x:Key="CyberSecondaryBrush"
                      Color="{StaticResource CyberSecondary}" />
     <SolidColorBrush x:Key="CyberAccentBrush"

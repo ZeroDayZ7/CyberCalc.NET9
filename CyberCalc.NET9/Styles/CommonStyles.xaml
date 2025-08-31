@@ -104,7 +104,7 @@
         <Setter Property="Foreground"
                 Value="{DynamicResource ButtonForeground}" />
         <Setter Property="BorderBrush"
-                Value="{DynamicResource BorderBrush}" />
+                Value="{DynamicResource CyberAccentBrush}" />
     </Style>
     <!-- Styl dla przycisków operatorów -->
     <Style x:Key="OperatorButton"
@@ -115,7 +115,7 @@
         <Setter Property="BorderBrush"
                 Value="{DynamicResource CyberSecondaryBrush}" />
         <Setter Property="Foreground"
-                Value="{DynamicResource CyberSecondaryBrush}" />
+                Value="{DynamicResource ButtonForeground}" />
     </Style>
     <!-- Styl dla przycisku równości -->
     <Style x:Key="EqualsButton"
@@ -126,7 +126,7 @@
         <Setter Property="BorderBrush"
                 Value="{DynamicResource CyberAccentBrush}" />
         <Setter Property="Foreground"
-                Value="{DynamicResource CyberAccentBrush}" />
+                Value="{DynamicResource ButtonForeground}" />
     </Style>
     <!-- Styl dla przycisków czyszczenia -->
     <Style x:Key="ClearButton"
@@ -234,7 +234,7 @@
         <Setter Property="Background"
                 Value="{DynamicResource CyberSecondary}" />
         <Setter Property="Foreground"
-                Value="{DynamicResource TextColor}" />
+                Value="{DynamicResource ButtonForeground}" />
         <Setter Property="FontSize"
                 Value="12" />
         <Setter Property="Padding"
