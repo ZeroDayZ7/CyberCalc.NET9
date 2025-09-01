@@ -7,7 +7,7 @@
     <SolidColorBrush x:Key="WindowBackground"
                      Color="{StaticResource CyberBackground}" />
     <SolidColorBrush x:Key="ButtonBackground"
-                     Color="#51808067" />
+                     Color="#518080" />
     <SolidColorBrush x:Key="ButtonForeground"
                      Color="#000000" />
     <SolidColorBrush x:Key="BorderBrush"

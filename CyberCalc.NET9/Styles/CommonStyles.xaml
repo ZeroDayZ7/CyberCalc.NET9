@@ -104,7 +104,7 @@
         <Setter Property="Foreground"
                 Value="{DynamicResource ButtonForeground}" />
         <Setter Property="BorderBrush"
-                Value="{DynamicResource CyberAccentBrush}" />
+                Value="{DynamicResource BorderBrush}" />
     </Style>
     <!-- Styl dla przycisków operatorów -->
     <Style x:Key="OperatorButton"
