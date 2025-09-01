@@ -1,6 +1,5 @@
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Input;
 
 namespace WPF_CALC_NET_9.Controls
 {
@@ -11,10 +10,17 @@ namespace WPF_CALC_NET_9.Controls
             InitializeComponent();
         }
 
+        public static readonly DependencyProperty HeaderTextProperty =
+            DependencyProperty.Register(
+                nameof(HeaderText),
+                typeof(string),
+                typeof(Header),
+                new PropertyMetadata(string.Empty));
+
         public string HeaderText
         {
-            get => HeaderTextBlock.Text;
-            set => HeaderTextBlock.Text = value;
+            get => (string)GetValue(HeaderTextProperty);
+            set => SetValue(HeaderTextProperty, value);
         }
     }
 }

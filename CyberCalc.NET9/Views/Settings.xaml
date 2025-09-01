@@ -5,8 +5,8 @@
         xmlns:helpers="clr-namespace:WPF_CALC_NET_9.Helpers"
         helpers:DragBehavior.IsDraggable="True"
         Title="Settings"
-        Height="300"
-        Width="400"
+        Height="380"
+        Width="460"
         ResizeMode="NoResize"
         WindowStartupLocation="CenterOwner"
         Background="Transparent"
@@ -16,68 +16,60 @@
             BorderBrush="{DynamicResource BorderBrush}"
             BorderThickness="1"
             CornerRadius="5">
-        <Border.Effect>
-            <DropShadowEffect Color="Black"
-                              BlurRadius="15"
-                              ShadowDepth="5"
-                              Opacity="0.7" />
-        </Border.Effect>
         <Grid Margin="0">
             <Grid.RowDefinitions>
-                <RowDefinition Height="35" />
+                <RowDefinition Height="40" />
                 <RowDefinition Height="*" />
-                <RowDefinition Height="50" />
+                <RowDefinition Height="60" />
             </Grid.RowDefinitions>
-            <!-- Nagłówek -->
-            <local:Header Grid.Row="0"
-                                   HeaderText="SETTINGS" />
-            <!-- Treść okna -->
+            <!-- Header -->
+            <local:Header HeaderText="[ SETTINGS ]"
+                          Grid.Row="0" />
+            <!-- Main Content -->
             <StackPanel Grid.Row="1"
-                        Margin="10"
+                        Margin="20"
                         VerticalAlignment="Top">
-                <!-- Sekcja wyboru motywu -->
-                <GroupBox Header="Motyw"
-                          Foreground="{DynamicResource TextColor}"
-                          BorderBrush="{DynamicResource CyberSecondaryBrush}"
-                          Margin="0,5">
+                <!-- Theme Section -->
+                <GroupBox Header="THEME_SELECTION"
+                          Style="{StaticResource NeonGroupBox}">
                     <StackPanel Orientation="Horizontal"
                                 HorizontalAlignment="Center">
-                        <Button Content="Cyberpunk"
+                        <Button Content="CYBERPUNK"
                                 Command="{Binding ThemeCommand}"
                                 CommandParameter="Cyberpunk"
-                                Style="{StaticResource SettingsButton}"
-                                Margin="5"
-                                BorderThickness="0"
-                                Padding="5" />
-                        <Button Content="Dark"
+                                Style="{StaticResource NeonThemeButton}"
+                                ToolTip="Activate cyberpunk theme" />
+                        <Button Content="DARK"
                                 Command="{Binding ThemeCommand}"
                                 CommandParameter="Dark"
-                                Style="{StaticResource SettingsButton}"
-                                Margin="5"
-                                BorderThickness="0"
-                                Padding="5" />
-                        <Button Content="Light"
+                                Style="{StaticResource NeonThemeButton}"
+                                ToolTip="Activate dark theme" />
+                        <Button Content="LIGHT"
                                 Command="{Binding ThemeCommand}"
                                 CommandParameter="Light"
-                                Style="{StaticResource SettingsButton}"
-                                Margin="5"
-                                BorderThickness="0"
-                                Padding="5" />
+                                Style="{StaticResource NeonThemeButton}"
+                                ToolTip="Activate light theme" />
                     </StackPanel>
                 </GroupBox>
-                <!-- Sekcja czyszczenia historii -->
-                <GroupBox Header="Historia"
-                          Foreground="{DynamicResource TextColor}"
-                          BorderBrush="{DynamicResource CyberSecondaryBrush}"
-                          Margin="0,5">
-                    <Button Content="Wyczyść historię"
-                            Style="{StaticResource SettingsClearButton}"
-                            Click="ClearHistory_Click"
-                            Margin="5" />
+                <!-- History Section -->
+                <GroupBox Header="HISTORY_MANAGEMENT"
+                          Style="{StaticResource NeonGroupBox}">
+                    <StackPanel HorizontalAlignment="Center">
+                        <Button Content="WIPE_HISTORY"
+                                Style="{StaticResource NeonClearButton}"
+                                Click="ClearHistory_Click"
+                                ToolTip="Clear all calculation history" />
+                        <TextBlock Text="[ PERMANENT_OPERATION ]"
+                                   Foreground="{DynamicResource NeonClearForeground}"
+                                   FontSize="10"
+                                   Margin="0,5,0,0"
+                                   FontStyle="Italic"
+                                   Opacity="0.7" />
+                    </StackPanel>
                 </GroupBox>
             </StackPanel>
-            <!-- Przycisk zamknięcia -->
-            <local:CloseButton Grid.Row="2" />
+            <!-- Footer -->
+            <local:Footer Grid.Row="2" />
         </Grid>
     </Border>
 </Window>

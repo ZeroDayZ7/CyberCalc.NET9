@@ -1,7 +1,6 @@
-<!-- Styles/CommonStyles.xaml -->
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
-    <!-- Styl dla kciuka paska przewijania -->
+    <!-- Podstawowe style - używają DynamicResource dla tematów -->
     <Style x:Key="CyberScrollThumb"
            TargetType="Thumb">
         <Setter Property="Background"
@@ -22,7 +21,6 @@
             </Setter.Value>
         </Setter>
     </Style>
-    <!-- Styl dla paska przewijania -->
     <Style TargetType="ScrollBar">
         <Setter Property="Background"
                 Value="{DynamicResource WindowBackground}" />
@@ -45,7 +43,6 @@
             </Setter.Value>
         </Setter>
     </Style>
-    <!-- Styl podstawowy dla przycisków -->
     <Style x:Key="CyberButton"
            TargetType="Button">
         <Setter Property="BorderThickness"
@@ -77,9 +74,9 @@
                         <Trigger Property="IsMouseOver"
                                  Value="True">
                             <Setter Property="Background"
-                                    Value="#2D3E50" />
+                                    Value="{DynamicResource ButtonHoverBackground}" />
                             <Setter Property="Foreground"
-                                    Value="#FFFFFF" />
+                                    Value="{DynamicResource ButtonHoverForeground}" />
                             <Setter Property="BorderBrush"
                                     Value="{DynamicResource CyberSecondaryBrush}" />
                         </Trigger>
@@ -95,7 +92,6 @@
             </Setter.Value>
         </Setter>
     </Style>
-    <!-- klawiatura numeryczna -->
     <Style x:Key="KeyButton"
            TargetType="Button"
            BasedOn="{StaticResource CyberButton}">
@@ -106,40 +102,36 @@
         <Setter Property="BorderBrush"
                 Value="{DynamicResource BorderBrush}" />
     </Style>
-    <!-- Styl dla przycisków operatorów -->
     <Style x:Key="OperatorButton"
            TargetType="Button"
            BasedOn="{StaticResource CyberButton}">
         <Setter Property="Background"
-                Value="#2d6787" />
+                Value="{DynamicResource OperatorBackground}" />
         <Setter Property="BorderBrush"
                 Value="{DynamicResource CyberSecondaryBrush}" />
         <Setter Property="Foreground"
                 Value="{DynamicResource ButtonForeground}" />
     </Style>
-    <!-- Styl dla przycisku równości -->
     <Style x:Key="EqualsButton"
            TargetType="Button"
            BasedOn="{StaticResource CyberButton}">
         <Setter Property="Background"
-                Value="#1B5E20" />
+                Value="{DynamicResource EqualsBackground}" />
         <Setter Property="BorderBrush"
                 Value="{DynamicResource CyberAccentBrush}" />
         <Setter Property="Foreground"
                 Value="{DynamicResource ButtonForeground}" />
     </Style>
-    <!-- Styl dla przycisków czyszczenia -->
     <Style x:Key="ClearButton"
            TargetType="Button"
            BasedOn="{StaticResource CyberButton}">
         <Setter Property="Background"
-                Value="#5D1A1A" />
+                Value="{DynamicResource ClearBackground}" />
         <Setter Property="BorderBrush"
-                Value="#FF4444" />
+                Value="{DynamicResource ClearBorder}" />
         <Setter Property="Foreground"
-                Value="#FFFFFF" />
+                Value="{DynamicResource ClearForeground}" />
     </Style>
-    <!-- Styl dla pól tekstowych -->
     <Style x:Key="CyberTextBox"
            TargetType="TextBox">
         <Setter Property="Background"
@@ -173,7 +165,6 @@
             </Setter.Value>
         </Setter>
     </Style>
-    <!-- InputBox -->
     <Style x:Key="InputBox"
            TargetType="TextBox"
            BasedOn="{StaticResource CyberTextBox}">
@@ -184,14 +175,12 @@
         <Setter Property="FontSize"
                 Value="20" />
     </Style>
-    <!-- HistoryBox -->
     <Style x:Key="HistoryBox"
            TargetType="TextBox"
            BasedOn="{StaticResource CyberTextBox}">
         <Setter Property="FontSize"
                 Value="14" />
     </Style>
-    <!-- Styl dla przycisków nagłówka -->
     <Style x:Key="HeaderButton"
            TargetType="Button">
         <Setter Property="Background"
@@ -227,7 +216,6 @@
             </Setter.Value>
         </Setter>
     </Style>
-    <!-- FunctionButton -->
     <Style x:Key="FunctionButton"
            TargetType="Button"
            BasedOn="{StaticResource CyberButton}">
@@ -254,7 +242,6 @@
             </Trigger>
         </Style.Triggers>
     </Style>
-    <!-- SettingsButton -->
     <Style x:Key="SettingsButton"
            TargetType="Button">
         <Setter Property="Background"
@@ -290,9 +277,9 @@
                         <Trigger Property="IsMouseOver"
                                  Value="True">
                             <Setter Property="Background"
-                                    Value="#2D3E50" />
+                                    Value="{DynamicResource ButtonHoverBackground}" />
                             <Setter Property="Foreground"
-                                    Value="#FFFFFF" />
+                                    Value="{DynamicResource ButtonHoverForeground}" />
                             <Setter Property="BorderBrush"
                                     Value="{DynamicResource CyberSecondaryBrush}" />
                         </Trigger>
@@ -308,18 +295,16 @@
             </Setter.Value>
         </Setter>
     </Style>
-    <!-- Settings -->
     <Style x:Key="SettingsClearButton"
            TargetType="Button"
            BasedOn="{StaticResource SettingsButton}">
         <Setter Property="Background"
-                Value="#5D1A1A" />
+                Value="{DynamicResource ClearBackground}" />
         <Setter Property="BorderBrush"
-                Value="#FF4444" />
+                Value="{DynamicResource ClearBorder}" />
         <Setter Property="Foreground"
-                Value="#FF4444" />
+                Value="{DynamicResource ClearForeground}" />
     </Style>
-    <!-- HeaderTextStyle -->
     <Style x:Key="HeaderTextStyle"
            TargetType="TextBlock">
         <Setter Property="Foreground"
@@ -334,5 +319,148 @@
                 Value="Center" />
         <Setter Property="HorizontalAlignment"
                 Value="Center" />
+    </Style>
+    <Style x:Key="NeonText"
+           TargetType="TextBlock">
+        <Setter Property="Foreground"
+                Value="{DynamicResource NeonTextForeground}" />
+        <Setter Property="FontFamily"
+                Value="Consolas" />
+        <Setter Property="TextAlignment"
+                Value="Center" />
+        <Setter Property="Effect">
+            <Setter.Value>
+                <DropShadowEffect BlurRadius="12"
+                                  ShadowDepth="0"
+                                  Color="{DynamicResource NeonGlowColor}"
+                                  Opacity="0.5" />
+            </Setter.Value>
+        </Setter>
+    </Style>
+    <Style x:Key="NeonButton"
+           TargetType="Button">
+        <Setter Property="Background"
+                Value="Transparent" />
+        <Setter Property="Foreground"
+                Value="{DynamicResource NeonButtonForeground}" />
+        <Setter Property="BorderBrush"
+                Value="{DynamicResource NeonButtonBorder}" />
+        <Setter Property="BorderThickness"
+                Value="1" />
+        <Setter Property="Padding"
+                Value="8,3" />
+        <Setter Property="FontFamily"
+                Value="Consolas" />
+        <Setter Property="FontSize"
+                Value="12" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="Button">
+                    <Border Background="{TemplateBinding Background}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}"
+                            CornerRadius="2">
+                        <ContentPresenter HorizontalAlignment="Center"
+                                          VerticalAlignment="Center" />
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+        <Style.Triggers>
+            <Trigger Property="IsMouseOver"
+                     Value="True">
+                <Setter Property="Foreground"
+                        Value="{DynamicResource NeonButtonHoverForeground}" />
+                <Setter Property="BorderBrush"
+                        Value="{DynamicResource NeonButtonHoverBorder}" />
+                <Setter Property="Effect">
+                    <Setter.Value>
+                        <DropShadowEffect BlurRadius="15"
+                                          ShadowDepth="0"
+                                          Color="{DynamicResource NeonHoverGlowColor}"
+                                          Opacity="1" />
+                    </Setter.Value>
+                </Setter>
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+    <Style x:Key="NeonLink"
+           TargetType="Hyperlink">
+        <Setter Property="Foreground"
+                Value="{DynamicResource NeonLinkForeground}" />
+        <Setter Property="TextDecorations"
+                Value="None" />
+        <Style.Triggers>
+            <Trigger Property="IsMouseOver"
+                     Value="True">
+                <Setter Property="Foreground"
+                        Value="{DynamicResource NeonLinkHoverForeground}" />
+                <Setter Property="TextDecorations"
+                        Value="Underline" />
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+    <Style x:Key="NeonThemeButton"
+           TargetType="Button"
+           BasedOn="{StaticResource NeonButton}">
+        <Setter Property="Margin"
+                Value="8,5" />
+        <Setter Property="MinWidth"
+                Value="80" />
+    </Style>
+    <Style x:Key="NeonClearButton"
+           TargetType="Button"
+           BasedOn="{StaticResource NeonButton}">
+        <Setter Property="Foreground"
+                Value="{DynamicResource NeonClearForeground}" />
+        <Setter Property="BorderBrush"
+                Value="{DynamicResource NeonClearBorder}" />
+        <Setter Property="Padding"
+                Value="15,5" />
+    </Style>
+    <Style x:Key="NeonGroupBox"
+           TargetType="GroupBox">
+        <Setter Property="Foreground"
+                Value="{DynamicResource NeonGroupBoxForeground}" />
+        <Setter Property="BorderBrush"
+                Value="{DynamicResource NeonGroupBoxBorder}" />
+        <Setter Property="BorderThickness"
+                Value="1" />
+        <Setter Property="Padding"
+                Value="10" />
+        <Setter Property="Margin"
+                Value="0,10" />
+        <Setter Property="FontFamily"
+                Value="Consolas" />
+        <Setter Property="FontSize"
+                Value="12" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="GroupBox">
+                    <Border Background="Transparent"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}"
+                            CornerRadius="3"
+                            Padding="{TemplateBinding Padding}">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="*" />
+                            </Grid.RowDefinitions>
+                            <Border Grid.Row="0"
+                                    Background="{DynamicResource NeonGroupBoxHeaderBackground}"
+                                    Margin="-5,0,-5,0"
+                                    Padding="5,0">
+                                <TextBlock Text="{TemplateBinding Header}"
+                                           Foreground="{TemplateBinding Foreground}"
+                                           FontWeight="Bold" />
+                            </Border>
+                            <ContentPresenter Grid.Row="1"
+                                              Margin="0,10,0,0" />
+                        </Grid>
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
     </Style>
 </ResourceDictionary>

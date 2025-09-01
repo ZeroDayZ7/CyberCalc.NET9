@@ -1,21 +1,41 @@
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
-    <Color x:Key="CyberPrimary">#333333</Color>
-    <Color x:Key="CyberSecondary">#444444</Color>
-    <Color x:Key="CyberAccent">#787878</Color>
-    <Color x:Key="CyberBackground">#bababa</Color>
-    <SolidColorBrush x:Key="WindowBackground"
-                     Color="{StaticResource CyberBackground}" />
-    <SolidColorBrush x:Key="ButtonBackground"
-                     Color="#518080" />
-    <SolidColorBrush x:Key="ButtonForeground"
-                     Color="#000000" />
-    <SolidColorBrush x:Key="BorderBrush"
-                     Color="{StaticResource CyberPrimary}" />
-    <SolidColorBrush x:Key="TextColor"
-                     Color="#000000" />
-    <SolidColorBrush x:Key="CyberSecondaryBrush"
-                     Color="{StaticResource CyberSecondary}" />
-    <SolidColorBrush x:Key="CyberAccentBrush"
-                     Color="{StaticResource CyberAccent}" />
+    
+    <Color x:Key="CyberPrimary">#888888</Color>
+    <Color x:Key="CyberSecondary">#000000</Color>
+    <Color x:Key="CyberAccent">#007acc</Color>
+    <Color x:Key="CyberBackground">#f0f0f0</Color>
+    <Color x:Key="CyberTertiary">#aaaaaa</Color>
+<Color x:Key="NeonGlowColor">#007acc</Color>
+    <Color x:Key="NeonHoverGlowColor">#005a9e</Color>
+    <!-- Basic colors -->
+    <SolidColorBrush x:Key="WindowBackground" Color="{DynamicResource CyberBackground}" />
+    <SolidColorBrush x:Key="ButtonBackground" Color="#e0e0e0" />
+    <SolidColorBrush x:Key="ButtonForeground" Color="#000000" />
+    <SolidColorBrush x:Key="ButtonHoverBackground" Color="#d0d0d0" />
+    <SolidColorBrush x:Key="ButtonHoverForeground" Color="#000000" />
+    <SolidColorBrush x:Key="BorderBrush" Color="{DynamicResource CyberPrimary}" />
+    <SolidColorBrush x:Key="TextColor" Color="#333333" />
+    <SolidColorBrush x:Key="CyberSecondaryBrush" Color="{DynamicResource CyberSecondary}" />
+    <SolidColorBrush x:Key="CyberAccentBrush" Color="{DynamicResource CyberAccent}" />
+    
+    <SolidColorBrush x:Key="OperatorBackground" Color="#a0c5e8" />
+    <SolidColorBrush x:Key="EqualsBackground" Color="#90ee90" />
+    <SolidColorBrush x:Key="ClearBackground" Color="#ffb6c1" />
+    <SolidColorBrush x:Key="ClearBorder" Color="#ff6b6b" />
+    <SolidColorBrush x:Key="ClearForeground" Color="#000000" />
+
+    <SolidColorBrush x:Key="NeonTextForeground" Color="#007acc" />
+    <SolidColorBrush x:Key="NeonButtonForeground" Color="#007acc" />
+    <SolidColorBrush x:Key="NeonButtonBorder" Color="#007acc" />
+    <SolidColorBrush x:Key="NeonButtonHoverForeground" Color="#005a9e" />
+    <SolidColorBrush x:Key="NeonButtonHoverBorder" Color="#005a9e" />
+    <SolidColorBrush x:Key="NeonLinkForeground" Color="#007acc" />
+    <SolidColorBrush x:Key="NeonLinkHoverForeground" Color="#005a9e" />
+    <SolidColorBrush x:Key="NeonClearForeground" Color="#cc0000" />
+    <SolidColorBrush x:Key="NeonClearBorder" Color="#cc0000" />
+    <SolidColorBrush x:Key="NeonGroupBoxForeground" Color="#007acc" />
+    <SolidColorBrush x:Key="NeonGroupBoxBorder" Color="#007acc" />
+    <SolidColorBrush x:Key="NeonGroupBoxHeaderBackground" Color="#e0e8f0" />
+
 </ResourceDictionary>
