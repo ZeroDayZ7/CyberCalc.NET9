@@ -12,11 +12,11 @@
     <!-- Basic colors -->
     <SolidColorBrush x:Key="WindowBackground" Color="{DynamicResource CyberBackground}" />
     <SolidColorBrush x:Key="ButtonBackground" Color="#1B263B" />
-    <SolidColorBrush x:Key="ButtonForeground" Color="#00FFFF" />
+    <SolidColorBrush x:Key="ButtonForeground" Color="{DynamicResource CyberSecondary}" />
     <SolidColorBrush x:Key="ButtonHoverBackground" Color="#2D3E50" />
     <SolidColorBrush x:Key="ButtonHoverForeground" Color="#FFFFFF" />
     <SolidColorBrush x:Key="BorderBrush" Color="{DynamicResource CyberPrimary}" />
-    <SolidColorBrush x:Key="TextColor" Color="#00FFFF" />
+    <SolidColorBrush x:Key="TextColor" Color="{DynamicResource CyberPrimary}" />
     <SolidColorBrush x:Key="CyberSecondaryBrush" Color="{DynamicResource CyberSecondary}" />
     <SolidColorBrush x:Key="CyberAccentBrush" Color="{DynamicResource CyberAccent}" />
     
@@ -25,17 +25,17 @@
     <SolidColorBrush x:Key="ClearBackground" Color="#5D1A1A" />
     <SolidColorBrush x:Key="ClearBorder" Color="#FF4444" />
     <SolidColorBrush x:Key="ClearForeground" Color="#FFFFFF" />
-    <SolidColorBrush x:Key="NeonTextForeground" Color="#FF00FF" />
-    <SolidColorBrush x:Key="NeonButtonForeground" Color="#00FFFF" />
-    <SolidColorBrush x:Key="NeonButtonBorder" Color="#00FFFF" />
-    <SolidColorBrush x:Key="NeonButtonHoverForeground" Color="#FF00FF" />
-    <SolidColorBrush x:Key="NeonButtonHoverBorder" Color="#FF00FF" />
-    <SolidColorBrush x:Key="NeonLinkForeground" Color="#00FFFF" />
-    <SolidColorBrush x:Key="NeonLinkHoverForeground" Color="#FF00FF" />
+    <SolidColorBrush x:Key="NeonTextForeground" Color="{DynamicResource NeonHoverGlowColor}" />
+    <SolidColorBrush x:Key="NeonButtonForeground" Color="{DynamicResource NeonGlowColor}" />
+    <SolidColorBrush x:Key="NeonButtonBorder" Color="{DynamicResource NeonGlowColor}" />
+    <SolidColorBrush x:Key="NeonButtonHoverForeground" Color="{DynamicResource NeonHoverGlowColor}" />
+    <SolidColorBrush x:Key="NeonButtonHoverBorder" Color="{DynamicResource NeonHoverGlowColor}" />
+    <SolidColorBrush x:Key="NeonLinkForeground" Color="{DynamicResource NeonGlowColor}" />
+    <SolidColorBrush x:Key="NeonLinkHoverForeground" Color="{DynamicResource NeonHoverGlowColor}" />
     <SolidColorBrush x:Key="NeonClearForeground" Color="#FF0066" />
     <SolidColorBrush x:Key="NeonClearBorder" Color="#FF0066" />
-    <SolidColorBrush x:Key="NeonGroupBoxForeground" Color="#00FFFF" />
-    <SolidColorBrush x:Key="NeonGroupBoxBorder" Color="#00FFFF" />
+    <SolidColorBrush x:Key="NeonGroupBoxForeground" Color="{DynamicResource NeonGlowColor}" />
+    <SolidColorBrush x:Key="NeonGroupBoxBorder" Color="{DynamicResource NeonGlowColor}" />
     <SolidColorBrush x:Key="NeonGroupBoxHeaderBackground" Color="#001122" />
 
 </ResourceDictionary>

@@ -83,5 +83,5 @@ namespace WPF_CALC_NET_9.Core.Math
             if (stack.Count != 1) throw new ArgumentException("Błędne wyrażenie");
             return stack.Pop();
         }
-  }
+    }
 }

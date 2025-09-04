@@ -2,6 +2,8 @@
 
 `dotnet watch run --project CyberCalc.NET9/WPF-CALC-NET-9.csproj`
 
+`dotnet format`
+
 | Komenda                     | Opis                                                         | Przykład                                                    |
 | --------------------------- | ------------------------------------------------------------ | ----------------------------------------------------------- |
 | `dotnet new`                | Tworzy nowy projekt/rozwiązanie                              | `dotnet new wpf -n MyApp`                                   |
