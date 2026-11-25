@@ -1,10 +1,10 @@
 {
-  "version": "2.1.7",
-  "tag": "v2.1.7",
-  "releaseDate": "2025-08-30T07:44:47Z",
-  "releaseUrl": "https://github.com/ZeroDayZ7/CyberCalc.NET9/releases/tag/v2.1.7",
-  "installerUrl": null,
-  "zipUrl": null,
-  "checksumsUrl": null,
-  "releaseNotes": "New Style, more in README"
+  "version": "2.2.1",
+  "tag": "v2.2.1",
+  "releaseDate": "2026-11-25T10:55:10Z",
+  "releaseUrl": "https://github.com/ZeroDayZ7/CyberCalc.NET9/releases/tag/v2.2.1",
+  "installerUrl": "https://github.com/ZeroDayZ7/CyberCalc.NET9/releases/download/v2.2.1/CyberCalc-Setup-2.2.1-x64.exe",
+  "zipUrl": "https://github.com/ZeroDayZ7/CyberCalc.NET9/releases/download/v2.2.1/CyberCalc-2.2.1-win-x64.zip",
+  "checksumsUrl": "https://github.com/ZeroDayZ7/CyberCalc.NET9/releases/download/v2.2.1/CyberCalc-2.2.1-SHA256SUMS.txt",
+  "releaseNotes": "**Full Changelog**: https://github.com/ZeroDayZ7/CyberCalc.NET9/compare/v2.2.0...v2.2.1"
 }

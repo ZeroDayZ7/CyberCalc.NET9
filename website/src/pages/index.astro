@@ -11,7 +11,7 @@ const release = releaseData as {
   checksumsUrl: string | null;
 };
 
-const base = '/CyberCalc.NET9';
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 const hasRelease = Boolean(release.version && release.installerUrl);
 const releaseDate = release.releaseDate
   ? new Intl.DateTimeFormat('pl-PL', { dateStyle: 'long' }).format(new Date(release.releaseDate))
@@ -38,7 +38,7 @@ const features = [
   <main>
     <section class="container hero" aria-labelledby="hero-title">
       <div><div class="eyebrow">Kalkulator dla Windows</div><h1 id="hero-title">Cyber<span>Calc</span></h1><p class="hero-copy">Lekki kalkulator desktopowy do codziennych i bardziej zaawansowanych obliczeń. Czysty interfejs, klawiatura i historia — bez rozpraszania.</p><div class="hero-actions"><a class="button button-primary" href="#pobierz">Pobierz za darmo</a><a class="button button-secondary" href="#funkcje">Poznaj możliwości</a></div></div>
-      <div class="product-frame"><img src={`${base}/cybercalc-2.1.7.png`} alt="Zrzut ekranu interfejsu kalkulatora CyberCalc" width="1280" height="720" loading="eager" /></div>
+      <div class="product-frame"><img src={`${base}/cybercalc-2.1.7.png`} alt="Zrzut ekranu interfejsu kalkulatora CyberCalc" width="380" height="450" loading="eager" /></div>
     </section>
 
     <section class="section container" id="funkcje" aria-labelledby="features-title"><div class="section-heading"><div class="eyebrow">Możliwości</div><h2 id="features-title">Wszystko, czego potrzebujesz do obliczeń</h2><p>CyberCalc koncentruje się na szybkim działaniu i czytelności. Nie wymaga konta ani serwisu online.</p></div><div class="feature-grid">{features.map((feature) => <article class="feature"><div class="feature-icon" aria-hidden="true">{feature.icon}</div><h3>{feature.title}</h3><p>{feature.text}</p></article>)}</div></section>
