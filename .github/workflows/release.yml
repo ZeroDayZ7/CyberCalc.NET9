@@ -118,68 +118,99 @@ jobs:
             }
           }
 
-      - name: Prevent overwriting existing release
+      - name: Publish GitHub Release
         shell: pwsh
         env:
           GH_TOKEN: ${{ github.token }}
-        run: |
-          gh release view $env:RELEASE_TAG *> $null
-          if ($LASTEXITCODE -eq 0) { throw "Release $env:RELEASE_TAG already exists" }
-
-      - name: Create GitHub Release
-        shell: pwsh
-        env:
-          GH_TOKEN: ${{ github.token }}
-        run: |
-          gh release create $env:RELEASE_TAG `
-            --title "CyberCalc.NET9 $env:RELEASE_VERSION" `
-            --generate-notes `
-            "artifacts/CyberCalc-Setup-$env:RELEASE_VERSION-x64.exe" `
-            "artifacts/CyberCalc-$env:RELEASE_VERSION-win-x64.zip" `
-            "artifacts/CyberCalc-$env:RELEASE_VERSION-SHA256SUMS.txt"
-
-  website:
-    name: Build and deploy website
-    needs: release
-    runs-on: ubuntu-latest
-    permissions:
-      contents: read
-      pages: write
-      id-token: write
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
-
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: 22
-          cache: npm
-          cache-dependency-path: website/package-lock.json
-
-      - name: Configure Pages
-        uses: actions/configure-pages@v5
-
-      - name: Install dependencies
-        working-directory: website
-        run: npm ci
-
-      - name: Sync release metadata and build
-        working-directory: website
-        env:
-          GITHUB_TOKEN: ${{ github.token }}
           GITHUB_REPOSITORY: ${{ github.repository }}
-        run: node scripts/sync-release.mjs --tag=${{ github.ref_name }} --output=src/data/release.json && npm run build
+        run: |
+          $ErrorActionPreference = 'Stop'
+          $tag = $env:RELEASE_TAG
+          $version = $env:RELEASE_VERSION
+          $repo = $env:GITHUB_REPOSITORY
 
-      - name: Upload Pages artifact
-        uses: actions/upload-pages-artifact@v3
-        with:
-          path: website/dist
+          if (-not $tag -or -not $version) {
+            throw 'RELEASE_TAG or RELEASE_VERSION was not propagated.'
+          }
 
-      - name: Deploy to GitHub Pages
-        id: deployment
-        uses: actions/deploy-pages@v4
+          $localTag = & git rev-parse --verify "refs/tags/$tag^{commit}" 2>&1
+          if ($LASTEXITCODE -ne 0) {
+            throw "Required tag '$tag' is not available in the checkout: $localTag"
+          }
+
+          $authOutput = & gh auth status 2>&1 | Out-String
+          if ($LASTEXITCODE -ne 0) {
+            throw "GitHub CLI authentication failed. $authOutput"
+          }
+
+          $apiOutput = & gh api --method GET "repos/$repo/releases/tags/$tag" 2>&1 | Out-String
+          $apiExitCode = $LASTEXITCODE
+
+          if ($apiExitCode -ne 0 -and $apiOutput -match '(?is)(HTTP\s*404|404:\s*Not Found|Status:\s*404)') {
+            & gh release create $tag `
+              --repo $repo `
+              --verify-tag `
+              --title "CyberCalc.NET9 $version" `
+              --generate-notes `
+              "artifacts/CyberCalc-Setup-$version-x64.exe" `
+              "artifacts/CyberCalc-$version-win-x64.zip" `
+              "artifacts/CyberCalc-$version-SHA256SUMS.txt"
+            if ($LASTEXITCODE -ne 0) {
+              throw "Failed to create GitHub Release '$tag'."
+            }
+            Write-Host "Created GitHub Release '$tag'."
+          }
+          elseif ($apiExitCode -ne 0) {
+            throw "GitHub API failed while checking Release '$tag' (exit $apiExitCode): $apiOutput"
+          }
+          else {
+            Write-Host "GitHub Release '$tag' already exists; checking assets."
+
+            $release = $apiOutput | ConvertFrom-Json
+            $existingAssets = @($release.assets | ForEach-Object { $_.name })
+
+            $expectedFiles = @(
+              "artifacts/CyberCalc-Setup-$version-x64.exe",
+              "artifacts/CyberCalc-$version-win-x64.zip",
+              "artifacts/CyberCalc-$version-SHA256SUMS.txt"
+            )
+
+            $downloadDir = Join-Path $env:RUNNER_TEMP "existing-release-assets"
+            New-Item -ItemType Directory -Force $downloadDir | Out-Null
+
+            foreach ($file in $expectedFiles) {
+              $name = [IO.Path]::GetFileName($file)
+              if ($existingAssets -contains $name) {
+                $existingDownload = Join-Path $downloadDir $name
+                if (Test-Path $existingDownload) { Remove-Item -Force $existingDownload }
+
+                & gh release download $tag --repo $repo --pattern $name --dir $downloadDir --clobber
+                if ($LASTEXITCODE -ne 0) {
+                  throw "Failed to download existing asset '$name' for checksum comparison."
+                }
+
+                $existingHash = (Get-FileHash -Algorithm SHA256 -LiteralPath $existingDownload).Hash
+                $localHash = (Get-FileHash -Algorithm SHA256 -LiteralPath $file).Hash
+                if ($existingHash -ne $localHash) {
+                  throw "Existing asset '$name' differs from the newly built artifact. Refusing to overwrite it."
+                }
+
+                Write-Host "Asset '$name' already exists and matches; skipping upload."
+                continue
+              }
+
+              & gh release upload $tag $file --repo $repo
+              if ($LASTEXITCODE -ne 0) {
+                throw "Failed to upload missing asset '$name'."
+              }
+              Write-Host "Uploaded missing asset '$name'."
+            }
+          }
+
+          $verifiedNames = & gh release view $tag --repo $repo --json assets --jq '.assets[].name' 2>&1
+          if ($LASTEXITCODE -ne 0) {
+            throw "Failed to verify GitHub Release '$tag': $verifiedNames"
+          }
+          foreach ($name in $verifiedNames) {
+            if ($name -match '\S') { Write-Host "Verified Release asset: $name" }
+          }
