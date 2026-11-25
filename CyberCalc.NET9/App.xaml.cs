@@ -30,7 +30,12 @@ namespace WPF_CALC_NET_9
             {
                 base.OnStartup(e);
 
-                var version = Assembly.GetExecutingAssembly().GetName().Version?.ToString() ?? "0.0.0";
+                var informationalVersion = Assembly.GetExecutingAssembly()
+                    .GetCustomAttribute<AssemblyInformationalVersionAttribute>()?.InformationalVersion
+                    ?.Split('+')[0];
+                var version = !string.IsNullOrWhiteSpace(informationalVersion)
+                    ? informationalVersion
+                    : Assembly.GetExecutingAssembly().GetName().Version?.ToString() ?? "0.0.0";
                 Resources["AppVersion"] = $"v{version}";
                 var titleAttr = Assembly.GetExecutingAssembly()
                                         .GetCustomAttribute<AssemblyTitleAttribute>();

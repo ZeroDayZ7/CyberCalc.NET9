@@ -1,0 +1,139 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - 'v[0-9]*.[0-9]*.[0-9]*'
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: windows-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Validate tag and version
+        shell: pwsh
+        env:
+          GITHUB_REF_NAME: ${{ github.ref_name }}
+        run: |
+          $tag = $env:GITHUB_REF_NAME
+          if ($tag -notmatch '^v(\d+\.\d+\.\d+)$') { throw "Tag must use vX.Y.Z" }
+          $version = $Matches[1]
+          if ($version -notmatch '^\d+\.\d+\.\d+$') {
+            throw "Invalid semantic version: $version"
+          }
+          $central = (Get-Content -Raw version.txt).Trim()
+          if ($central -ne $version) {
+            throw "Tag $tag does not match version.txt ($central)"
+          }
+          "RELEASE_VERSION=$version" | Out-File -FilePath $env:GITHUB_ENV -Append
+          "RELEASE_TAG=$tag" | Out-File -FilePath $env:GITHUB_ENV -Append
+          $numericVersion = ($version -split '-')[0]
+          "NUMERIC_VERSION=$numericVersion" | Out-File -FilePath $env:GITHUB_ENV -Append
+
+      - name: Setup .NET 9
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: 9.0.x
+
+      - name: Restore
+        run: dotnet restore WPF-CALC-NET-9.sln --runtime win-x64
+
+      - name: Build Release
+        run: dotnet build WPF-CALC-NET-9.sln --configuration Release --no-restore
+
+      - name: Prepare clean output directories
+        shell: pwsh
+        run: |
+          Remove-Item -Recurse -Force publish/win-x64 -ErrorAction SilentlyContinue
+          Remove-Item -Recurse -Force artifacts -ErrorAction SilentlyContinue
+          New-Item -ItemType Directory -Force publish/win-x64, artifacts | Out-Null
+
+      - name: Publish win-x64
+        run: >-
+          dotnet publish CyberCalc.NET9/WPF-CALC-NET-9.csproj
+          --configuration Release --runtime win-x64 --self-contained true
+          --output publish/win-x64 --no-restore
+
+      - name: Clean developer and debug files
+        shell: pwsh
+        run: |
+          Get-ChildItem publish/win-x64 -Recurse -Include '*.pdb','*.user','*.nupkg','*.snupkg' |
+            Remove-Item -Force -ErrorAction Stop
+          if (Get-ChildItem publish/win-x64 -Recurse -Include '*.pdb','*.user','*.nupkg','*.snupkg') {
+            throw 'Developer or debug files remain in publication'
+          }
+
+      - name: Install Inno Setup
+        shell: pwsh
+        run: choco install innosetup --no-progress --yes
+
+      - name: Compile installer
+        shell: pwsh
+        run: |
+          New-Item -ItemType Directory -Force artifacts | Out-Null
+          $iscc = 'C:\Program Files (x86)\Inno Setup 6\ISCC.exe'
+          if (-not (Test-Path $iscc)) { $iscc = 'C:\Program Files\Inno Setup 6\ISCC.exe' }
+          if (-not (Test-Path $iscc)) { throw 'Inno Setup compiler was not found' }
+          & $iscc '/DAppVersion=${{ env.RELEASE_VERSION }}' '/DNumericVersion=${{ env.NUMERIC_VERSION }}' '/DSourceDir=${{ github.workspace }}\publish\win-x64' '/DOutputDir=${{ github.workspace }}\artifacts' installer/CyberCalc.iss
+
+      - name: Create ZIP
+        shell: pwsh
+        run: |
+          $zip = "artifacts/CyberCalc-$env:RELEASE_VERSION-win-x64.zip"
+          Compress-Archive -Path publish/win-x64/* -DestinationPath $zip -CompressionLevel Optimal
+
+      - name: Generate SHA256 sums
+        shell: pwsh
+        run: |
+          $files = Get-ChildItem artifacts -File | Where-Object { $_.Extension -ne '.txt' }
+          $lines = foreach ($file in $files) {
+            $hash = (Get-FileHash -Algorithm SHA256 -LiteralPath $file.FullName).Hash.ToLowerInvariant()
+            "$hash  $($file.Name)"
+          }
+          $lines | Set-Content -Encoding ascii "artifacts/CyberCalc-$env:RELEASE_VERSION-SHA256SUMS.txt"
+
+      - name: Verify release artifacts
+        shell: pwsh
+        run: |
+          $installer = "artifacts/CyberCalc-Setup-$env:RELEASE_VERSION-x64.exe"
+          $zip = "artifacts/CyberCalc-$env:RELEASE_VERSION-win-x64.zip"
+          $sums = "artifacts/CyberCalc-$env:RELEASE_VERSION-SHA256SUMS.txt"
+          foreach ($path in @($installer, $zip, $sums)) {
+            if (-not (Test-Path $path) -or (Get-Item $path).Length -eq 0) { throw "Missing artifact: $path" }
+          }
+          $summary = Get-Content $sums
+          foreach ($line in $summary) {
+            if ($line -match '^([0-9a-f]{64})  (.+)$') {
+              $hash = $Matches[1]; $name = $Matches[2]
+              $actual = (Get-FileHash -Algorithm SHA256 -LiteralPath "artifacts/$name").Hash.ToLowerInvariant()
+              if ($actual -ne $hash) { throw "Checksum mismatch: $name" }
+            }
+          }
+
+      - name: Prevent overwriting existing release
+        shell: pwsh
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh release view $env:RELEASE_TAG *> $null
+          if ($LASTEXITCODE -eq 0) { throw "Release $env:RELEASE_TAG already exists" }
+
+      - name: Create GitHub Release
+        shell: pwsh
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh release create $env:RELEASE_TAG `
+            --title "CyberCalc.NET9 $env:RELEASE_VERSION" `
+            --generate-notes `
+            "artifacts/CyberCalc-Setup-$env:RELEASE_VERSION-x64.exe" `
+            "artifacts/CyberCalc-$env:RELEASE_VERSION-win-x64.zip" `
+            "artifacts/CyberCalc-$env:RELEASE_VERSION-SHA256SUMS.txt"

@@ -7,7 +7,38 @@
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
     <UseWPF>true</UseWPF>
+    <RuntimeIdentifiers>win-x64</RuntimeIdentifiers>
     <ApplicationIcon>Assets\app_icon.ico</ApplicationIcon>
+
+    <!-- Single source of truth for release version: ../version.txt -->
+    <CyberCalcVersion>$([System.String]::Copy($([System.IO.File]::ReadAllText('$(MSBuildProjectDirectory)\..\version.txt'))).Trim())</CyberCalcVersion>
+    <CyberCalcNumericVersion>$([System.Text.RegularExpressions.Regex]::Match($(CyberCalcVersion), '^\d+\.\d+\.\d+').Value)</CyberCalcNumericVersion>
+    <Version Condition="'$(CyberCalcNumericVersion)' != ''">$(CyberCalcVersion)</Version>
+    <PackageVersion Condition="'$(CyberCalcNumericVersion)' != ''">$(CyberCalcVersion)</PackageVersion>
+    <AssemblyVersion Condition="'$(CyberCalcNumericVersion)' != ''">$(CyberCalcNumericVersion).0</AssemblyVersion>
+    <FileVersion Condition="'$(CyberCalcNumericVersion)' != ''">$(CyberCalcNumericVersion).0</FileVersion>
+    <InformationalVersion Condition="'$(CyberCalcNumericVersion)' != ''">$(CyberCalcVersion)</InformationalVersion>
+    <IncludeSourceRevisionInInformationalVersion>false</IncludeSourceRevisionInInformationalVersion>
+
+    <AssemblyTitle>CYBERPUNK CALC</AssemblyTitle>
+    <Product>CyberCalc.NET9</Product>
+    <Company>Skyline Systems</Company>
+    <Copyright>Copyright © 2025 Skyline Systems</Copyright>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)' == 'Release'">
+    <Optimize>true</Optimize>
+  </PropertyGroup>
+
+  <!-- Validated publication defaults for a self-contained Windows x64 WPF application. -->
+  <PropertyGroup Condition="'$(RuntimeIdentifier)' != ''">
+    <SelfContained>true</SelfContained>
+    <PublishReadyToRun>true</PublishReadyToRun>
+    <PublishSingleFile>false</PublishSingleFile>
+    <PublishTrimmed>false</PublishTrimmed>
+    <DebugType>none</DebugType>
+    <DebugSymbols>false</DebugSymbols>
+    <PublishAot>false</PublishAot>
   </PropertyGroup>
 
   <ItemGroup>
@@ -15,6 +46,5 @@
     <Folder Include="Views\" />
     <Folder Include="Controls\" />
   </ItemGroup>
-
 
 </Project>

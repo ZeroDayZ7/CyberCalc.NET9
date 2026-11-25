@@ -19,7 +19,12 @@ namespace WPF_CALC_NET_9.ViewModels
 
         // Constants for better maintainability
         private const string DefaultValue = "0";
+        private const string HistoryDirectoryName = "CyberCalc";
         private const string HistoryFileName = "calculation_history.txt";
+        private static readonly string HistoryDirectory = Path.Combine(
+            Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData),
+            HistoryDirectoryName);
+        private static readonly string HistoryFilePath = Path.Combine(HistoryDirectory, HistoryFileName);
         private const string Operators = "+-*/%^";
         private const string OpenParentheses = "(";
         private const string CloseParentheses = ")";
@@ -30,7 +35,31 @@ namespace WPF_CALC_NET_9.ViewModels
         {
             _calculator = new CalculatorModel();
             InitializeCommands();
+            EnsureHistoryStorage();
             _ = LoadCalculationHistoryAsync(); // Fire and forget async initialization
+        }
+
+        private static void EnsureHistoryStorage()
+        {
+            Directory.CreateDirectory(HistoryDirectory);
+
+            if (!File.Exists(HistoryFilePath))
+            {
+                string[] legacyPaths =
+                {
+                    Path.Combine(Environment.CurrentDirectory, HistoryFileName),
+                    Path.Combine(AppContext.BaseDirectory, HistoryFileName)
+                };
+
+                foreach (string legacyPath in legacyPaths)
+                {
+                    if (File.Exists(legacyPath))
+                    {
+                        File.Copy(legacyPath, HistoryFilePath, overwrite: false);
+                        break;
+                    }
+                }
+            }
         }
 
         #region Properties
@@ -303,9 +332,9 @@ namespace WPF_CALC_NET_9.ViewModels
         {
             try
             {
-                if (File.Exists(HistoryFileName))
+                if (File.Exists(HistoryFilePath))
                 {
-                    await File.WriteAllTextAsync(HistoryFileName, string.Empty);
+                    await File.WriteAllTextAsync(HistoryFilePath, string.Empty);
                 }
                 HistoryText = string.Empty;
 
@@ -325,7 +354,8 @@ namespace WPF_CALC_NET_9.ViewModels
         {
             try
             {
-                await File.AppendAllTextAsync(HistoryFileName, result + Environment.NewLine);
+                EnsureHistoryStorage();
+                await File.AppendAllTextAsync(HistoryFilePath, result + Environment.NewLine);
             }
             catch (Exception ex)
             {
@@ -337,13 +367,13 @@ namespace WPF_CALC_NET_9.ViewModels
         {
             try
             {
-                if (!File.Exists(HistoryFileName))
+                if (!File.Exists(HistoryFilePath))
                 {
                     HistoryText = string.Empty;
                     return;
                 }
 
-                var allLines = await File.ReadAllLinesAsync(HistoryFileName);
+                var allLines = await File.ReadAllLinesAsync(HistoryFilePath);
                 var lastLines = allLines
                     .Reverse()
                     .Take(MaxHistoryLines)

@@ -6,8 +6,8 @@
              StartupUri="Views/MainWindow.xaml">
     <Application.Resources>
         <ResourceDictionary>
-            <sys:String x:Key="AppVersion">v2.1.7</sys:String>
             <sys:String x:Key="AppTitle">CYBERPUNK CALC</sys:String>
+            <sys:String x:Key="AppVersion"></sys:String>
             <!-- Włączanie motywów z folderu Styles -->
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="Styles/Cyberpunk.xaml" />
