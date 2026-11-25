@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://zerodayz7.github.io/CyberCalc.NET9/sitemap.xml

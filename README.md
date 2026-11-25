@@ -1,5 +1,7 @@
 # CyberCalc.NET9
 
+**[Oficjalna strona produktu](https://zerodayz7.github.io/CyberCalc.NET9/)** · **[Najnowsze wydanie](https://github.com/ZeroDayZ7/CyberCalc.NET9/releases/latest)**
+
 This project is a modernized port of the classic WPF-CALC, rewritten from .NET Framework to .NET 9, introducing new Cyberpunk and Legacy themes while preserving the core calculator functionality.
 
 ## Features
@@ -31,7 +33,7 @@ git clone https://github.com/ZeroDayZ7/CyberCalc.NET9.git
 cd CyberCalc.NET9
 dotnet build
 dotnet run
-````
+```
 
 ## Downloads / Installer
 
@@ -45,3 +47,15 @@ You can also download the pre-built installer from the [Releases](https://github
 ## License
 
 This project is provided as a trial version. All rights reserved.
+
+## Website
+
+The official static website is maintained in `website/` using Astro and TypeScript.
+
+```bash
+cd website
+npm ci
+npm run sync-release
+npm run build
+npm run dev
+```

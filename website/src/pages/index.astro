@@ -1,0 +1,56 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import releaseData from '../data/release.json';
+
+const release = releaseData as {
+  version: string | null;
+  releaseDate: string | null;
+  releaseUrl: string;
+  installerUrl: string | null;
+  zipUrl: string | null;
+  checksumsUrl: string | null;
+};
+
+const base = '/CyberCalc.NET9';
+const hasRelease = Boolean(release.version && release.installerUrl);
+const releaseDate = release.releaseDate
+  ? new Intl.DateTimeFormat('pl-PL', { dateStyle: 'long' }).format(new Date(release.releaseDate))
+  : null;
+
+const features = [
+  { icon: '01', title: 'Zaawansowane obliczenia', text: 'Wspiera podstawowe operatory oraz funkcje sin, cos, tan, log i sqrt.' },
+  { icon: '02', title: 'Trzy motywy interfejsu', text: 'Wybieraj Cyberpunk, Dark lub Legacy bez zmiany sposobu pracy.' },
+  { icon: '03', title: 'Historia obliczeń', text: 'Ostatnie wyniki są zapisywane lokalnie i dostępne bezpośrednio w aplikacji.' },
+  { icon: '04', title: 'Obsługa klawiatury', text: 'Wprowadź liczby i operatory bez odrywania rąk od klawiatury.' },
+  { icon: '05', title: 'Pojedyncza instancja', text: 'Aplikacja pilnuje, by nie uruchamiać wielu kopii jednocześnie.' },
+  { icon: '06', title: 'Windows x64', text: 'Gotowa, samodzielna wersja instalacyjna dla Windows bez SDK.' }
+];
+---
+
+<BaseLayout title="CyberCalc — nowoczesny kalkulator dla Windows" description="CyberCalc to kalkulator desktopowy dla Windows z funkcjami matematycznymi, historią obliczeń i trzema motywami interfejsu.">
+  <header class="container">
+    <nav class="nav" aria-label="Główna nawigacja">
+      <a class="brand" href={`${base}/`} aria-label="Strona główna CyberCalc"><span class="brand-mark" aria-hidden="true">C</span><span>CyberCalc</span></a>
+      <div class="nav-links"><a href="#funkcje">Funkcje</a><a href="#instrukcja">Instrukcja</a><a href="#faq">FAQ</a><a class="button button-primary" href="#pobierz">Pobierz</a></div>
+    </nav>
+  </header>
+
+  <main>
+    <section class="container hero" aria-labelledby="hero-title">
+      <div><div class="eyebrow">Kalkulator dla Windows</div><h1 id="hero-title">Cyber<span>Calc</span></h1><p class="hero-copy">Lekki kalkulator desktopowy do codziennych i bardziej zaawansowanych obliczeń. Czysty interfejs, klawiatura i historia — bez rozpraszania.</p><div class="hero-actions"><a class="button button-primary" href="#pobierz">Pobierz za darmo</a><a class="button button-secondary" href="#funkcje">Poznaj możliwości</a></div></div>
+      <div class="product-frame"><img src={`${base}/cybercalc-2.1.7.png`} alt="Zrzut ekranu interfejsu kalkulatora CyberCalc" width="1280" height="720" loading="eager" /></div>
+    </section>
+
+    <section class="section container" id="funkcje" aria-labelledby="features-title"><div class="section-heading"><div class="eyebrow">Możliwości</div><h2 id="features-title">Wszystko, czego potrzebujesz do obliczeń</h2><p>CyberCalc koncentruje się na szybkim działaniu i czytelności. Nie wymaga konta ani serwisu online.</p></div><div class="feature-grid">{features.map((feature) => <article class="feature"><div class="feature-icon" aria-hidden="true">{feature.icon}</div><h3>{feature.title}</h3><p>{feature.text}</p></article>)}</div></section>
+
+    <section class="section download" id="pobierz" aria-labelledby="download-title"><div class="container"><div class="download-card"><div><div class="eyebrow">Najnowsza wersja</div><h2 id="download-title">{hasRelease ? `CyberCalc ${release.version}` : 'Wersja do pobrania'}</h2>{hasRelease ? <p class="availability"><strong>Gotowe wydanie</strong>{releaseDate ? ` · ${releaseDate}` : ''} · Windows x64</p> : <p class="availability"><strong>Wydanie nie jest jeszcze dostępne.</strong> Pełne informacje pojawią się po publikacji kolejnej wersji.</p>}</div><div class="download-actions">{release.installerUrl ? <a class="button button-primary" href={release.installerUrl}>Pobierz instalator EXE</a> : <a class="button button-primary" href={release.releaseUrl}>Zobacz wydania GitHub</a>}{release.zipUrl && <a class="button button-secondary" href={release.zipUrl}>Pobierz ZIP</a>}<div class="download-links">{release.checksumsUrl && <a href={release.checksumsUrl}>Sumy SHA256</a>}<a href={release.releaseUrl}>Pełne informacje o wydaniu</a></div></div></div></div></section>
+
+    <section class="section container" aria-labelledby="requirements-title"><div class="section-heading"><div class="eyebrow">Wymagania</div><h2 id="requirements-title">Gotowe dla Windows</h2></div><div class="requirements"><article class="requirement"><h3>System i architektura</h3><ul><li>Windows 10 lub nowszy</li><li>Windows 11</li><li>Architektura x64</li></ul></article><article class="requirement"><h3>Środowisko</h3><ul><li>Wersja publikowana jako aplikacja self-contained</li><li>Nie wymaga osobnej instalacji SDK .NET</li><li>Bez konta i połączenia z usługą online</li></ul></article></div></section>
+
+    <section class="section container" id="instrukcja" aria-labelledby="guide-title"><div class="section-heading"><div class="eyebrow">Pierwsze kroki</div><h2 id="guide-title">Od pobrania do pierwszego wyniku</h2></div><div class="steps"><article class="step"><div class="step-number">01</div><h3>Pobierz instalator</h3><p>W sekcji pobierania wybierz główny plik EXE dla Windows x64.</p></article><article class="step"><div class="step-number">02</div><h3>Zainstaluj aplikację</h3><p>Uruchom instalator i opcjonalnie wybierz własny katalog. Instalacja nie wymaga administratora.</p></article><article class="step"><div class="step-number">03</div><h3>Uruchom i licz</h3><p>Otwórz CyberCalc z menu Start lub pulpitu i wprowadź wyrażenie przyciskami albo klawiaturą.</p></article><article class="step"><div class="step-number">04</div><h3>Wybierz motyw</h3><p>Otwórz ustawienia i przełącz interfejs na Cyberpunk, Dark lub Legacy.</p></article><article class="step"><div class="step-number">05</div><h3>Odczytaj historię</h3><p>Ostatnie obliczenia są dostępne w aplikacji i można je wyczyścić w ustawieniach.</p></article><article class="step"><div class="step-number">06</div><h3>Aktualizuj i odinstaluj</h3><p>Uruchom nowszy instalator. Historia pozostaje po aktualizacji i deinstalacji.</p></article></div></section>
+
+    <section class="section container" id="faq" aria-labelledby="faq-title"><div class="section-heading"><div class="eyebrow">FAQ</div><h2 id="faq-title">Najczęstsze pytania</h2></div><div class="faq-list"><details class="faq"><summary>Czy CyberCalc jest darmowy?</summary><p>Tak, publikowany instalator jest dostępny do pobrania. Licencja projektu jest określona w repozytorium.</p></details><details class="faq"><summary>Czy aplikacja wymaga .NET?</summary><p>Dystrybucja self-contained zawiera środowisko potrzebne do uruchomienia. Nie trzeba instalować osobnego SDK .NET.</p></details><details class="faq"><summary>Czy działa na Windows 10?</summary><p>Projekt jest przeznaczony dla Windows x64 i działa na Windows 10 oraz Windows 11.</p></details><details class="faq"><summary>Jak zaktualizować aplikację?</summary><p>Pobierz nowy instalator i uruchom go. Istniejąca wersja zostanie zaktualizowana.</p></details><details class="faq"><summary>Gdzie jest historia obliczeń?</summary><p>Historia jest przechowywana lokalnie w katalogu <code>%LOCALAPPDATA%\CyberCalc</code>.</p></details><details class="faq"><summary>Jak zgłosić problem?</summary><p>Utwórz zgłoszenie w sekcji Issues repozytorium GitHub i podaj wersję oraz system Windows.</p></details></div></section>
+  </main>
+
+  <footer class="footer"><div class="container footer-inner"><div>CyberCalc · {release.version ? `wersja ${release.version}` : 'najbliższe wydanie'}</div><div class="footer-links"><a href="https://github.com/ZeroDayZ7/CyberCalc.NET9">GitHub</a><a href="https://github.com/ZeroDayZ7/CyberCalc.NET9/issues">Zgłoś błąd</a><a href="https://github.com/ZeroDayZ7/CyberCalc.NET9/releases">Wydania</a></div></div></footer>
+</BaseLayout>

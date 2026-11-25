@@ -137,3 +137,49 @@ jobs:
             "artifacts/CyberCalc-Setup-$env:RELEASE_VERSION-x64.exe" `
             "artifacts/CyberCalc-$env:RELEASE_VERSION-win-x64.zip" `
             "artifacts/CyberCalc-$env:RELEASE_VERSION-SHA256SUMS.txt"
+
+  website:
+    name: Build and deploy website
+    needs: release
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: website/package-lock.json
+
+      - name: Configure Pages
+        uses: actions/configure-pages@v5
+
+      - name: Install dependencies
+        working-directory: website
+        run: npm ci
+
+      - name: Sync release metadata and build
+        working-directory: website
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+          GITHUB_REPOSITORY: ${{ github.repository }}
+        run: node scripts/sync-release.mjs --tag=${{ github.ref_name }} --output=src/data/release.json && npm run build
+
+      - name: Upload Pages artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: website/dist
+
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
