@@ -59,3 +59,7 @@ npm run sync-release
 npm run build
 npm run dev
 ```
+
+## Maintainer Documentation
+
+[Release Guide](docs/RELEASING.md)
