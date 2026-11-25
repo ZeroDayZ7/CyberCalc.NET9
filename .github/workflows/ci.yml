@@ -22,7 +22,7 @@ jobs:
           dotnet-version: 9.0.x
 
       - name: Restore
-        run: dotnet restore WPF-CALC-NET-9.sln --runtime win-x64
+        run: dotnet restore WPF-CALC-NET-9.sln -p:Configuration=Release -r win-x64
 
       - name: Build Release
         run: dotnet build WPF-CALC-NET-9.sln --configuration Release --no-restore

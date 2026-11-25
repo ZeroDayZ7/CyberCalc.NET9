@@ -44,7 +44,7 @@ jobs:
           dotnet-version: 9.0.x
 
       - name: Restore
-        run: dotnet restore WPF-CALC-NET-9.sln --runtime win-x64
+        run: dotnet restore WPF-CALC-NET-9.sln -p:Configuration=Release -r win-x64
 
       - name: Build Release
         run: dotnet build WPF-CALC-NET-9.sln --configuration Release --no-restore
@@ -60,7 +60,7 @@ jobs:
         run: >-
           dotnet publish CyberCalc.NET9/WPF-CALC-NET-9.csproj
           --configuration Release --runtime win-x64 --self-contained true
-          --output publish/win-x64 --no-restore
+          --output publish/win-x64 -p:PublishReadyToRun=true
 
       - name: Clean developer and debug files
         shell: pwsh

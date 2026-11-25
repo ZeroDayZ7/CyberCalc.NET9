@@ -19,13 +19,13 @@ Remove-Item -Recurse -Force artifacts -ErrorAction SilentlyContinue
 Remove-Item -Recurse -Force publish/win-x64 -ErrorAction SilentlyContinue
 New-Item -ItemType Directory -Force artifacts, publish/win-x64 | Out-Null
 
-dotnet restore WPF-CALC-NET-9.sln --runtime win-x64
+dotnet restore WPF-CALC-NET-9.sln -p:Configuration=Release -r win-x64
 if ($LASTEXITCODE) { throw "dotnet restore failed" }
 dotnet build WPF-CALC-NET-9.sln --configuration Release --no-restore
 if ($LASTEXITCODE) { throw "dotnet build failed" }
 dotnet publish CyberCalc.NET9/WPF-CALC-NET-9.csproj `
     --configuration Release --runtime win-x64 --self-contained true `
-    --output publish/win-x64 --no-restore
+    --output publish/win-x64 -p:PublishReadyToRun=true
 if ($LASTEXITCODE) { throw "dotnet publish failed" }
 
 Get-ChildItem publish/win-x64 -Recurse -Include '*.pdb','*.user','*.nupkg','*.snupkg' |
